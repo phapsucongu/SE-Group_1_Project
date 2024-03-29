@@ -1,0 +1,57 @@
+POST http://localhost:5000/api/auth/register
+Content-Type: application/json
+
+{
+    "username": "John Doe",
+    "password": "123456"
+}
+
+###
+
+POST http://localhost:5000/api/auth/login
+Content-Type: application/json
+
+{
+    "username": "John Doe",
+    "password": "123456"
+} 
+
+###
+
+POST http://localhost:5000/api/post
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjAwMTJkNGRmYTJkZTQ4NTViYmNkODEiLCJpYXQiOjE3MTE0OTA5NTB9.EyqfflJtPQgaIlwgyFtAb8p2-jMXEtclBWBe5u2pmCU
+
+{
+    "title": "Post 2",
+    "description": "This is a post",
+    "url": "https://www.google.com",
+    "status": "LEARNING"
+}
+
+###
+
+GET http://localhost:5000/api/post
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjAwMTJkNGRmYTJkZTQ4NTViYmNkODEiLCJpYXQiOjE3MTE0OTA5NTB9.EyqfflJtPQgaIlwgyFtAb8p2-jMXEtclBWBe5u2pmCU
+
+###
+
+
+PUT http://localhost:5000/api/post/6603befddd430c15bd50eaed
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjAwMTJkNGRmYTJkZTQ4NTViYmNkODEiLCJpYXQiOjE3MTE0OTA5NTB9.EyqfflJtPQgaIlwgyFtAb8p2-jMXEtclBWBe5u2pmCU
+
+{
+    "title": "Post 2",
+    "description": "This is a update",
+    "url": "https://www.google.com",
+    "status": "LEARNING"
+}
+
+###
+
+DELETE http://localhost:5000/api/post/6603befddd430c15bd50eaed
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjAwMTJkNGRmYTJkZTQ4NTViYmNkODEiLCJpYXQiOjE3MTE0OTA5NTB9.EyqfflJtPQgaIlwgyFtAb8p2-jMXEtclBWBe5u2pmCU
+
