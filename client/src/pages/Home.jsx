@@ -1,7 +1,6 @@
 import React from 'react';
 import lawyerImage from '../assets/images/ladki.png';
 
-
 function HomePage() {
   return (
     <section className="hero__section pt-[60px] 2xl:h-[800px]">
@@ -16,7 +15,7 @@ function HomePage() {
   Law and justice are very important parts of any society. Be it developed or developing, every country has a need for justice, fairness, and rule of law. A large part of that institution is Lawyers who help provide justice to the citizens.
 </p>
 
-            <button className="bg-primaryColor text-white py-2 px-4 rounded mt-6">
+            <button className=" bg-gradient-to-tr from-[#ff5842] to-[#CBACD8] text-white py-2 px-4 rounded-[20px] mt-6">
               Get started Now!
             </button>
           </div>
