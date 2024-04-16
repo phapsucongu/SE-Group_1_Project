@@ -83,7 +83,7 @@ const Header = () => {
             <div className="hidden">
               <Link to="/">
                 <figure className="w-[35px] h-[35] rounded-full">
-                  <img src={userImg} className="w-full rounded-full" alt="" />
+                   <img src={userImg} className="w-full rounded-full" alt="" />
                 </figure>
               </Link>
             </div>

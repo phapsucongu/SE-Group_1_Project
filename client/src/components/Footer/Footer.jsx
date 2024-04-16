@@ -81,7 +81,7 @@ const Footer = () => {
   const year = new Date().getFullYear();
 
   return (
-    <footer className="pb-16 pt-10 bg-gradient-to-t from-[#0081A7] to-[#86E3CE]">
+    <footer className="pb-16 pt-10 bg-[#001431]">
       <div className="container">
         <div className="flex justify-between flex-col md:flex-row flex-wrap gap-[30px]">
           <div>
