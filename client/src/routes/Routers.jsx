@@ -3,6 +3,7 @@ import Login from '../pages/Login';
 import Signup from '../pages/Signup';
 import Contact from '../pages/Contact';
 import Experts from '../pages/Experts';
+import ChatPage from '../pages/Chat';
 
 import { Route, Routes } from 'react-router-dom';
 import MyBookings from '../pages/MyBookings';
@@ -17,6 +18,7 @@ const Routers = () => {
       <Route path="/register" element={<Signup />} />
       <Route path="/contact" element={<Contact />} />
       <Route path="/mybookings" element={<MyBookings />} />
+      <Route path="/chat" element={<ChatPage />} />
     </Routes>
   );
 };
