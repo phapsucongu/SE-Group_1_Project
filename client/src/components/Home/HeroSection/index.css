@@ -15,7 +15,7 @@
     font-weight: 1000;
     line-height: 56px;
     text-transform: uppercase;
-    color: #C49603;
+    color: #dcae16;
     text-shadow: 3px 2px 2px rgba(37, 7, 89, 0.5);
 }
 
@@ -62,5 +62,5 @@
   }
 
   #hero .button:hover {
-    background: #C49603;
+    background: #dcae16;
   }
