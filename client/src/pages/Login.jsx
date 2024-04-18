@@ -1,80 +1,84 @@
+import { useState, useContext } from "react"
+import { Link, useNavigate } from 'react-router-dom';
+import {toast} from 'react-toastify';
+import { apiUrl } from "../context/constants.jsx";
+import { authContext} from '../context/AuthContext.jsx';
+import Axios from "axios";
 
-import React, { useState } from 'react';
+
+
+
 const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+   const [formData, setFormData] = useState({
+    username:'',
+    password: ''
+  });
+
+const [loading, setLoading] = useState(false);
+const navigate = useNavigate();
+const {dispatch} = useContext(authContext);
+
+  const handleInputChange = e => {
+    setFormData({...formData,[e.target.name]: e.target.value});
+  };
+
+  const headers = {
+    'Content-Type': 'application/json', // Thiết lập kiểu dữ liệu của yêu cầu
+    
+};
+  const submitHandler = async event => {
+    event.preventDefault();
+    const response = await Axios.post(`${apiUrl}/auth/login`, formData, {headers});
+      //console.log(response.data);
+      if(response.data.success){
+        console.log(response.data);
+      }
+  }
 
   return (
-    <>
-
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Sign in to your account
-          </h2>
-        </div>
-
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6" action="#" method="POST">
-            <div>
-              <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
-                Username
-              </label>
-              <div className="mt-2">
-                <input
-                  type="username"
-                  autoComplete="username"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-
-            <div>
-              <div className="flex items-center justify-between">
-                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                  Password
-                </label>
-                <div className="text-sm">
-                  <a href="#" className="font-semibold text-primaryColor hover:text-primaryColor">
-                    Forgot password?
-                  </a>
-                </div>
-              </div>
-              <div className="mt-2">
-                <input
-      
-                  type="password"
-                  autoComplete="current-password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-
-            <div>
-              <button
-               className={username && password ? 'flex w-full justify-center rounded-md bg-primaryColor px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600' : 'flex w-full justify-center rounded-md bg-gray-300 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm cursor-not-allowed'}
-               disabled={username && password ? false : true}
-                type="submit"
-              >
-                Sign in
-              </button>
-            </div>
-          </form>
-
-          <p className="mt-10 text-center text-sm text-gray-500">
-            Not a member?{' '}
-            <a href="#" className="font-semibold leading-6 text-primaryColor hover:text-primaryColor">
-              Sign up now
-            </a>
+    <section className="px-5 lg:px-0">
+      <div className="w-full max-w-[570px] mx-auto rounded-lg shadow-md md:p-10">
+        <h3 className="text-headingColor text-[22px] leading-9 font-bold mb-10">
+          Hello! <span className="text-primaryColor">Welcome</span> Back
+        </h3>
+        <form className="py-4 md:py-0" onSubmit={submitHandler}>
+          <div className="mb-5">
+            <input type="username"
+            placeholder="Enter Your Email"
+            name="username"
+            value={formData.username}  
+            onChange={handleInputChange}
+            className="w-full py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
+            required
+          />
+          </div>
+          <div className="mb-5">
+            <input type="password"
+            placeholder="Password Here"
+            name="password"
+            value={formData.password} 
+            onChange={handleInputChange}
+            className="w-full py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
+            required
+          />
+          </div>
+          <div className="mt-7">
+            <button
+              type="submit"
+              className="w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg px-4 py-3">
+              Login
+            </button>
+          </div>
+          <p className="mt-5 text-textColor text-center">
+            Don&apos;t have an account? 
+              <Link to='/register' className='text-primaryColor font-medium ml-1'>
+                 Register
+              </Link>
           </p>
-        </div>
+        </form>
       </div>
-    </>
+    </section>
   )
-};
+}
 
-export default Login;
+export default Login
