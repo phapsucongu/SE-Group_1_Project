@@ -4,6 +4,7 @@ import Signup from '../pages/Signup';
 import Contact from '../pages/Contact';
 import Experts from '../pages/Experts';
 import ChatPage from '../pages/Chat';
+import Profile from '../pages/Profile';
 
 import { Route, Routes } from 'react-router-dom';
 import MyBookings from '../pages/MyBookings';
@@ -19,6 +20,7 @@ const Routers = () => {
       <Route path="/contact" element={<Contact />} />
       <Route path="/mybookings" element={<MyBookings />} />
       <Route path="/chat" element={<ChatPage />} />
+      <Route path="/profile" element={<Profile />} />
     </Routes>
   );
 };
