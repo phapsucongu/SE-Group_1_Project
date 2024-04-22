@@ -23,7 +23,7 @@ const navLinks = [
 ];
 
 const Header = () => {
-  const headerRef = useRef(null);
+  const headerRef = useRef(this);
   const menuRef = useRef(null);
 
   const handleStickyHeader = () => {
