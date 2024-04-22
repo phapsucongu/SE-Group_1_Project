@@ -49,7 +49,7 @@ const quickLinks01 = [
 
 const quickLinks02 = [
   {
-    path: '/experts ',
+    path: '/expert ',
     display: 'Find a Expert',
   },
   {

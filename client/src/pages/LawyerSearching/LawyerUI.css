@@ -1,0 +1,36 @@
+.grid-container {
+    display: grid;
+    grid-template-columns: 400px 400px; /* Định nghĩa kích thước cố định cho hai cột */
+    width: 900px;
+    justify-items: center;
+    column-gap: 75px;
+  }
+
+  .image-container {
+    width: 370px; /* Kích thước cố định cho khung chứa ảnh */
+    height: 370px; /* Kích thước cố định cho khung chứa ảnh */
+    display: flex;
+    justify-content: center;
+    /* align-items: center; */
+  }
+  .image {
+    max-width: 100%; /* Ảnh sẽ tự điều chỉnh kích thước để vừa trong khung */
+    max-height: 100%; /* Ảnh sẽ tự điều chỉnh kích thước để vừa trong khung */
+    border-radius: 3%
+  }
+
+  .doctor-name {
+    font-size: 20px;
+    line-height: 30px;
+    color: #000000;
+    font-weight: 700;
+    margin-top: 3rem;
+  }
+  
+  @media (min-width: 1024px) {
+    .my-element {
+      font-size: 26px;
+      line-height: 9;
+      margin-top: 5rem;
+    }
+  }
