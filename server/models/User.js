@@ -24,19 +24,19 @@ const UserSchema = new mongoose.Schema({
     },
     fullname: {
         type: String,
-        required: true
+        default: 'user'
     },
     email: {
         type: String,
-        required: true
+        default: ''
     },
     gender: {
         type: String,
-        required: true
+        default: 'male'
     },
     phone: {
         type: String,
-        required: true
+        default: ''
     },
 });
 

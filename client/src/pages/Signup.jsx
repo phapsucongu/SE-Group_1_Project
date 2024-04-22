@@ -11,11 +11,9 @@ const Signup = () => {
   
 
   const [formData, setFormData] = useState({
-    name:'',
-    email:'',
+    username:'',
     password: '',
-    gender: '',
-    role: 'customer',
+    role: 'user',
   });
   const navigate = useNavigate();
 
@@ -63,25 +61,15 @@ const Signup = () => {
             <div className="mb-5">
               <input 
               type="text"
-              placeholder="Full Name"
-              name="name"
-              value={formData.name}
+              placeholder="Username"
+              name="username"
+              value={formData.username}
               onChange={handleInputChange} 
               className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
               required
             />
             </div>
-            <div className="mb-5">
-              <input 
-              type="email"
-              placeholder="Enter Your Email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}  
-              className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
-              required
-            />
-            </div>
+            
             <div className="mb-5">
               <input 
               type="password"
@@ -93,23 +81,15 @@ const Signup = () => {
               required
             />
             </div>
-            <div className='mb-5 flex items-center justify-between'>
-             
-              <label
-               className='text-headingColor font-bold text-[16px] leading-7'
-              >
-                Gender:
-                <select
-                  name='gender'
-                  value={formData.gender}
-                  onChange={handleInputChange} 
-                  className='text-textColor font-semibold text-[15px] leading-7 px-4 py-3 focus:outline-none'
-                >
-                  <option value="gay">Gay</option>
-                  <option value="male">Male</option>
-                  <option value="female">Female</option>
-                </select>
-              </label>
+            <div className="mb-5">
+              <input 
+              type="password"
+              placeholder="Confirm password"
+              name="password"
+              onChange={handleInputChange}  
+              className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
+              required
+            />
             </div>
             <div className="mt-7">
               <button

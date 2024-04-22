@@ -2,7 +2,6 @@ import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
 import Contact from '../pages/Contact';
-import Experts from '../pages/Experts';
 import ChatPage from '../pages/Chat';
 import Profile from '../pages/Profile';
 
