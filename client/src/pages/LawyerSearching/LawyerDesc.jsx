@@ -18,10 +18,10 @@ const LawyerDesc = () => {
                         </figure>
                         <div>
                             <span className="bg-[#CCF0F3] text-irisBlueColor py-1 px-6 lg:py-2 lg:px-6 text-[12px]
-                            leading-4 lg:text-[16px] lg:leading-7 font-semibold rounded">Speciality
+                            leading-4 lg:text-[16px] lg:leading-7 font-semibold rounded">Criminal Defense Lawyer
                             </span>
                             <h3 className="text-headingColor text-[22px] leading-9 mt-3 font-bold">
-                                Lawyer's name
+                            Chloe Scott
                             </h3>
                             {/* <h3 className="fle items-center gap-[6px]">
                                 <span className="flex items-center gap-[6px] text-[14px] leading-5 lg:text-[16px]
@@ -29,8 +29,7 @@ const LawyerDesc = () => {
                             </h3> */}
 
                             <p className="text__para text-[14px] leading-5 md:text-[15px] lg:max-w-[390px]">
-                                short description about this lawyer
-                                asljkfdasdf
+                            Experienced criminal defense attorney, protecting clients' rights.
                             </p>
                         </div>
                     </div>
