@@ -4,7 +4,6 @@ import { lawyers } from './LawyersData'
 import './LawyerUI.css';
 
 const LawyerList = () => {
-
     return (
         <div className='grid-container' style={{ marginLeft: 50 }}>
             {lawyers.map(lawyer => (
