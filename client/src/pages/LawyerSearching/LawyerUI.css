@@ -44,3 +44,8 @@
       margin-top: 5rem;
     }
   }
+
+  .sticky-div {
+    position: sticky !important;
+    top: 0;
+  }

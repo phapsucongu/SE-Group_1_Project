@@ -40,8 +40,6 @@ Please feel free to reach out to me at chloe.scott@example.com. I look forward t
                         <p className="text-[14px] leading-5 font-medium text-textColor">
                         Harvard University, Cambridge.
                         </p>
-
-
                     </li>
                 </ul>
             </div>

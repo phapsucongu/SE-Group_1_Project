@@ -8,7 +8,7 @@ const LawyerCard = ({lawyer}) => {
 
     const {name, specialization, avgRating, totalRating, photo, totalPatients, hospital} = lawyer;
     return (
-        <div  style={{ marginBottom: 50, marginLeft:20}}>
+        <div  style={{ marginBottom: 50, marginLeft:20 }}>
             <div className="image-container">
                 <img src={photo} className="image" alt="" />
             </div>
