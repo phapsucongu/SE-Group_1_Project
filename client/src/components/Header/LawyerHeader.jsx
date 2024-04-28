@@ -9,16 +9,8 @@ const navLinks = [
     display: 'Home',
   },
   {
-    path: '/experts',
-    display: 'Find An Expert',
-  },
-  {
-    path: '/mybookings',
-    display: 'My Booking',
-  },
-  {
-    path: '/contact',
-    display: 'Contact',
+    path: '/appointment',
+    display: 'Appointments',
   },
 ];
 

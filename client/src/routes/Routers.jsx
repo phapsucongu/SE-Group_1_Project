@@ -8,6 +8,7 @@ import Profile from '../pages/Profile';
 import { Route, Routes } from 'react-router-dom';
 import MyBookings from '../pages/MyBookings';
 import SearchLawyer from '../pages/LawyerSearching/SearchLawyer';
+import AppointmentPage from '../pages/Appointment/AppointmentPage'
 
 const Routers = () => {
   return (
@@ -21,6 +22,7 @@ const Routers = () => {
       <Route path="/mybookings" element={<MyBookings />} />
       <Route path="/chat" element={<ChatPage />} />
       <Route path="/profile" element={<Profile />} />
+      <Route path="/appointment" element={<AppointmentPage />} />
     </Routes>
   );
 };
