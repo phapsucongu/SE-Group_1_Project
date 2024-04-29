@@ -1,8 +1,10 @@
-import logo from '../../assets/images/legal-services.png';
-import userImg from '../../assets/images/avatar-icon.png';
+import React, { useContext, useEffect, useRef } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { BiMenu } from 'react-icons/bi';
-import { useEffect, useRef } from 'react';
+import { authContext } from '../../context/AuthContext';
+import logo from '../../assets/images/legal-services.png';
+import userImg from '../../assets/images/avatar-icon.png';
+
 const navLinks = [
   {
     path: '/home',
@@ -27,8 +29,9 @@ const navLinks = [
 ];
 
 const Header = () => {
-  const headerRef = useRef(this);
+  const headerRef = useRef(null);
   const menuRef = useRef(null);
+  const { authState } = useContext(authContext);
 
   const handleStickyHeader = () => {
     window.addEventListener('scroll', () => {
@@ -46,7 +49,7 @@ const Header = () => {
   useEffect(() => {
     handleStickyHeader();
     return () => window.removeEventListener('scroll', handleStickyHeader);
-  });
+  }, []);
 
   const toggleMenu = () => {
     menuRef.current.classList.toggle('show__menu');
@@ -82,27 +85,33 @@ const Header = () => {
             </ul>
           </div>
 
-          {/* nav Right */}
+          {/* Nav Right */}
           <div className='flex items-center gap-4'>
-          <div className='hidden'>
-            <Link to='/'>
-              <figure className='w-[35px] h-[35px] rounded-full cursor-pointer'>
-                <img src={userImg} className='w-full rounded-full' alt="" />
-              </figure>
-            </Link>
-          </div>         
-          <Link to='/login'>
-              <button 
-              className='bg-primaryColor py-2 px-6 text-white font-[600] h-[44px] flex items-center justify-center rounded-[50px]'>
-              Login</button>
-            </Link>
+            {authState.isAuthenticated ? (
+              <div className='hidden'>
+                <Link to='/'>
+                  <figure className='w-[35px] h-[35px] rounded-full cursor-pointer'>
+                    <img src={userImg} className='w-full rounded-full' alt="" />
+                  </figure>
+                </Link>
+              </div>
+            ) : null}
+            {!authState.isAuthenticated && (
+              <Link to='/login'>
+                <button 
+                  className='bg-primaryColor py-2 px-6 text-white font-[600] h-[44px] flex items-center justify-center rounded-[50px]'>
+                  Login
+                </button>
+              </Link>
+            )}
             <span className='md:hidden' onClick={toggleMenu}>
               <BiMenu className='w-6 h-6 cursor-pointer'/>
-            </span>    
-        </div> 
+            </span>
+          </div> 
+        </div>
       </div>
-    </div>
- </header>
-  )
-}
+    </header>
+  );
+};
+
 export default Header;

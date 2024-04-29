@@ -3,8 +3,9 @@ const router = express.Router();
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const verifyToken = require('../middleware/auth');
 
-// @route POST api/auth
+// @route POST api/auth/register
 // @desc Auth user
 // @access Public
 
@@ -60,6 +61,24 @@ router.post('/login', async (req, res) => {
         res.status(200).json({ success: true, msg: 'login success', accessToken });
     } catch (err) {
         console.error(err.message);
+        res.status(500).json({ success: false, msg: 'server error' });
+    }
+})
+
+
+// @route GET api/auth/
+// @desc Check if user is logged in
+// @access Public
+
+
+router.get('/',verifyToken, async (req, res) => {
+    try {
+        const user = await User.findById(req.userId).select('-password');
+        if (!user) {
+            return res.status(400).json({ success: false, msg: 'user not found' });
+        }
+        res.status(200).json({ success: true, user });
+    } catch (err) {
         res.status(500).json({ success: false, msg: 'server error' });
     }
 })

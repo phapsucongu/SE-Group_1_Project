@@ -29,10 +29,10 @@ connectDB();
 
 app.use('/api/auth', authRouter);
 app.use('/api/post', postRouter);
-app.use('/api/chat', chatRouter);
+//app.use('/api/chat', chatRouter);
 const cors = require('cors')
 
-app.use(cors()) // Use this after the variable declaration
+app.use(cors());
   
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Server running on port ${port}`));

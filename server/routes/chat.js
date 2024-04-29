@@ -1,10 +1,10 @@
-const express = require('express');
+/*const express = require('express');
 const chatRouter = express(); // Sử dụng express để tạo app
 
 const http = require('http')
 //const server = http.createServer(chat);
 const { Server } = require("socket.io");
-const io = new Server(server);
+//const io = new Server(server);
 
 chatRouter.get('/', (req, res) => {
     res.sendFile(__dirname+'/test.html');
@@ -20,4 +20,4 @@ io.on('connection', (socket) => {
         io.emit('user-chat', data);
     });
 });
-module.exports = chatRouter;
+module.exports = chatRouter;*/
