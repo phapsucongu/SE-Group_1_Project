@@ -1,18 +1,23 @@
 const express = require('express');
-const router = express.Router();
-const app = express(); // Sử dụng express để tạo app
+const chatRouter = express(); // Sử dụng express để tạo app
 
-const { Server } = require('socket.io')
-const http = require('http').Server(app); // Sử dụng express để tạo server HTTP
+const http = require('http')
+//const server = http.createServer(chat);
+const { Server } = require("socket.io");
+const io = new Server(server);
 
-const io = new Server(http);
+chatRouter.get('/', (req, res) => {
+    res.sendFile(__dirname+'/test.html');
+});
 
-router.get('/', (req, res) => {
-    res.sendFile(__dirname+"/test.html");
+server.listen(3000, () => {
+    console.log('listening on port:3000');
 });
 
 io.on('connection', (socket) => {
     console.log('a user connected');
-})
-
-module.exports = router;
+    socket.on('on-chat', data => {
+        io.emit('user-chat', data);
+    });
+});
+module.exports = chatRouter;
