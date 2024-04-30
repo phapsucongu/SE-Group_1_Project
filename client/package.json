@@ -10,8 +10,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+<<<<<<< HEAD
     "@ant-design/icons": "^5.3.6",
     "antd": "^5.16.4",
+=======
+>>>>>>> winter
     "axios": "^1.6.8",
     "dayjs": "^1.11.10",
     "moment": "^2.30.1",
