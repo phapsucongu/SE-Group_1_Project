@@ -31,7 +31,6 @@ app.use('/api/auth', authRouter);
 app.use('/api/post', postRouter);
 //app.use('/api/chat', chatRouter);
 const cors = require('cors')
-
 app.use(cors());
   
 const port = process.env.PORT || 5000;
