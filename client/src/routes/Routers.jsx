@@ -8,6 +8,7 @@ import Profile from '../pages/Profile';
 import MyBookings from '../pages/MyBookings';
 import SearchLawyer from '../pages/LawyerSearching/SearchLawyer';
 import ProtectedRoute from './ProtectedRoute';
+import AppointmentPage from '../pages/Appointment/AppointmentPage'
 
 const Routers = () => {
   return (

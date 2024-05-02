@@ -13,20 +13,16 @@ const navLinks = [
   },
   {
     path: '/experts',
-    display: 'Find a Expert',
+    display: 'Find An Expert',
   },
   {
     path: '/mybookings',
-    display: 'My Bookings',
+    display: 'My Booking',
   },
   {
     path: '/contact',
     display: 'Contact',
   },
-  {
-    path: '/chat',
-    display: 'Chat',
-  }
 ];
 
 const Header = () => {
