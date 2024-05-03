@@ -7,6 +7,7 @@ import ChatPage from '../pages/Chat';
 import Profile from '../pages/Profile';
 import MyBookings from '../pages/MyBookings';
 import SearchLawyer from '../pages/LawyerSearching/SearchLawyer';
+import LawyerDesc from '../pages/LawyerSearching/LawyerDesc';
 import ProtectedRoute from './ProtectedRoute';
 import AppointmentPage from '../pages/Appointment/AppointmentPage'
 
@@ -15,6 +16,8 @@ const Routers = () => {
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/home" element={<Home />} />
+      <Route path="/experts" element={<SearchLawyer />} />
+      <Route path="/expertInf" element={<LawyerDesc />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Signup />} />
       <Route path="/chat" element={<ChatPage />} />

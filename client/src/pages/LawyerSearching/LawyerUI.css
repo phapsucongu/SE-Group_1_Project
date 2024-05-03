@@ -1,21 +1,31 @@
 .grid-container {
     display: grid;
-    grid-template-columns: 400px 400px; /* Định nghĩa kích thước cố định cho hai cột */
-    width: 900px;
+
+    /* grid-template-columns: 400px 400px; */
+    /* grid-template-columns: auto-fit; */
+    width: 95%;
     justify-items: center;
-    column-gap: 75px;
+    column-gap: 70px; 
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    grid-gap: 10px; 
+    /* border-width: 2px;
+    border-color: blue; */
+
   }
 
   .image-container {
-    width: 370px; /* Kích thước cố định cho khung chứa ảnh */
-    height: 370px; /* Kích thước cố định cho khung chứa ảnh */
+    width: 370px; 
+    height: 370px; 
+
     display: flex;
     justify-content: center;
     /* align-items: center; */
   }
   .image {
-    max-width: 100%; /* Ảnh sẽ tự điều chỉnh kích thước để vừa trong khung */
-    max-height: 100%; /* Ảnh sẽ tự điều chỉnh kích thước để vừa trong khung */
+
+    max-width: 100%; 
+    max-height: 100%; 
+
     border-radius: 3%
   }
 
@@ -33,4 +43,9 @@
       line-height: 9;
       margin-top: 5rem;
     }
+  }
+
+  .sticky-div {
+    position: sticky !important;
+    top: 0;
   }
