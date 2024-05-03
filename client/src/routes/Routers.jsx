@@ -18,6 +18,7 @@ const Routers = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Signup />} />
       <Route path="/chat" element={<ChatPage />} />
+      <Route path="/appointment" element={<AppointmentPage/>}/>
 
       <Route path="/experts" element={
             <ProtectedRoute>
@@ -43,6 +44,7 @@ const Routers = () => {
             </ProtectedRoute>
           }
       />
+      
     </Routes>
   );
 };
