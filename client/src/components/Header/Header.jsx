@@ -1,8 +1,11 @@
-import logo from '../../assets/images/legal-services.png';
-import userImg from '../../assets/images/avatar-icon.png';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
 import { BiMenu } from 'react-icons/bi';
-import { useEffect, useRef } from 'react';
+import { authContext } from '../../context/AuthContext';
+import logo from '../../assets/images/legal-services.png';
+import userImg from '../../assets/images/avatar-icon.png';
+import { LOCAL_STORAGE_TOKEN_NAME } from '../../context/constants';
+
 const navLinks = [
   {
     path: '/home',
@@ -23,8 +26,10 @@ const navLinks = [
 ];
 
 const Header = () => {
-  const headerRef = useRef(this);
+  const headerRef = useRef(null);
   const menuRef = useRef(null);
+  const { authState } = useContext(authContext);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   const handleStickyHeader = () => {
     window.addEventListener('scroll', () => {
@@ -42,10 +47,29 @@ const Header = () => {
   useEffect(() => {
     handleStickyHeader();
     return () => window.removeEventListener('scroll', handleStickyHeader);
-  });
+  }, []);
 
   const toggleMenu = () => {
-    menuRef.current.classList.toggle('show__menu');
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
+  const handleClickOutside = (event) => {
+    if (isDropdownOpen) {
+      setIsDropdownOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    // Add event listener on document mount
+    document.addEventListener('click', handleClickOutside);
+
+    // Remove event listener on component unmount
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, []); // Empty dependency array ensures it runs only once
+
+  const handleLogout = () => {
+    localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME);
+    window.location.href = '/login';
   };
 
   return (
@@ -54,8 +78,8 @@ const Header = () => {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div style={{ display: 'flex', alignItems: 'center' }} >
-            <img width={30} src={logo} alt="" />
-            <h4 style = {{marginLeft: '10px', fontWeight: 'bold', fontSize: '22px' }}>Law Connect</h4>
+            <img id='userImg' width={30} src={logo} alt="" />
+            <h4 style={{ marginLeft: '10px', fontWeight: 'bold', fontSize: '22px' }}>Law Connect</h4>
           </div>
 
           {/* Menu */}
@@ -78,27 +102,44 @@ const Header = () => {
             </ul>
           </div>
 
-          {/* nav Right */}
+          {/* Nav Right */}
           <div className='flex items-center gap-4'>
-          <div className='flex'>
-            <Link to='/'>
-              <figure className='w-[35px] h-[35px] rounded-full cursor-pointer'>
-                <img src={userImg} className='w-full rounded-full' alt="" />
-              </figure>
-            </Link>
-          </div>         
-          <Link to='/login'>
-              <button 
-              className='bg-primaryColor py-2 px-6 text-white font-[600] h-[44px] flex items-center justify-center rounded-[50px]'>
-              Login</button>
-            </Link>
+            {authState.isAuthenticated ? (
+              <div className="relative">
+                <div className="inline-block relative">
+                  <figure className="w-[35px] h-[35px] rounded-full cursor-pointer" onClick={toggleMenu}>
+                    <img src={userImg} className="w-full rounded-full" alt="" />
+                  </figure>
+                  {isDropdownOpen && (
+                    <div className="absolute right-0 mt-2 w-28 bg-white rounded-lg shadow-lg z-10">
+                      <div className="py-1">
+                        <Link to="/profile" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-200 text-center">
+                          Profile
+                        </Link>
+                        <button onClick={handleLogout} className="w-full text-left px-4 py-2 text-sm text-gray-800 hover:bg-gray-200 flex justify-center items-center">
+                          Logout
+                        </button>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            ) : (
+              <Link to='/login'>
+                <button
+                  className='bg-primaryColor py-2 px-6 text-white font-[600] h-[44px] flex items-center justify-center rounded-[50px]'>
+                  Login
+                </button>
+              </Link>
+            )}
             <span className='md:hidden' onClick={toggleMenu}>
-              <BiMenu className='w-6 h-6 cursor-pointer'/>
-            </span>    
-        </div> 
+              <BiMenu className='w-6 h-6 cursor-pointer' />
+            </span>
+          </div>
+        </div>
       </div>
-    </div>
- </header>
-  )
-}
+    </header>
+  );
+};
+
 export default Header;

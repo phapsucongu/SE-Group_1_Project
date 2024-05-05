@@ -1,52 +1,42 @@
-import React, { useState } from 'react';
+import React, { useState ,useContext} from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { BASE_URL } from '../../config';
 import {toast} from 'react-toastify';
 import HashLoader from 'react-spinners/HashLoader';
+import { authContext } from '../context/AuthContext';
 const Signup = () => {
 
-  const [previewURL, setPreviewURL] = useState('');
-  const [file, setFile] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const {registerUser} = useContext(authContext);
   
-
   const [formData, setFormData] = useState({
     username:'',
     password: '',
-    role: 'user',
+    confirmPassword: ''
   });
   const navigate = useNavigate();
+
+  const {username, password, confirmPassword} = formData;
 
   const handleInputChange = e => {
     setFormData({...formData,[e.target.name]: e.target.value});
   };
-
-  const handleFileInputChange = async event => {
-    const file = event.target.files[0]
-  }
-
   const submitHandler = async event => {
-    console.log(formData)
-    setLoading(true)
+    event.preventDefault();
+    if (password !== confirmPassword) {
+      setFormData({...formData, password: '', confirmPassword: ''});
+      return toast.error('Passwords do not match');
+      
+    }
     try {
-      const response = await fetch(`${BASE_URL}/auth/register`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(formData)
-      })
-      const {message} = await response.json()
-      if (!response.ok) {
-        throw new Error(message)
+      const registerData = await registerUser(formData);
+      if (registerData.success) {
+        navigate('/');
+        toast.success('Registered successfully');
+      } else {
+        toast.error(registerData.message);
       }
-      setLoading(false)
-      toast.success(message)
-      navigate('/login')
     }
     catch (error) {
-      setLoading(false)
-      toast.error(error.message)
+      toast.error(error.response.data.message);
     }
   }
 
@@ -63,7 +53,7 @@ const Signup = () => {
               type="text"
               placeholder="Username"
               name="username"
-              value={formData.username}
+              value={username}
               onChange={handleInputChange} 
               className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
               required
@@ -75,7 +65,7 @@ const Signup = () => {
               type="password"
               placeholder="Password"
               name="password"
-              value={formData.password}
+              value={password}
               onChange={handleInputChange}  
               className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
               required
@@ -85,7 +75,8 @@ const Signup = () => {
               <input 
               type="password"
               placeholder="Confirm password"
-              name="password"
+              name="confirmPassword"
+              value={confirmPassword}
               onChange={handleInputChange}  
               className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
               required
@@ -93,10 +84,10 @@ const Signup = () => {
             </div>
             <div className="mt-7">
               <button
-              disabled={loading && true}
+              //disabled={loading && true}
                 type="submit"
                 className="w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg px-4 py-3">
-                { loading ? <HashLoader size ={35} color = "white" /> : 'Sign Up'}
+                Register
               </button>
             </div>
             <p className="mt-5 text-textColor text-center">

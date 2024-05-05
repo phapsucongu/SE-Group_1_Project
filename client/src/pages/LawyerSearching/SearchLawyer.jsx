@@ -22,7 +22,6 @@ const SearchLawyer = () => {
     sortByGender !== '' && (query["gender"] = sortByGender);
     specialist !== '' && (query["specialist"] = specialist);
 
-
     return (
         <div>
             <SubHeader title='Search Lawyers' subtitle='Our trustworthy lawyers'/>
