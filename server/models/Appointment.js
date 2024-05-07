@@ -22,3 +22,4 @@ const AppointmentSchema = new mongoose.Schema({
         default: 'pending'
     },
 });
+export default AppointmentSchema;
