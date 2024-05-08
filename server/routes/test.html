@@ -1,25 +1,40 @@
-    <!DOCTYPE html>
-    <html>
-        <head>
-            <meta charset="utf-8">
-            <meta http-equiv="X-UA-Compatible" content="IE=edge">
-            <title></title>
-            <meta name="description" content="">
-            <meta name="viewport" content="width=device-width, initial-scale=1">
-            <link rel="stylesheet" href="">
-        </head>
-        <body>
-            <div>
-                <h1>Chat Page</h1>
-            </div><ul id="messages"></ul><form id="chat-form">
-                    <input id="msg" type="text" placeholder="Enter Message" required autocomplete="off" />
-                    <button class="btn">Send</button>
-                </form>
-            
-            <script src="" async defer></script>
-        </body>
-        <script src="../server/node_modules/socket.io/client-dist/socket.io.js"></script>
-        <script>
-            const socket = io();
-        </script>
-    </html> 
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="">
+    </head>
+    <body>
+        <div>
+            <h1>Chat Page</h1>
+        </div>
+        <ul id="messages"></ul>
+        <form id="chat-form">
+                <input id="msg" type="text" placeholder="Enter Message" required autocomplete="off" />
+                <button class="btn">Send</button>
+        </form>
+    </body>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io();
+        const name = prompt('Enter your name');
+        const chatForm = document.getElementById('chat-form');
+        const chatMessages = document.getElementById('messages');
+        chatForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const message = document.getElementById('msg').value;
+            socket.emit('on-chat', { name, message});
+            document.getElementById('msg').value = '';
+        });
+        const messages = document.querySelector('#messages');
+        socket.on('user-chat', message => {
+            const chatItem = document.createElement('li');
+            chatItem.textContent = `${message.name}: ${message.message}`;
+            messages.appendChild(chatItem);
+        }); 
+    </script>
+</html> 

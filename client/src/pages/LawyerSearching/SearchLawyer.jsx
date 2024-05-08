@@ -35,7 +35,7 @@ const SearchLawyer = () => {
                             setPriceRange={setPriceRange}
                             query={query}
                         />
-                        <div className="w-full lg:w-8/12 xl:w-9/12">
+                        <div className="w-full lg:w-8/12 xl:w-9/12 flex justify-center items-center screen">
                             
                             <LawyerList />
                             

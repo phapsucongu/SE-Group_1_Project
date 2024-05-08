@@ -1,38 +1,56 @@
 import { useState, useContext } from "react"
-import { Link, useNavigate } from 'react-router-dom';
-import {toast} from 'react-toastify';
+import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { apiUrl } from "../context/constants.jsx";
-import { authContext} from '../context/AuthContext.jsx';
-import Axios from "axios";
+import { authContext } from '../context/AuthContext.jsx';
+import axios from "axios";
 
 
 
 
 const Login = () => {
-   const [formData, setFormData] = useState({
-    username:'',
+
+  const { authState: {authLoading,isAuthenticated} } = useContext(authContext);
+  if (authLoading) <div>Loading...</div>
+  else if (isAuthenticated){
+    window.location.href = '/';
+    return null;
+  }
+
+  //context 
+  const { loginUser } = useContext(authContext);
+
+  const [formData, setFormData] = useState({
+    username: '',
     password: ''
   });
 
-const [loading, setLoading] = useState(false);
-const navigate = useNavigate();
-const {dispatch} = useContext(authContext);
+  const { username, password } = formData;
+
+  //const [loading, setLoading] = useState(false);
 
   const handleInputChange = e => {
-    setFormData({...formData,[e.target.name]: e.target.value});
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
 
   const headers = {
     'Content-Type': 'application/json', // Thiết lập kiểu dữ liệu của yêu cầu
-    
-};
+
+  };
   const submitHandler = async event => {
     event.preventDefault();
-    const response = await Axios.post(`${apiUrl}/auth/login`, formData, {headers});
-      //console.log(response.data);
-      if(response.data.success){
-        console.log(response.data);
+    try {
+      const loginData = await loginUser(formData);
+      if (loginData.success) {
+        toast.success(loginData.message);
+        window.location.href = '/';
+      } else {
+        toast.error(loginData.message);
       }
+    } catch (error) {
+      toast.error(error.response.data.message);
+    }
   }
 
   return (
@@ -44,23 +62,23 @@ const {dispatch} = useContext(authContext);
         <form className="py-4 md:py-0" onSubmit={submitHandler}>
           <div className="mb-5">
             <input type="username"
-            placeholder="Enter Your Email"
-            name="username"
-            value={formData.username}  
-            onChange={handleInputChange}
-            className="w-full py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
-            required
-          />
+              placeholder="Enter Your Email"
+              name="username"
+              value={formData.username}
+              onChange={handleInputChange}
+              className="w-full py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
+              required
+            />
           </div>
           <div className="mb-5">
             <input type="password"
-            placeholder="Password Here"
-            name="password"
-            value={formData.password} 
-            onChange={handleInputChange}
-            className="w-full py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
-            required
-          />
+              placeholder="Password Here"
+              name="password"
+              value={formData.password}
+              onChange={handleInputChange}
+              className="w-full py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
+              required
+            />
           </div>
           <div className="mt-7">
             <button
@@ -70,10 +88,10 @@ const {dispatch} = useContext(authContext);
             </button>
           </div>
           <p className="mt-5 text-textColor text-center">
-            Don&apos;t have an account? 
-              <Link to='/register' className='text-primaryColor font-medium ml-1'>
-                 Register
-              </Link>
+            Don&apos;t have an account?
+            <Link to='/register' className='text-primaryColor font-medium ml-1'>
+              Register
+            </Link>
           </p>
         </form>
       </div>
