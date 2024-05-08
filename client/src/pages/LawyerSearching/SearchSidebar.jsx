@@ -19,7 +19,7 @@ const SearchSidebar = ({ setSearchTerm, setSorByGender, setSpecialist, setPriceR
     },
   ];
 
-  const doctorSpecialistOptions = [
+  const SpecialistOptions = [
     { label: "Criminal Defense", value: "Criminal Defense" },
     { label: "Family Law", value: "Family Law" },
     { label: "Intellectual Property", value: "Intellectual Property" },
@@ -85,7 +85,7 @@ const SearchSidebar = ({ setSearchTerm, setSorByGender, setSpecialist, setPriceR
           <h6 style={{fontSize:'17px'}}>Select Specialist</h6>
             <div className='flex flex-row flex-wrap'>
               <Radio.Group onChange={onSelectSepcialist}>
-                {doctorSpecialistOptions.map((option, index) => (
+                {SpecialistOptions.map((option, index) => (
                   <div key={index}>
                     <Radio value={option.value}>{option.label}</Radio>
                   </div>

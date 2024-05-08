@@ -29,7 +29,7 @@
     border-radius: 3%
   }
 
-  .doctor-name {
+  .lawyer-name {
     font-size: 20px;
     line-height: 30px;
     color: #000000;
@@ -45,7 +45,3 @@
     }
   }
 
-  .sticky-div {
-    position: sticky !important;
-    top: 0;
-  }
