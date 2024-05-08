@@ -2,7 +2,9 @@ import React from "react";
 import lawyerImg from "./LawyersImg/lawyer4.jpg";
 import { useState } from "react";
 import LawyerAbout from "./LawyerAbout";
+import Feedback from "./Feedback";
 import SidePanel from "./SidePanel";
+import starIcon from "./LawyersImg/Star.png";
 
 const LawyerDesc = () => {
     const [tab, steTab] = useState('about');
@@ -27,7 +29,14 @@ const LawyerDesc = () => {
                                 <span className="flex items-center gap-[6px] text-[14px] leading-5 lg:text-[16px]
                                 lg:leading-7 font-semibold text-headingColor"></span>
                             </h3> */}
-
+                            <div className="flex items-center gap-[6px]">
+                                <span className="flex items-center gap-[6px] text-[14px] leading-5 lg:text-[16px] lg:leading-7 font-semibold text-headingColor">
+                                    <img src={starIcon} alt="star" /> 4.5
+                                </span>
+                                <span className="text-[14px] leading-5 lg:text-[16px] lg:leading-7 font-semibold text-headingColor">
+                                    (272)
+                                </span>
+                            </div>
                             <p className="text__para text-[14px] leading-5 md:text-[15px] lg:max-w-[390px]">
                             Experienced criminal defense attorney, protecting clients' rights.
                             </p>
@@ -39,9 +48,10 @@ const LawyerDesc = () => {
                         className={`${tab==='about' && "border-b border-solid border-primaryColor"} py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold`}>
                             About
                         </button>
-                        <button onClick={()=> steTab(`anotherbutton`)}
-                        className={`${tab==='anotherbutton' && "border-b border-solid border-primaryColor"} py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold`}>
-                            AnotherButton
+
+                        <button onClick={()=> steTab(`feedback`)}
+                        className={`${tab==='feedback' && "border-b border-solid border-primaryColor"} py-2 px-5 mr-5 text-[16px] leading-7 text-headingColor font-semibold`}>
+                            Feedbacks
                         </button>
                     </div>
 
@@ -50,7 +60,7 @@ const LawyerDesc = () => {
                             tab==='about' && <LawyerAbout />
                         }
                         {
-                            tab==='anotherbutton' && <LawyerAbout />
+                            tab==='feedback' && <Feedback />
                         }
                     </div>
                 </div>

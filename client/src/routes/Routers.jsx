@@ -9,7 +9,6 @@ import { Route, Routes } from 'react-router-dom';
 import MyBookings from '../pages/MyBookings';
 import SearchLawyer from '../pages/LawyerSearching/SearchLawyer';
 import LawyerDesc from '../pages/LawyerSearching/LawyerDesc';
-
 const Routers = () => {
   return (
     <Routes>
