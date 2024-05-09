@@ -3,7 +3,6 @@ import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
 import Contact from '../pages/Contact';
-import ChatPage from '../pages/Chat';
 import Profile from '../pages/Profile';
 import MyBookings from '../pages/MyBookings';
 import SearchLawyer from '../pages/LawyerSearching/SearchLawyer';
@@ -20,8 +19,8 @@ const Routers = () => {
       <Route path="/expertInf" element={<LawyerDesc />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Signup />} />
-      <Route path="/chat" element={<ChatPage />} />
       <Route path="/appointment" element={<AppointmentPage/>}/>
+      <Route path="profile" element={<Profile />} />
 
       <Route path="/experts" element={
             <ProtectedRoute>
