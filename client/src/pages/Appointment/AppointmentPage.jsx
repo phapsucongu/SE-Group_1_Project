@@ -1,6 +1,7 @@
 import { Button, Steps, message } from "antd";
 import SelectAppointment from './SelectAppointment'
 import { useState } from 'react';
+import moment from 'moment';
 
 const AppointmentPage = () => {
 
@@ -10,6 +11,7 @@ const handleChange = (e) => { setSelectValue({ ...selectValue, [e.target.name]: 
 const [selectedDate, setSelectedDate] = useState('');
 const handleDateChange = (date) => { setSelectedDate(moment(date).format('YYYY-MM-DD HH:mm:ss')) }
 const [selectTime, setSelectTime] = useState('');
+const [address, setAddress] = useState('');
 const [current, setCurrent] = useState(0);
 
 
@@ -21,6 +23,8 @@ const steps = [
       selectedDate={selectedDate}
       selectTime={selectTime}
       setSelectTime={setSelectTime}
+      address={address}
+      setAddress={setAddress}
     />
   }
   ]

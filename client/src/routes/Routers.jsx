@@ -3,7 +3,8 @@ import Home from '../pages/Home';
 import Login from '../pages/Login';
 import Signup from '../pages/Signup';
 import Contact from '../pages/Contact';
-import Profile from '../pages/Profile';
+import ClientAccount from '../components/Dashboard/client-account/MyAccount';
+import LawyerAccount from '../components/Dashboard/lawyer-account/MyAccount';
 import MyBookings from '../pages/MyBookings';
 import SearchLawyer from '../pages/LawyerSearching/SearchLawyer';
 import LawyerDesc from '../pages/LawyerSearching/LawyerDesc';
@@ -20,7 +21,8 @@ const Routers = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Signup />} />
       <Route path="/appointment" element={<AppointmentPage/>}/>
-      <Route path="profile" element={<Profile />} />
+      <Route path="clientaccount" element={<ClientAccount />} />
+      <Route path="lawyeraccount" element = {<LawyerAccount/>}/>
 
       <Route path="/experts" element={
             <ProtectedRoute>
@@ -40,12 +42,7 @@ const Routers = () => {
             </ProtectedRoute>
           } 
       />
-      <Route path="/profile" element={
-            <ProtectedRoute>
-              <Profile/>
-            </ProtectedRoute>
-          }
-      />
+     
       
     </Routes>
   );

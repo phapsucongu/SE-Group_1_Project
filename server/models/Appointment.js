@@ -1,24 +1,33 @@
-const mongoose = require('mongoose');
+import mongoose from "mongoose";
 
-const AppointmentSchema = new mongoose.Schema({
-    user: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'users'
+const bookingSchema = new mongoose.Schema(
+    {
+        doctor: {
+            type: mongoose.Types.ObjectId,
+            ref: "lLawyer",
+            required: true,
+        },
+        user: {
+            type: mongoose.Types.ObjectId,
+            ref: "User",
+            required: true,
+        },
+        ticketPrice: { type: String, required: true },
+        appointmentDate: {
+            type: Date,
+            required: true,
+        },
+        status: {
+            type: String,
+            enum: ["pending", "approved", "cancelled"],
+            default: "pending",
+        },
+        isPaid: {
+            type: Boolean,
+            default: true,
+        },
     },
-    lawyer: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'users'
-    },
-    date: {
-        type: Date,
-        default: Date.now
-    },
-    time: {
-        type: String,
-        default: ''
-    },
-    status: {
-        type: String,
-        default: 'pending'
-    },
-});
+    { timestamps: true }
+);
+
+export default mongoose.model("Booking", bookingSchema);
