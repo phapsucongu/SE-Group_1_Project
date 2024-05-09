@@ -16,25 +16,25 @@ const SidePanel = () => {
 
             <div className="mt-[30px]">
                 <p className="text__para mt-0 font-semibold text-headingColor">
-                    Available Time Slots:
+                    Status: Active
                 </p>
 
                 <ul className="mt-3">
                     <li className="flex items-center justify-between mb-2">
                         <p className="text-[15px] leading-6 text-textColor font-semibold">
-                            Sunday
+                            Online
                         </p>
                         <p className="text-[15px] leading-6 text-textColor font-semibold">
-                            4:00 PM - 9:30 PM
+                            Google Meet
                         </p>
                     </li>
 
                     <li className="flex items-center justify-between mb-2">
                         <p className="text-[15px] leading-6 text-textColor font-semibold">
-                            Saturday
+                            Offline
                         </p>
                         <p className="text-[15px] leading-6 text-textColor font-semibold">
-                            4:00 PM - 9:30 PM
+                            322 My Dinh Building
                         </p>
                     </li>
                 </ul>

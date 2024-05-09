@@ -107,7 +107,7 @@ const Profile = () => {
                 <Select 
                 name = "gender"
                 value= {formData.gender}
-                onchang = {handleInputChange}
+                onchange = {handleInputChange}
                 className="text-textColor font-semibold text-[15px] leading-7 px-4 py-3 focus:outline-none"
                 >
                     <option value=""> Select</option>

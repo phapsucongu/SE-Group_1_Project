@@ -1,14 +1,14 @@
 import React, { useContext, useState } from "react";
-import userImg from "../../../assets/images/ladki.png";
+import userImg from "../../../assets/images/avatar-icon.png";
 import { authContext } from "../../../context/AuthContext";
 
-import Profile from "../client-account/Profile";
+import Profile from "../lawyer-account/Profile";
 import ChangePassword from "./ChangePassword";
 import Loading from "../../Loader/Loading"
 
 import userGetProfile from "../../../hooks/useFecthData";
 import { BASE_URL } from "../../../utils/config";
-const ClientAccount = () => {
+const LawyerAccount = () => {
 
     const {dispatch}  = useContext(authContext);
 
@@ -90,4 +90,4 @@ const ClientAccount = () => {
         </section>
     )
 }
-export default ClientAccount;
+export default LawyerAccount;
