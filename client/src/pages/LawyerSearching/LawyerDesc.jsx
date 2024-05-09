@@ -2,7 +2,9 @@ import React from "react";
 import lawyerImg from "./LawyersImg/lawyer4.jpg";
 import { useState } from "react";
 import LawyerAbout from "./LawyerAbout";
+import Feedback from "./Feedback";
 import SidePanel from "./SidePanel";
+import starIcon from "./LawyersImg/Star.png";
 
 const LawyerDesc = () => {
     const [tab, steTab] = useState('about');
