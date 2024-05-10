@@ -12,8 +12,8 @@ const navLinks = [
     display: 'Home',
   },
   {
-    path: '/experts',
-    display: 'Find An Expert',
+    path: '/findalawyer',
+    display: 'Find A Lawyer',
   },
   {
     path: '/mybookings',
@@ -24,6 +24,16 @@ const navLinks = [
     display: 'Contact',
   },
 ];
+const guessNavLinks = [
+  {
+    path: '/home',
+    display: 'Home',
+  },
+  {
+    path: '/findalawyer',
+    display: 'Find A Lawyer',
+  },
+]
 
 const Header = () => {
   const headerRef = useRef(null);

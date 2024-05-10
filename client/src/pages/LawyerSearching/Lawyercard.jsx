@@ -6,7 +6,7 @@ import { BsArrowRight } from "react-icons/bs";
 
 const LawyerCard = ({lawyer}) => {
 
-    const {name, specialization, avgRating, totalRating, photo, totalPatients, hospital} = lawyer;
+    const {name, specialization, photo, ticketPrice,} = lawyer;
     return (
         <div  style={{ marginBottom: 50, marginLeft:20 }}>
             <div className="image-container">
@@ -20,14 +20,14 @@ const LawyerCard = ({lawyer}) => {
             </div>
             <div className="mt-[9px] lg:mt-1 flex items-center justify-between">
                 <div>
-                    {/* <h3 className="text-[16px] leading-7 lg:text-[18px] lg:leading-[30px] font-semibold text-headingColor"> */}
-                    <h3 className="text-[16px] leading-7 lg:text-[18px] lg:leading-[30px] font-semibold text-headingColor">
-                        +{totalPatients} cases
-                    </h3>
-                    <p className="text-[14px] leading-6 font-[400] text-textColor">At {hospital}</p>
+                   <div></div>
+                    <div className="text-[16px] leading-7 lg:text-[18px] lg:leading-[30px] text-headingColor">
+                        Ticket Price: {ticketPrice}$
+                    </div>
+                    
                 </div>
                 
-                <Link to="/expertInf" 
+                <Link to="/lawyerInfo" 
                     className="w-[44px] h-[44px] rounded-full border border-solid border-[#181A1E] mt-[30px] mx-auto
                     flex items-center justify-center group hover:bg-primaryColor hover:border-none">
                         <BsArrowRight className="group-hover:text-white w-6 h-5" />
