@@ -10,21 +10,23 @@ import SearchLawyer from '../pages/LawyerSearching/SearchLawyer';
 import LawyerDesc from '../pages/LawyerSearching/LawyerDesc';
 import ProtectedRoute from './ProtectedRoute';
 import AppointmentPage from '../pages/Appointment/AppointmentPage'
+import MyAppointments from '../pages/MyAppointments';
 
 const Routers = () => {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
       <Route path="/home" element={<Home />} />
-      <Route path="/experts" element={<SearchLawyer />} />
-      <Route path="/expertInf" element={<LawyerDesc />} />
+      <Route path="/findalawyer" element={<SearchLawyer />} />
+      <Route path="/lawyerInfo" element={<LawyerDesc />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Signup />} />
       <Route path="/appointment" element={<AppointmentPage/>}/>
       <Route path="clientaccount" element={<ClientAccount />} />
       <Route path="lawyeraccount" element = {<LawyerAccount/>}/>
+      <Route path="myappointments" element={<MyAppointments/>}/>
 
-      <Route path="/experts" element={
+      <Route path="/findalawyer" element={
             <ProtectedRoute>
               <SearchLawyer />
             </ProtectedRoute>
@@ -37,9 +39,9 @@ const Routers = () => {
           } 
       />
       <Route path="/mybookings" element={
-            <ProtectedRoute>
+           
               <MyBookings/>
-            </ProtectedRoute>
+           
           } 
       />
      
