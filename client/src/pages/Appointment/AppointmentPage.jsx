@@ -2,6 +2,7 @@ import { Button, Steps, message } from "antd";
 import SelectAppointment from './SelectAppointment'
 import { useState } from 'react';
 import moment from 'moment';
+import ConfirmAppointment from './ConfirmAppointment';
 
 const AppointmentPage = () => {
 
@@ -9,7 +10,7 @@ const AppointmentPage = () => {
 const handleChange = (e) => { setSelectValue({ ...selectValue, [e.target.name]: e.target.value }) };
 
 const [selectedDate, setSelectedDate] = useState('');
-const handleDateChange = (date) => { setSelectedDate(moment(date).format('YYYY-MM-DD HH:mm:ss')) }
+const handleDateChange = (date) => { setSelectedDate(moment(date).format('YYYY-MM-DD')) }
 const [selectTime, setSelectTime] = useState('');
 const [address, setAddress] = useState('');
 const [current, setCurrent] = useState(0);
@@ -26,8 +27,16 @@ const steps = [
       address={address}
       setAddress={setAddress}
     />
+  },
+  {
+    title: 'Confirm Appointment',
+    content: <ConfirmAppointment
+      
+      />
   }
   ]
+
+
 
 return (
     <>
@@ -36,12 +45,34 @@ return (
 
     <Steps current={current}/>
           <div className='mb-5 mt-3 mx-3'>{steps[current].content}</div>
-          <div className='text-end mx-3' >
-            Hi
-          </div>
+          <div className="mt-3">
+            {current < steps.length - 1 && (
+              <Button className="px-4 py-2 text-lg flex items-center justify-center ml-auto" 
+               type="primary" onClick={() => setCurrent(current + 1)}>
+                Next
+              </Button>
+            )}
+            <div className="px-4 py-2 flex items-center justify-end space-x-4">
+            {current > 0 && (
+              <Button 
+                className="px-4 py-2 text-lg flex items-center justify-center"
+              onClick={() => setCurrent(current - 1)}>
+                Previous
+              </Button>
+            )}
+            {current === steps.length - 1 && (
+              <Button 
+                className="px-4 py-2 text-lg flex items-center justify-center"
+              type="primary" onClick={() => message.success('Processing complete!')}>
+                Done
+              </Button>
+            )}
+            </div>
   </div>
   </div>
+  </div>.
     </>
+
   )
 }
 export default AppointmentPage

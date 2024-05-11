@@ -13,8 +13,8 @@ const SelectApppointment = ({ selectedDate, handleDateChange, selectTime, setSel
 
     
     const timeSlot = [
-        '8:00 AM', '9:00 AM', '10:00 AM', '11:00 AM', '12:00 PM', // Morning time slot
-        '1:00 PM', '2:00 PM', '3:00 PM', '4:00 PM', '5:00 PM', '6:00 PM', // Afternoon time slot
+        '7:00 AM','7:30 AM', '8:00 AM','8:30 AM', '9:00 AM','9:30 AM', '10:00 AM', '11:00 AM', , // Morning time slot
+         '2:00 PM','2:30 PM', '3:00 PM','3:30 PM', '4:00 PM','4:30 PM', '5:00 PM', '6:00 PM', // Afternoon time slot
       ];
 
 
@@ -47,40 +47,58 @@ const SelectApppointment = ({ selectedDate, handleDateChange, selectTime, setSel
                             </div>
                             <div className='flex space-x-6'>
                                 <FaCalendarAlt className='icon' />
-                                <p>{(selectedDate && selectTime) && moment(selectedDate).format('LL') + ' ' + selectTime}</p>
+                                <p>{(selectedDate && selectTime) && moment(selectedDate).format('MM/DD/YYYY') + ' ' + selectTime}</p>
                             </div>
                         </div>
                     </div>
 
-                    <div className="pl-3 pr-3 md:w-2/3 sm:w-full mt-3 border-r">
+                    <div className="pl-3 pr-3 md:w-1/3 sm:w-full mt-3 border-r">
                         <p className='py-2 border-b info-head-date'>
-                            {selectedDate ? `Selected - ${moment(selectedDate).format('LL')}` : 'Pick a Time'}
+                            {selectedDate ? `Selected - ${moment(selectedDate).format('MM/DD/YYYY')}` : 'Pick a Time'}
                         </p>
-                        <div className='pt-2 info-date-card grid grid-cols-1 md:grid-cols-2 gap-3'>
-                        {
-                        next7Days.map((item, index) => (
-                        <div key={index + 8} className="mb-3" onClick={() => handleDateChange(item)}>
-                        <div className={`p-3 mb-3 rounded text-center select-date ${moment(item).format('LL') === moment(selectedDate).format('LL') ? 'active' : ''}`}>
-                        <div className='select-month'>{moment(item).format('MMMM YYYY')}</div>
-                        <div className='select-day-num'>{moment(item).format('D')}</div>
-                        <div className='select-month'>{moment(item).format('dddd')}</div>
-                         </div>
-                         </div>
-                         ))
-                         }
+                        <div className='pt-2'>
+                        <label className="text-l font-bold">
+                        Date
+                        </label>
+                        </div>
+                        <div className="pt-2 pb-2 boder-b">
+                          <input 
+                            type="date"
+                            name="date"
+                            value={moment(selectedDate).format('YYYY-MM-DD')}
+                            onChange={(e) => handleDateChange(e.target.value)}
+                            className="form__input py-4"
+                        />
+                        </div>
+                         
+                
+                        <label className="text-l font-bold">
+                        Address
+                        </label>
+                        <div className="pt-2 pb-2 boder-b">
+                        <select 
+                        name="address"
+                        value={address}
+                        onChange={handleChange}
+                        className = "form__input py-4 bg-white">
+                            <option value=""></option>
+                            <option value="Online">Online</option>
+                            <option value="Facility no. 1">Facility no. 1 </option>
+                            <option value="Facility no. 2">Facility no. 2 </option>
+                        </select>
                         </div>
                         </div>
+                        
 
 
 
-
-                        <div className="pr-3 pl-3 md:w-1/3 sm:w-full mt-3 ">
+                        <div className="pr-3 pl-3 md:w-2/5 sm:w-full mt-3 ">
                         <p className='py-2 border-b info-head-date'>
                             {selectTime ? `Selected -  ${selectTime} To ${moment(selectTime, 'hh:mm A').add(60, 'minutes').format('hh:mm A')}` : 'Pick a Time'}
                         </p>
 
                         <div className='select-time-div'>
-    <h4 className='text-xl font-bold'>Morning Time <span className='text-gray-600'>(8AM - 12PM)</span></h4>
+    <h4 className='text-xl font-bold'>Morning Time <span className='text-gray-600'>(7AM - 11AM)</span></h4>
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-3">
         {
             amTimeSlot.map((item, id) => (
@@ -91,7 +109,7 @@ const SelectApppointment = ({ selectedDate, handleDateChange, selectTime, setSel
 </div>
 
 <div className='select-time-div'>
-    <h4 className='text-xl font-bold'>Afternoon Time <span className='text-gray-600'>(1PM - 5PM)</span></h4>
+    <h4 className='text-xl font-bold'>Afternoon Time <span className='text-gray-600'>(2PM - 6PM)</span></h4>
     <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mt-3 pb-3">
         {
             pmTimeSlot.map((item, id) => (
@@ -99,24 +117,6 @@ const SelectApppointment = ({ selectedDate, handleDateChange, selectTime, setSel
             ))
                             }
                             </div>
-                    </div>
-                    <div className="mb-5 grid grid-cols-2 gap-5 border-t">
-                <div>
-                <label className="form__label text-l font-bold">
-                 Address
-                </label>
-                <select 
-                name="address"
-                value={address}
-                onChange={handleChange}
-                className = "form__input py-2.5">
-
-                    <option value=""></option>
-                    <option value="Online">Online</option>
-                    <option value="Offline">Facility no. 1 </option>
-                    <option value="Offline">Facility no. 2 </option>
-                </select>
-                    </div>
                     </div>
                     </div>
                 </div>
