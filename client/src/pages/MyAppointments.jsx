@@ -33,11 +33,12 @@ const MyAppointments= () => {
                 <thead>
                   <tr className = "text-center">
                     <th className=" font-semibold py-3 px-5 bg-blue-200 text-bold border border-black">S.No</th>
-                    <th className="font-semibold py-2 px-4 bg-blue-200 text-bold border border-black">Client</th>
-                    <th className="font-semibold py-2 px-4 bg-blue-200 text-bold  border border-black">Date</th>
-                    <th className="font-semibold py-2 px-4 bg-blue-200 text-bold  border border-black" >Time</th>
-                    <th className="font-semibold py-2 px-4 bg-blue-200 text-bold  border border-black">Status</th>
-                    <th className="font-semibold py-2 px-4 bg-blue-200 text-bold  border border-black">_____</th>
+                    <th className="font-semibold py-2 px-5 bg-blue-200 text-bold border border-black">Client</th>
+                    <th className="font-semibold py-2 px-5 bg-blue-200 text-bold  border border-black">Date</th>
+                    <th className="font-semibold py-2 px-5 bg-blue-200 text-bold  border border-black" >Time</th>
+                    <th class="font-semibold py-2 px-5 bg-blue-200 text-bold  border border-black" >Address</th>
+                    <th className="font-semibold py-2 px-5 bg-blue-200 text-bold  border border-black">Status</th>
+                    <th className="font-semibold py-2 px-5 bg-blue-200 text-bold  border border-black">Action</th>
                   </tr>
                 </thead>
                 {<tbody>
@@ -48,6 +49,7 @@ const MyAppointments= () => {
                         <td  className="font-semibold py-5 px-4  border border-black" >{ele?.client}</td>
                         <td  className="font-semibold py-5 px-4  border border-black" >{ele?.date}</td>
                         <td  className="font-semibold py-5 px-4  border border-black" >{ele?.time}</td>
+                        <td  className="font-semibold py-5 px-4  border border-black" >{ele?.address}</td>
                         <td  className="font-semibold py-5 px-4  border border-black" >{ele?.status}</td>
                         <td  className="font-semibold py-5 px-4  border border-black">
                         <button

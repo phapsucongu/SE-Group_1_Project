@@ -9,6 +9,7 @@ export const appointment = [
     date: "02-02-2023",
     time: "10:00 AM",
     status: "Pending",
+    address: "Facility no. 1"
       
     },
     {
@@ -18,6 +19,7 @@ export const appointment = [
         date: "05-02-2023",
     time: "11:00 AM",
     status: "Pending",
+    address: "Online"
     },
     {
       id: "03",
@@ -26,6 +28,7 @@ export const appointment = [
         date: "07-02-2023",
     time: "12:00 PM",
     status: "Pending",
+    address: "Facility no. 2"
     },
     {
     id: "04",
@@ -34,5 +37,6 @@ export const appointment = [
     date: "09-02-2023",
     time: "01:00 PM",
     status: "Pending",
+    address: "Online"
     },
   ];
