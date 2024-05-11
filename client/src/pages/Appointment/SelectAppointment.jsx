@@ -5,7 +5,7 @@ import './index.css'
 import { FaBriefcase, FaRegClock, FaLocationArrow, FaLink, FaCalendarAlt } from "react-icons/fa";
 
 const SelectApppointment = ({ selectedDate, handleDateChange, selectTime, setSelectTime, address, setAddress}) => {
-    const handleSelectTime = (date) => { setSelectTime(date) }
+    const handleSelectTime = (time) => { setSelectTime(time) }
 
     const handleChange = (e) => {
         setAddress(e.target.value);
@@ -22,7 +22,7 @@ const SelectApppointment = ({ selectedDate, handleDateChange, selectTime, setSel
     const pmTimeSlot = timeSlot.filter((item) => item.includes('PM'));
 
     const next7Days = Array.from({ length: 8}, (_, index) =>
-        moment().clone().add(index, 'days')
+        moment().clone().add(index+1, 'days')
     )
 
     return (
@@ -43,7 +43,7 @@ const SelectApppointment = ({ selectedDate, handleDateChange, selectTime, setSel
                             </div>
                             <div className='flex space-x-6'>
                                 <FaLocationArrow className='icon' />
-                                <p>{address === 'Online' ? 'Online' : 'Offline'}</p>
+                                <p>{address}</p>
                             </div>
                             <div className='flex space-x-6'>
                                 <FaCalendarAlt className='icon' />
@@ -113,7 +113,8 @@ const SelectApppointment = ({ selectedDate, handleDateChange, selectTime, setSel
 
                     <option value=""></option>
                     <option value="Online">Online</option>
-                    <option value="Offline">Offline</option>
+                    <option value="Offline">Facility no. 1 </option>
+                    <option value="Offline">Facility no. 2 </option>
                 </select>
                     </div>
                     </div>
