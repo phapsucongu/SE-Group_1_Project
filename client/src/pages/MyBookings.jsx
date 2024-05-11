@@ -6,6 +6,12 @@ import { appointment } from '../fakedata/appointment'; //cai nay la data fake
 
 
 const MyBookings = () => {
+  const [appointments, setAppointments] = useState(appointment);
+
+  const deleteUser = (id) => {
+    const newAppointments = appointments.filter((ele) => ele.id !== id);
+    setAppointments(newAppointments);
+  }
 
     
   return (
@@ -20,28 +26,30 @@ const MyBookings = () => {
               >
                 <thead>
                   <tr className = "text-center">
-                    <th class=" font-semibold py-3 px-5 bg-blue-200 text-bold border border-black">S.No</th>
-                    <th class="font-semibold py-2 px-4 bg-blue-200 text-bold border border-black">Lawyer</th>
-                    <th class="font-semibold py-2 px-4 bg-blue-200 text-bold  border border-black">Date</th>
-                    <th class="font-semibold py-2 px-4 bg-blue-200 text-bold  border border-black" >Time</th>
-                    <th class="font-semibold py-2 px-4 bg-blue-200 text-bold  border border-black">Status</th>
-                    <th class="font-semibold py-2 px-4 bg-blue-200 text-bold  border border-black">_____</th>
+                    <th className=" font-semibold py-3 px-5 bg-blue-200 text-bold border border-black">S.No</th>
+                    <th className="font-semibold py-2 px-5 bg-blue-200 text-bold border border-black">Lawyer</th>
+                    <th className="font-semibold py-2 px-5 bg-blue-200 text-bold  border border-black">Date</th>
+                    <th className="font-semibold py-2 px-5 bg-blue-200 text-bold  border border-black" >Time</th>
+                    <th className="font-semibold py-2 px-5 bg-blue-200 text-bold  border border-black" >Address</th>
+                    <th className="font-semibold py-2 px-5 bg-blue-200 text-bold  border border-black">Status</th>
+                    <th className="font-semibold py-2 px-5 bg-blue-200 text-bold  border border-black">Action</th>
                   </tr>
                 </thead>
                 {<tbody>
-                  {appointment?.map((ele, i) => {
+                  {appointments?.map((ele, i) => {
                     return (
-                      <tr class="even:bg-white odd:bg-gray-300" key={ele?._id}>
-                        <td class="font-semibold py-5 px-4   border border-black" >{i + 1}</td>
-                        <td  class="font-semibold py-5 px-4  border border-black" >{ele?.lawyer}</td>
-                        <td  class="font-semibold py-5 px-4  border border-black" >{ele?.date}</td>
-                        <td  class="font-semibold py-5 px-4  border border-black" >{ele?.time}</td>
-                        <td  class="font-semibold py-5 px-4  border border-black" >{ele?.status}</td>
-                        <td  class="font-semibold py-5 px-4  border border-black">
+                      <tr className="even:bg-white odd:bg-gray-300" key={ele?.id}>
+                        <td className="font-semibold py-5 px-4   border border-black" >{i + 1}</td>
+                        <td  className="font-semibold py-5 px-4  border border-black" >{ele?.lawyer}</td>
+                        <td  className="font-semibold py-5 px-4  border border-black" >{ele?.date}</td>
+                        <td  className="font-semibold py-5 px-4  border border-black" >{ele?.time}</td>
+                        <td  className="font-semibold py-5 px-4  border border-black" >{ele?.address}</td>
+                        <td  className="font-semibold py-5 px-4  border border-black" >{ele?.status}</td>
+                        <td  className="font-semibold py-5 px-4  border border-black">
                           <button
-                             class="bg-red-500 text-white text-sm py-2 px-3 rounded"
+                             className="bg-red-500 text-white text-sm py-2 px-3 rounded"
                             onClick={() => {
-                              deleteUser(ele?._id);
+                              deleteUser(ele?.id);
                             }}
                           >
                             Remove
