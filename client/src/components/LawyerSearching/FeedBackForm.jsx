@@ -5,8 +5,13 @@ const FeedBackForm = () => {
   const [hover, sethover] = useState(0);
   const [reviewtext, setReviewText] = useState("");
 
+  const [reviews, setReviews] = useState([]);
+  const [feedbackForm, setFeedbackForm] = useState(false);
+
   const handleSubmitReview = async (e) => {
     e.preventDefault();
+    setReviews([...reviews, { rating, reviewtext }]);
+    setFeedbackForm(false);
   };
   return (
     <form action="">

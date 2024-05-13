@@ -30,9 +30,9 @@ const SelectApppointment = ({ selectedDate, handleDateChange, selectTime, setSel
 
             <div className="p-3" style={{ background: '#f8f9fa' }}>
                 <div className="flex flex-row">
-                <div className="md:w-1/4 sm:w-full mt-3 info-part border-r pr-3">
-                        <p className='py-2 border-b info-head-date'>Would you like to schedule an Interview? Pick a Date & Time</p>
-                        <div className="p-5 rounded-lg shadow-md">
+                <div className="pl-5 md:w-1/4 sm:w-full mt-3 border-r pr-5">
+                        <p className='py-2 border-b info-head-date'>Selected information</p>
+                        <div className="p-5 rounded-lg shadow-md  mt-4">
                             <div className='flex space-x-6'>
                                 <FaBriefcase className='icon' />
                                 <p>With Lawyer</p>
@@ -92,7 +92,7 @@ const SelectApppointment = ({ selectedDate, handleDateChange, selectTime, setSel
 
 
 
-                        <div className="pr-3 pl-3 md:w-2/5 sm:w-full mt-3 ">
+                        <div className="pr-5 pl-5 md:w-2/5 sm:w-full mt-3 ">
                         <p className='py-2 border-b info-head-date'>
                             {selectTime ? `Selected -  ${selectTime} To ${moment(selectTime, 'hh:mm A').add(60, 'minutes').format('hh:mm A')}` : 'Pick a Time'}
                         </p>
