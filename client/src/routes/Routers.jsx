@@ -9,7 +9,8 @@ import MyBookings from '../pages/MyBookings';
 import SearchLawyer from '../pages/LawyerSearching/SearchLawyer';
 import LawyerDesc from '../pages/LawyerSearching/LawyerDesc';
 import ProtectedRoute from './ProtectedRoute';
-import AppointmentPage from '../pages/Appointment/AppointmentPage'
+import AppointmentPage from '../pages/Appointment/AppointmentPage';
+import AdminApplications from '../components/Admin/AdminApplications';
 
 const Routers = () => {
   return (
@@ -22,6 +23,7 @@ const Routers = () => {
       <Route path="/register" element={<Signup />} />
       <Route path="/chat" element={<ChatPage />} />
       <Route path="/appointment" element={<AppointmentPage/>}/>
+      <Route path="/dashboard" element={<AdminApplications />} />
 
       <Route path="/experts" element={
             <ProtectedRoute>
