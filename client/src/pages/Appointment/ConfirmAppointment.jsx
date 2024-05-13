@@ -12,7 +12,7 @@ const ConfirmAppointment = () => {
 
             <div className="p-3" style={{ background: '#f8f9fa' }}>
                 <div className="flex flex-row">
-                <div className="md:w-1/4 sm:w-full mt-3 info-part border-r pr-3">
+                <div className="md:w-1/3 sm:w-full mt-3 info-part border-r pr-3">
                         <p className='py-2 border-b info-head-date'>Confirm Date & Time</p>
                         <div className="p-5 rounded-lg shadow-md">
                             <div className='flex space-x-6'>
@@ -33,7 +33,9 @@ const ConfirmAppointment = () => {
                             </div>
                         </div>
                     </div>
-
+                <div className= "md:w-1/3">
+                    hi 
+                </div>    
             </div>
         </div>
     </div>
