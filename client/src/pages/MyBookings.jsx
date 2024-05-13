@@ -18,7 +18,7 @@ const MyBookings = () => {
     <>
     <SubHeader title='My Booking' subtitle='Check your booking'/>
         <section className="w-80vw mt-8 flex items-center justify-center">
-          {appointment.length > 0 ? (
+          {appointments.length > 0 ? (
             <div className="flex justify-center w-full">
               <div className="overflow-x-auto whitespace-no-wrap">
               <table
@@ -50,6 +50,7 @@ const MyBookings = () => {
                              className="bg-red-500 text-white text-sm py-2 px-3 rounded"
                             onClick={() => {
                               deleteUser(ele?.id);
+                              console.log(appointments.length);
                             }}
                           >
                             Remove
