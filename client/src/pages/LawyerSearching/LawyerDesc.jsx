@@ -121,6 +121,7 @@ const LawyerDesc = () => {
                 </div>
             </div>
         </div>
+        </div>
     </section>
 }
 

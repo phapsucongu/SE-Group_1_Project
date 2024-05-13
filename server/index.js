@@ -11,6 +11,8 @@ const uri = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}
 const authRouter = require('./routes/auth');
 const postRouter = require('./routes/post');
 const chatRouter = require('./routes/chat');
+const profileRouter = require('./routes/profile');
+const adminRouter = require('./routes/admin');
 const { channel } = require('diagnostics_channel');
 
 
@@ -30,8 +32,9 @@ connectDB();
 app.use('/api/auth', authRouter);
 app.use('/api/post', postRouter);
 //app.use('/api/chat', chatRouter);
+app.use('/api/profile', profileRouter);
+app.use('/api/admin', adminRouter);
 const cors = require('cors')
 app.use(cors());
-  
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Server running on port ${port}`));

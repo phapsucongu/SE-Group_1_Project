@@ -46,11 +46,11 @@ const ExpertSchema = new mongoose.Schema({
         type: String,
         default: ''
     },
-    cases: {
-        type: int,
-        default: 0
+    address: {
+        type: String,
+        default: ''
     },
-    specialist: {
+    speciality: {
         type: String,
         default: ''
     },

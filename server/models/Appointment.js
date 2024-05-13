@@ -27,5 +27,5 @@ const bookingSchema = new mongoose.Schema(
             default: true,
         },
     },
-});
+);
 export default AppointmentSchema;

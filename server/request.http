@@ -55,3 +55,8 @@ DELETE http://localhost:5000/api/post/6603befddd430c15bd50eaed
 Content-Type: application/json
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjAwMTJkNGRmYTJkZTQ4NTViYmNkODEiLCJpYXQiOjE3MTE0OTA5NTB9.EyqfflJtPQgaIlwgyFtAb8p2-jMXEtclBWBe5u2pmCU
 
+###
+
+PUT http://localhost:5000/api/userProfile/663008c861c00f5adadbe6b7
+Content-Type: application/json
+Authorization    
