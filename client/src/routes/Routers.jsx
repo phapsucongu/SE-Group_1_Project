@@ -22,9 +22,10 @@ const Routers = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Signup />} />
       <Route path="/appointment" element={<AppointmentPage/>}/>
-      <Route path="clientaccount" element={<ClientAccount />} />
-      <Route path="lawyeraccount" element = {<LawyerAccount/>}/>
-      <Route path="myappointments" element={<MyAppointments/>}/>
+      <Route path="/clientaccount" element={<ClientAccount />} />
+      <Route path="/lawyeraccount" element = {<LawyerAccount/>}/>
+      <Route path="/myappointments" element={<MyAppointments/>}/>
+
 
       <Route path="/findalawyer" element={
             <ProtectedRoute>
