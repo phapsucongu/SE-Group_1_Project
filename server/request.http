@@ -57,6 +57,15 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjAwM
 
 ###
 
-PUT http://localhost:5000/api/userProfile/663008c861c00f5adadbe6b7
+PUT http://localhost:5000/api/user/
 Content-Type: application/json
-Authorization    
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjAwMTJkNGRmYTJkZTQ4NTViYmNkODEiLCJpYXQiOjE3MTE0OTA5NTB9.EyqfflJtPQgaIlwgyFtAb8p2-jMXEtclBWBe5u2pmCU
+
+{
+    "bithday" : "1/1/1111",
+    "role" : "user",
+    "fullname" : "fullname",
+    "email" : "email",
+    "gender" : "gender",
+    "phone" : "phone"
+}    

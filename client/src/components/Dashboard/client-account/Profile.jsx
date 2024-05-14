@@ -2,41 +2,40 @@
 import React, { useState ,useContext} from 'react';
 import {useNavigate } from 'react-router-dom';
 import {toast} from 'react-toastify';
-import HashLoader from 'react-spinners/HashLoader';
 import { authContext } from '../../../context/AuthContext'
-import { BASE_URL } from '../../../utils/config';
+import {apiUrl,LOCAL_STORAGE_TOKEN_NAME} from '../../../context/constants.jsx';
+import setAuthToken from '../../../utils/setAuthToken';
 import { Select } from 'antd';
-import userProfile from '../../../fakedata/userProfile';
 import { useEffect } from 'react';
+import axios from 'axios';
 
 const Profile = () => {
-   // const {registerUser} = useContext(authContext);
-  
+  const { authState,loadUser } = useContext(authContext);
+  const user = authState.user;
+  //console.log(user);
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    birthday: '',
-    phone: '',
+    fullname: "",
+    email: "",
+    birthday: "",
+    phone: "",
+    gender: "",
   });
-  
-  const navigate = useNavigate();
-  
 
-  //Đoạn này để fakedata
+  const navigate = useNavigate();
+
   useEffect(() => {
-    if (userProfile) {
+    if (user) {
       setFormData({
-        name: userProfile.name || '',
-        email: userProfile.email || '',
-        birthday: userProfile.birthday || '',
-        phone: userProfile.phone || '',
-        gender: userProfile.gender || '', 
+        fullname: user.fullname,
+        email: user.email,
+        birthday: user.birthday,
+        phone: user.phone,
+        gender: user.gender, 
       });
     }
-  }, []); 
- 
+  }, [user]);
 
-  const {name,email,birthday,phone} = formData;
+  const { fullname, email, birthday, phone } = formData;
 
   const handleInputChange = e => {
     setFormData({...formData,[e.target.name]: e.target.value});
@@ -44,14 +43,18 @@ const Profile = () => {
 
  const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    // const {data, status} = await registerUser(`${BASE_URL}/user/profile/me`,formData);
-    // if(status === 'error'){
-    //   toast.error(data.message);
-    // }else{
-    //   toast.success(data.message);
-    //   navigate('/dashboard');
-    // }
+    //console.log(formData);
+    if (localStorage[LOCAL_STORAGE_TOKEN_NAME]) {
+      setAuthToken(localStorage[LOCAL_STORAGE_TOKEN_NAME]);
+    }
+    const response = await axios.put(`${apiUrl}/profile/user`,formData);
+    loadUser();
+    console.log(response);
+    if (response.data.success) {
+      toast.success(response.data.message);
+    } else {
+      toast.error(response.data.message);
+    }
   }
 
   return (
@@ -61,8 +64,8 @@ const Profile = () => {
               <input 
               type="text"
               placeholder={'Full name'}
-              name="name"
-              value={name}
+              name="fullname"
+              value={fullname}
               onChange={handleInputChange} 
               className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
               required
@@ -102,19 +105,19 @@ const Profile = () => {
               required
             />
             </div>
-            <lable className = "text-headingColor font-bold text-[16px] leading-7">
+            <label className = "text-headingColor font-bold text-[16px] leading-7">
                 Gender:
                 <Select 
                 name = "gender"
                 value= {formData.gender}
-                onchange = {handleInputChange}
+                onChange = {handleInputChange}
                 className="text-textColor font-semibold text-[15px] leading-7 px-4 py-3 focus:outline-none"
                 >
-                    <option value=""> Select</option>
-                    <option value="male"> Male</option>
-                    <option value="female"> Female</option>
+                    <Select.Option value="">Select</Select.Option>
+                    <Select.Option value="male">Male</Select.Option>
+                    <Select.Option value="female">Female</Select.Option>
                 </Select>
-            </lable>
+            </label>
             <div className="mt-7">
               <button
               //disabled={loading && true}

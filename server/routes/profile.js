@@ -9,9 +9,9 @@ const verifyToken = require('../middleware/auth');
 // @desc Get user profile
 // @access Private
 
-router.get('/user/:id', verifyToken, async (req, res) => {
+router.get('/user', verifyToken, async (req, res) => {
     try {
-        const user = await User.findById(req.params.id).select('-password');
+        const user = await User.findById(req.user.id).select('-password');
         if (!user) {
             return res.status(400).json({ success: false, msg: 'user not found' });
         }
@@ -26,10 +26,10 @@ router.get('/user/:id', verifyToken, async (req, res) => {
 // @desc Update user profile
 // @access Private
 
-router.put('/user/:id', verifyToken, async (req, res) => {
-    const { bithday, role, fullname, email, gender, phone } = req.body;
+router.put('/user', verifyToken, async (req, res) => {
+    const { birthday, role, fullname, email, gender, phone } = req.body;
     let userFields = {
-        bithday : bithday,
+        birthday : birthday,
         role : role,
         fullname : fullname,
         email : email,
@@ -37,12 +37,13 @@ router.put('/user/:id', verifyToken, async (req, res) => {
         phone : phone
     }
     try {
-        let user = await User.findById(req.params.id);
+        let user = await User.findById(req.userId);
         if (!user) {
             return res.status(400).json({ success: false, msg: 'user not found' });
         }
-        user = await User.findByIdAndUpdate(req.params.id, { $set: userFields }, { new: true });
+        user = await User.findByIdAndUpdate(req.userId, { $set: userFields }, { new: true });
         res.json({ success: true, user });
+        console.log(user);
     } catch (err) {
         console.error(err.message);
         res.status(500).json({ success: false, msg: 'server error' });
@@ -91,9 +92,9 @@ router.get('/expert/:id', verifyToken, async (req, res) => {
 // @access Private
 
 router.put('/expert/:id', verifyToken, async (req, res) => {
-    const { bithday, role, fullname, gmail, address, phone, experience, education, speciality } = req.body;
+    const { birthday, role, fullname, gmail, address, phone, experience, education, speciality } = req.body;
     let expertFields = {
-        bithday : bithday,
+        birthday : birthday,
         role : role,
         fullname : fullname,
         gmail : gmail,
