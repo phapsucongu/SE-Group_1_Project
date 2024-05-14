@@ -2,6 +2,8 @@ import React from "react";
 
 
 const lawyerProfile = {
+    username: 'hoangducduong1225',
+    password: '12345678',
     name: 'Duong Duc Hoang',
     email: 'comehere.hdd@gmai.com',
     birthday: '12/25/2004',

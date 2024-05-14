@@ -11,6 +11,7 @@ import LawyerDesc from '../components/LawyerSearching/LawyerDesc';
 import ProtectedRoute from './ProtectedRoute';
 import AppointmentPage from '../components/Appointment/AppointmentPage'
 import MyAppointments from '../pages/MyAppointments';
+import AdminApplications from '../components/Admin/AdminApplications';
 
 const Routers = () => {
   return (
@@ -22,6 +23,7 @@ const Routers = () => {
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Signup />} />
       <Route path="/appointment" element={<AppointmentPage/>}/>
+      <Route path="/dashboard" element={<AdminApplications />} />
       <Route path="clientaccount" element={<ClientAccount />} />
       <Route path="lawyeraccount" element = {<LawyerAccount/>}/>
       <Route path="myappointments" element={<MyAppointments/>}/>
