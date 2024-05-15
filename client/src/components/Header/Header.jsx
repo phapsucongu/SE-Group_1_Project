@@ -35,6 +35,37 @@ const guessNavLinks = [
   },
 ]
 
+const clientNavLinks = [
+  {
+    path: '/home',
+    display: 'Home',
+  },
+  {
+    path: '/findalawyer',
+    display: 'Find A Lawyer',
+  },
+  {
+    path: '/mybookings',
+    display: 'My Booking',
+  },
+  {
+    path: '/contact',
+    display: 'Contact',
+  },
+]
+
+const lawyerNavLinks = [
+  {
+    path: '/home',
+    display: 'Home',
+  },
+  {
+    path: '/myappointments',
+    display: 'My Appointments',
+  },
+]
+
+
 const Header = () => {
   const headerRef = useRef(null);
   const menuRef = useRef(null);
@@ -92,7 +123,7 @@ const Header = () => {
             <h4 style={{ marginLeft: '10px', fontWeight: 'bold', fontSize: '22px' }}>Law Connect</h4>
           </div>
 
-          {/* Menu */}
+          {/* Menu: Đoạn này sau tùy chỉnh theo role */}
           <div className="navigation" ref={menuRef} onClick={toggleMenu}>
             <ul className="menu flex items-center gap-[2.7rem]">
               {navLinks.map((link, index) => (

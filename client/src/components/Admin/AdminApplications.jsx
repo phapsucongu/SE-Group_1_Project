@@ -8,7 +8,8 @@ import React, { useState, useEffect } from "react";
 // import fetchData from "../helper/apiCall";
 import "./admin.css";
 import Sidebar from "./Sidebar";
-
+import { Link } from "react-router-dom";
+import ModalEditClient from "./ModalEditClient";
 // axios.defaults.baseURL = process.env.REACT_APP_SERVER_DOMAIN;
 
 const AdminApplications = () => {
@@ -133,8 +134,10 @@ const AdminApplications = () => {
                       <td className="select">
                         <button
                           className="btnAction user-btnAction accept-btnAction"
+                          onClick= {() => <ModalEditClient />}
                         >
                           Edit
+
                         </button>
                         <button
                           className="btnAction user-btnAction"
