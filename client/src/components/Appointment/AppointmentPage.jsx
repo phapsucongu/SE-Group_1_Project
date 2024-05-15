@@ -1,6 +1,7 @@
 import { Button, Steps, message } from "antd";
 import SelectAppointment from './SelectAppointment'
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import moment from 'moment';
 import ConfirmAppointment from './ConfirmAppointment';
 
@@ -50,9 +51,12 @@ return (
           <div className="mt-3">
             {current < steps.length - 1 && (
               <Button className="px-4 py-2 text-lg flex items-center justify-center ml-auto" 
-               type="primary" onClick={() => setCurrent(current + 1)}>
+               type="primary" onClick={() => setCurrent(current + 1)}
+               disabled={selectedDate === '' || selectTime === '' || address === ''}
+               >
                 Next
               </Button>
+              
             )}
             <div className="px-4 py-2 flex items-center justify-end space-x-4">
             {current > 0 && (
@@ -63,11 +67,13 @@ return (
               </Button>
             )}
             {current === steps.length - 1 && (
-              <Button 
+              <Link to="/mybookings">
+              <Button
                 className="px-4 py-2 text-lg flex items-center justify-center"
               type="primary" onClick={() => message.success('Processing complete!')}>
                 Done
               </Button>
+              </Link>
             )}
             </div>
   </div>
