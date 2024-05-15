@@ -30,9 +30,11 @@ const steps = [
   },
   {
     title: 'Confirm Appointment',
-    content: <ConfirmAppointment
-      
-      />
+    content: (<ConfirmAppointment
+    selectedDate={selectedDate}
+    selectTime={selectTime}
+    address={address}
+  />),
   }
   ]
 
