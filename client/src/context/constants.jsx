@@ -9,3 +9,9 @@ const axiosInstance = axios.create({
     }
   });
 export default axiosInstance;  
+
+export const APPOINTMENTS_LOADED_SUCCESS = 'APPOINTMENT_LOADED_SUCCESS'
+export const APPOINTMENTS_LOADED_FAIL = 'APPOINTMENT_LOADED_FAIL'
+export const ADD_APPOINTMENT = 'ADD_APPOINTMENT'
+export const DELETE_APPOINTMENT = 'DELETE_APPOINTMENT'
+export const FIND_APPOINTMENT = 'FIND_APPOINTMENT'
