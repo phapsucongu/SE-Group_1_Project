@@ -11,7 +11,7 @@ import Sidebar from "./Sidebar";
 import { Link } from "react-router-dom";
 import { Modal } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
-import ModalAddNewClient from "./ModalAddNewClient";
+
 // axios.defaults.baseURL = process.env.REACT_APP_SERVER_DOMAIN;
 
 const AdminApplications = () => {

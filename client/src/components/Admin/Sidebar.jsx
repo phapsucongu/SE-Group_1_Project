@@ -29,11 +29,6 @@ const Sidebar = () => {
       icon: <FaUsers />,
     },
     {
-      name: "AddLawyers",
-      path: "addLawyers",
-      icon: <FaUserPlus />,
-    },
-    {
       name: "Lawyers",
       path: "/lawyers",
       icon: <FaUserTie />,
