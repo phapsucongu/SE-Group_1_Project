@@ -28,6 +28,7 @@ const Routers = () => {
       <Route path="lawyeraccount" element = {<LawyerAccount/>}/>
       <Route path="myappointments" element={<MyAppointments/>}/>
 
+    
       <Route path="/findalawyer" element={
             <ProtectedRoute>
               <SearchLawyer />

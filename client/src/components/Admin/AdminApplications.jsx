@@ -58,7 +58,7 @@ const AdminApplications = () => {
       id: "4",
       name: "Emily Watson",
       birthday: "1995-01-01",
-      email: "emilywatson@",
+      email: "emilywatson@gmail.com",
       phone: "9876543210",
       gender: "Male"
     },

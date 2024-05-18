@@ -2,7 +2,7 @@ import { Button } from 'antd'
 import moment from 'moment';
 import { useState } from 'react';
 import './index.css'
-import { FaBriefcase, FaRegClock, FaLocationArrow, FaLink, FaCalendarAlt } from "react-icons/fa";
+import { FaBriefcase, FaRegClock, FaLocationArrow, FaLink, FaCalendarAlt} from "react-icons/fa";
 
 const SelectApppointment = ({ selectedDate, handleDateChange, selectTime, setSelectTime, address, setAddress}) => {
     const handleSelectTime = (time) => { setSelectTime(time) }
