@@ -2,42 +2,41 @@
 import React, { useState ,useContext} from 'react';
 import {useNavigate } from 'react-router-dom';
 import {toast} from 'react-toastify';
-import HashLoader from 'react-spinners/HashLoader';
 import { authContext } from '../../../context/AuthContext'
-import { BASE_URL } from '../../../utils/config';
+import {apiUrl,LOCAL_STORAGE_TOKEN_NAME} from '../../../context/constants.jsx';
+import setAuthToken from '../../../utils/setAuthToken';
 import { Select } from 'antd';
-import userProfile from '../../../fakedata/userProfile';
 import { useEffect } from 'react';
+import axiosInstance from '../../../context/constants.jsx';
 
 const Profile = () => {
-   // const {registerUser} = useContext(authContext);
-  
+  const { authState,loadUser } = useContext(authContext);
+  const user = authState.user;
+  //console.log(user);
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    birthday: '',
-    phone: '',
-    gender: '',
+    fullname: "",
+    email: "",
+    birthday: "",
+    phone: "",
+    gender: "",
   });
-  
-  const navigate = useNavigate();
-  
 
-  //Đoạn này để fakedata
+  const navigate = useNavigate();
+
   useEffect(() => {
-    if (userProfile) {
+    if (user) {
       setFormData({
-        name: userProfile.name || '',
-        email: userProfile.email || '',
-        birthday: userProfile.birthday || '',
-        phone: userProfile.phone || '',
-        gender: userProfile.gender || '', 
+        fullname: user.fullname,
+        email: user.email,
+        birthday: user.birthday,
+        phone: user.phone,
+        gender: user.gender, 
       });
     }
-  }, []); 
- 
+  }, [user]);
 
-  const {name,email,birthday,phone, gender} = formData;
+
+  const { fullname, email, birthday, phone, gender } = formData;
 
   const handleInputChange = e => {
     setFormData({...formData,[e.target.name]: e.target.value});
@@ -45,14 +44,18 @@ const Profile = () => {
 
  const submitHandler = async (e) => {
     e.preventDefault();
-    console.log(formData);
-    // const {data, status} = await registerUser(`${BASE_URL}/user/profile/me`,formData);
-    // if(status === 'error'){
-    //   toast.error(data.message);
-    // }else{
-    //   toast.success(data.message);
-    //   navigate('/dashboard');
-    // }
+    //console.log(formData);
+    if (localStorage[LOCAL_STORAGE_TOKEN_NAME]) {
+      setAuthToken(localStorage[LOCAL_STORAGE_TOKEN_NAME]);
+    }
+    const response = await axiosInstance.put(`${apiUrl}/profile/user`,formData);
+    loadUser();
+    console.log(response);
+    if (response.data.success) {
+      toast.success(response.data.message);
+    } else {
+      toast.error(response.data.message);
+    }
   }
 
   return (

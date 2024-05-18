@@ -6,7 +6,7 @@ import { FaBriefcase, FaRegClock, FaLocationArrow, FaMailBulk, FaCalendarAlt, Fa
 import userProfile from '../../fakedata/userProfile'
 import lawyerProfile from '../../fakedata/lawyerProfile'
 
-const ConfirmAppointment = ({ selectedDate, selectTime, address }) => {
+const ConfirmAppointment = ({ selectedDate, selectTime, address, description }) => {
     
 
     return (
@@ -32,6 +32,10 @@ const ConfirmAppointment = ({ selectedDate, selectTime, address }) => {
                             <div className='flex space-x-6'>
                                 <FaCalendarAlt className='icon' />
                                 <p>{selectedDate} {selectTime}</p>
+                            </div>
+                            <div className='flex space-x-6'>
+                                <FaCalendarAlt className='icon' />
+                                <p>{description}</p>
                             </div>
                         </div>
                     </div>

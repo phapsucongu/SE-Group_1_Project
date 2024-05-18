@@ -14,7 +14,7 @@ const UserSchema = new mongoose.Schema({
         type: Date,
         default: Date.now
     },
-    bithday: {
+    birthday: {
         type: Date,
         default: Date.now
     },

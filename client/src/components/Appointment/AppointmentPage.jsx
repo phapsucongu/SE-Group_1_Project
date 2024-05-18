@@ -16,6 +16,7 @@ const handleDateChange = (date) => { setSelectedDate(moment(date).format('YYYY-M
 const [selectTime, setSelectTime] = useState('');
 const [address, setAddress] = useState('');
 const [current, setCurrent] = useState(0);
+const [description, setDescription] = useState('');
 
 
 const steps = [
@@ -28,6 +29,8 @@ const steps = [
       setSelectTime={setSelectTime}
       address={address}
       setAddress={setAddress}
+      description={description}
+      setDescription={setDescription}
     />
   },
   {
@@ -36,6 +39,7 @@ const steps = [
     selectedDate={selectedDate}
     selectTime={selectTime}
     address={address}
+    description={description}
   />),
   }
   ]

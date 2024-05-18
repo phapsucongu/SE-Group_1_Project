@@ -4,8 +4,7 @@ import { toast } from 'react-toastify';
 import { apiUrl } from "../context/constants.jsx";
 import { authContext } from '../context/AuthContext.jsx';
 import axios from "axios";
-
-
+import { AppointmentContext } from "../context/AppointmentContext.jsx";
 
 
 const Login = () => {
@@ -14,6 +13,14 @@ const Login = () => {
   if (authLoading) <div>Loading...</div>
   else if (isAuthenticated){
     window.location.href = '/';
+    const { getAppointments } = useContext(AppointmentContext);
+    useEffect(() => {
+    const fetchData = async () => {
+      await getAppointments();
+    };
+
+    fetchData();
+  }, [getAppointments]);
     return null;
   }
 
@@ -44,6 +51,7 @@ const Login = () => {
       const loginData = await loginUser(formData);
       if (loginData.success) {
         toast.success(loginData.message);
+        
         window.location.href = '/';
       } else {
         toast.error(loginData.message);
