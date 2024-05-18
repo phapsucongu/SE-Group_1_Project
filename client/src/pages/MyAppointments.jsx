@@ -1,23 +1,33 @@
 import  React from 'react';
 import SubHeader from '../components/Header/SubHeader';
 import Empty from '../components/Empty';
-import { useState } from 'react';
-import { appointment } from '../fakedata/appointment'; //cai nay la data fake
-
+import { useState,useContext,useEffect } from 'react';
+//import { appointment } from '../fakedata/appointment'; //cai nay la data fake
+import axiosInstance,{apiUrl} from '../context/constants';
+import { AppointmentContext } from '../context/AppointmentContext';
 
 const MyAppointments= () => {
 
-  const [appointments, setAppointments] = useState(appointment);
+  //const [appointments, setAppointments] = useState(appointment);
 
-  const handleClick = (id, st) => {
-    const newAppointments = appointments.map((ele) => {
-      if (ele.id === id) {
-        return { ...ele, status: st };
+  const { appointmentState, getAppointments } = useContext(AppointmentContext);
+  if (appointmentState.appointmentsLoading) {
+    useEffect(() => {
+      getAppointments();
+    }, [getAppointments]);
+  }
+  const appointments = appointmentState.appointments.data || [];
+  console.log("Appointments: ", appointments);
+  const handleClick = async (id, status) => {
+    try {
+      console.log(id);
+      const response = await axiosInstance.put(`${apiUrl}/appointment/${status}/${id}`);
+      if (response.data.success) {
+        getAppointments();
       }
-      return ele;
-    });
-    setAppointments(newAppointments);
-    console.log(newAppointments);
+    } catch (error) {
+      console.error(error);
+    }
   }
     
   return (
@@ -36,7 +46,7 @@ const MyAppointments= () => {
                     <th className="font-semibold py-2 px-5 bg-blue-200 text-bold border border-black">Client</th>
                     <th className="font-semibold py-2 px-5 bg-blue-200 text-bold  border border-black">Date</th>
                     <th className="font-semibold py-2 px-5 bg-blue-200 text-bold  border border-black" >Time</th>
-                    <th class="font-semibold py-2 px-5 bg-blue-200 text-bold  border border-black" >Address</th>
+                    <th className="font-semibold py-2 px-5 bg-blue-200 text-bold  border border-black" >Address</th>
                     <th className="font-semibold py-2 px-5 bg-blue-200 text-bold  border border-black">Status</th>
                     <th className="font-semibold py-2 px-5 bg-blue-200 text-bold  border border-black">Action</th>
                   </tr>
@@ -46,7 +56,7 @@ const MyAppointments= () => {
                     return (
                       <tr className="even:bg-white odd:bg-gray-300" key={ele?.id}>
                         <td className="font-semibold py-5 px-4   border border-black" >{i + 1}</td>
-                        <td  className="font-semibold py-5 px-4  border border-black" >{ele?.client}</td>
+                        <td  className="font-semibold py-5 px-4  border border-black" >{ele?.user}</td>
                         <td  className="font-semibold py-5 px-4  border border-black" >{ele?.date}</td>
                         <td  className="font-semibold py-5 px-4  border border-black" >{ele?.time}</td>
                         <td  className="font-semibold py-5 px-4  border border-black" >{ele?.address}</td>
@@ -55,7 +65,7 @@ const MyAppointments= () => {
                         <button
                              className="mr-1 bg-green-500 text-white text-sm py-2 px-3 rounded"
                             onClick={() => {
-                              handleClick(ele?.id, "Accept");
+                              handleClick(ele?._id, "ACCEPT");
                             }}
                           >
                             Accept
@@ -64,7 +74,7 @@ const MyAppointments= () => {
                           <button
                              className="bg-red-500 text-white text-sm py-2 px-3 rounded"
                             onClick={() => {
-                              handleClick(ele?.id, "Reject");
+                              handleClick(ele?._id, "REJECT");
                             }}
                           >
                             Reject

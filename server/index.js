@@ -13,6 +13,8 @@ const postRouter = require('./routes/post');
 const chatRouter = require('./routes/chat');
 const profileRouter = require('./routes/profile');
 const adminRouter = require('./routes/admin');
+const appointmentRouter = require('./routes/appointment');
+const expertRouter = require('./routes/expert');
 const { channel } = require('diagnostics_channel');
 
 
@@ -34,7 +36,13 @@ app.use('/api/post', postRouter);
 //app.use('/api/chat', chatRouter);
 app.use('/api/profile', profileRouter);
 app.use('/api/admin', adminRouter);
+app.use('/api/appointment', appointmentRouter);
+app.use('/api/expert', expertRouter);
 const cors = require('cors')
-app.use(cors());
+app.use(cors(
+    {
+        origin: '*',
+    }
+));
 const port = process.env.PORT || 5000;
 app.listen(port, () => console.log(`Server running on port ${port}`));

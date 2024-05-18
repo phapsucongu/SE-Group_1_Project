@@ -7,7 +7,7 @@ import {apiUrl,LOCAL_STORAGE_TOKEN_NAME} from '../../../context/constants.jsx';
 import setAuthToken from '../../../utils/setAuthToken';
 import { Select } from 'antd';
 import { useEffect } from 'react';
-import axios from 'axios';
+import axiosInstance from '../../../context/constants.jsx';
 
 const Profile = () => {
   const { authState,loadUser } = useContext(authContext);
@@ -48,7 +48,7 @@ const Profile = () => {
     if (localStorage[LOCAL_STORAGE_TOKEN_NAME]) {
       setAuthToken(localStorage[LOCAL_STORAGE_TOKEN_NAME]);
     }
-    const response = await axios.put(`${apiUrl}/profile/user`,formData);
+    const response = await axiosInstance.put(`${apiUrl}/profile/user`,formData);
     loadUser();
     console.log(response);
     if (response.data.success) {

@@ -3,9 +3,8 @@ import {
 	APPOINTMENTS_LOADED_FAIL,
 	ADD_APPOINTMENT,
 	DELETE_APPOINTMENT,
-	UPDATE_APPOINTMENT,
 	FIND_APPOINTMENT
-} from '../contexts/constants'
+} from '../context/constants.jsx'
 
 export const appointmentReducer = (state, action) => {
 	const { type, payload } = action
@@ -38,16 +37,6 @@ export const appointmentReducer = (state, action) => {
 
 		case FIND_APPOINTMENT:
 			return { ...state, appointment: payload }
-
-		case UPDATE_APPOINTMENT:
-			const newPosts = state.appointments.map(appointment =>
-				appointment._id === payload._id ? payload : appointment
-			)
-
-			return {
-				...state,
-				appointments: newPosts
-			}
 
 		default:
 			return state

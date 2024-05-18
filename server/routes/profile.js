@@ -74,7 +74,7 @@ router.put('/changePassword/:id', verifyToken, async (req, res) => {
 // @desc Get expert profile
 // @access Private
 
-router.get('/expert/:id', verifyToken, async (req, res) => {
+router.get('/expert/:id', async (req, res) => {
     try {
         const user = await Expert.findById(req.params.id).select('-password');
         if (!user) {

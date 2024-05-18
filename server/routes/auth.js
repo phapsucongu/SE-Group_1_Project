@@ -3,6 +3,7 @@ const router = express.Router();
 const argon2 = require('argon2');
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
+const Expert = require('../models/Expert');
 const verifyToken = require('../middleware/auth');
 
 // @route POST api/auth/register
@@ -49,16 +50,31 @@ router.post('/login', async (req, res) => {
 
         const user = await User.findOne({ username });
         if (!user) {
-            return res.status(400).json({ success: false, msg: 'incorrect username or password' });
+            try {
+                const user = await Expert.findOne({ username });
+                console.log(user);
+                if (!user) {
+                    return res.status(400).json({ success: false, msg: 'incorrect username or password' });
+                }
+                const passwordValid = await argon2.verify(user.password, password);
+                if (!passwordValid) {
+                    return res.status(400).json({ success: false, msg: 'incorrect username or password' });
+                }
+                const accessToken = jwt.sign({ userId: user._id }, process.env.ACCESS_TOKEN_SECRET);
+                res.status(200).json({ success: true, msg: 'login success', accessToken });
+            } catch (error) {
+                console.error(error.message);
+                res.status(500).json({ success: false, msg: 'server error1' });
+            }
         }
-
+        else {
         const passwordValid = await argon2.verify(user.password, password);
         if (!passwordValid) {
             return res.status(400).json({ success: false, msg: 'incorrect username or password' });
         }
 
         const accessToken = jwt.sign({ userId: user._id }, process.env.ACCESS_TOKEN_SECRET);
-        res.status(200).json({ success: true, msg: 'login success', accessToken });
+        res.status(200).json({ success: true, msg: 'login success', accessToken });}
     } catch (err) {
         console.error(err.message);
         res.status(500).json({ success: false, msg: 'server error' });
@@ -75,9 +91,13 @@ router.get('/',verifyToken, async (req, res) => {
     try {
         const user = await User.findById(req.userId).select('-password');
         if (!user) {
-            return res.status(400).json({ success: false, msg: 'user not found' });
+            const user = await Expert.findById(req.userId).select('-password');
+            if (!user) {
+                return res.status(400).json({ success: false, msg: 'user not found' });
+            }
+            res.status(200).json({ success: true, user });
         }
-        res.status(200).json({ success: true, user });
+        else res.status(200).json({ success: true, user });
     } catch (err) {
         res.status(500).json({ success: false, msg: 'server error' });
     }

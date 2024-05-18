@@ -4,7 +4,10 @@ import axios from 'axios';
 const axiosInstance = axios.create({
     baseURL: apiUrl,
     headers: {
-      'Authorization': 'Bearer YOUR_ACCESS_TOKEN', // Thêm header Authorization hoặc các header khác nếu cần
+      'Access-Control-Allow-Origin': '*' ,
+      //'Authorization': 'Bearer YOUR_ACCESS_TOKEN', // Thêm header Authorization hoặc các header khác nếu cần
+      "Access-Control-Allow-Methods": "GET,PUT,POST,DELETE,PATCH,OPTIONS",
+      "preflightContinue": "false",
       'Content-Type': 'application/json',
     }
   });

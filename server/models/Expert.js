@@ -20,15 +20,15 @@ const ExpertSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        default: 'user'
+        default: 'lawyer'
     },
     fullname: {
         type: String,
-        default: 'user'
+        default: 'Name'
     },
     email: {
         type: String,
-        default: ''
+        default: 'email@gmail.com'
     },
     gender: {
         type: String,
@@ -52,8 +52,22 @@ const ExpertSchema = new mongoose.Schema({
     },
     speciality: {
         type: String,
-        default: ''
+        enum : [
+            "Criminal Defense",
+            "Family Law",
+            "Intellectual Property",
+            "Immigration",
+            "Environmental",
+            "PersonalInjury",
+            "Employment",
+            "EconomicLaw",
+        ],
     },
+    price :
+    {
+        type: Number,
+        default: 100,
+    }
 });
 
 const Expert = mongoose.model('experts', ExpertSchema);

@@ -1,11 +1,9 @@
-import mongoose from "mongoose";
-import mongoose from "mongoose";
-
-const bookingSchema = new mongoose.Schema(
+const mongoose = require('mongoose');
+const AppointmentSchema = new mongoose.Schema(
     {
-        doctor: {
+        lawyer: {
             type: mongoose.Types.ObjectId,
-            ref: "lLawyer",
+            ref: "Expert",
             required: true,
         },
         user: {
@@ -13,46 +11,32 @@ const bookingSchema = new mongoose.Schema(
             ref: "User",
             required: true,
         },
-        ticketPrice: { type: String, required: true },
-        appointmentDate: {
+        date: {
             type: Date,
+            required: true,
+        },
+        time: {
+            type: String,
             required: true,
         },
         status: {
             type: String,
-            enum: ["pending", "approved", "cancelled"],
-            default: "pending",
+            enum: ["PENDING", "ACCEPTED", "REJECTED", "CANCELLED", "COMPLETED"],
+            default: "PENDING",
         },
-        isPaid: {
-            type: Boolean,
-            default: true,
-        },
-const bookingSchema = new mongoose.Schema(
-    {
-        doctor: {
-            type: mongoose.Types.ObjectId,
-            ref: "lLawyer",
-            required: true,
-        },
-        user: {
-            type: mongoose.Types.ObjectId,
-            ref: "User",
-            required: true,
-        },
-        ticketPrice: { type: String, required: true },
-        appointmentDate: {
-            type: Date,
-            required: true,
-        },
-        status: {
+        description: {
             type: String,
-            enum: ["pending", "approved", "cancelled"],
-            default: "pending",
+            required: true,
         },
         isPaid: {
             type: Boolean,
-            default: true,
+            default: false,
+        },
+        lawyerName: {
+            type: String,
+            required: true,
         },
     },
 );
-export default AppointmentSchema;
+const Appointment = mongoose.model('appointments', AppointmentSchema);
+module.exports = Appointment;
