@@ -5,8 +5,11 @@ import LawyerAbout from "./LawyerAbout";
 import Feedback from "./Feedback";
 import SidePanel from "./SidePanel";
 import starIcon from "./LawyersImg/Star.png";
+import { useParams } from "react-router-dom";
 
 const LawyerDesc = () => {
+    const {id} = useParams();
+    console.log(id);
     const [tab, steTab] = useState('about');
 
     return (<section>
