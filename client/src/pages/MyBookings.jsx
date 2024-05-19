@@ -50,7 +50,7 @@ const MyBookings = () => {
                   {appointments.map((ele, i) => (
                     <tr className="even:bg-white odd:bg-gray-300" key={ele?._id}>
                       <td className="font-semibold py-5 px-4 border border-black">{i + 1}</td>
-                      <td className="font-semibold py-5 px-4 border border-black">{ele?.lawyer}</td>
+                      <td className="font-semibold py-5 px-4 border border-black">{ele?.lawyerName}</td>
                       <td className="font-semibold py-5 px-4 border border-black">{ele?.date}</td>
                       <td className="font-semibold py-5 px-4 border border-black">{ele?.time}</td>
                       <td className="font-semibold py-5 px-4 border border-black">{ele?.address}</td>

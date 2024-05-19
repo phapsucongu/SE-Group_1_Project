@@ -1,9 +1,10 @@
 import { Button, Steps, message } from "antd";
 import SelectAppointment from './SelectAppointment'
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import moment from 'moment';
 import ConfirmAppointment from './ConfirmAppointment';
+import { createAppointment } from "../../service/Apointment";
 
 const AppointmentPage = () => {
 
@@ -16,6 +17,7 @@ const [selectTime, setSelectTime] = useState('');
 const [address, setAddress] = useState('');
 const [current, setCurrent] = useState(0);
 const [description, setDescription] = useState('');
+
 
 
 const steps = [
@@ -43,8 +45,22 @@ const steps = [
   }
   ]
 
+  const { lawyerid} =useParams();
 
+  const form = {
+    lawyer: '',
+    date: '',
+    time: '',
+    description: ''
+  }
+  form.lawyer=lawyerid;
+  form.date=selectedDate;
+  form.time=selectTime;
+  form.description=description;
+  
+  console.log(form);
 
+  
 return (
     <>
     <div className="container" style={{ marginTop: '8rem', bottom: '5rem' }}>
@@ -71,10 +87,11 @@ return (
               </Button>
             )}
             {current === steps.length - 1 && (
-              <Link to="/mybookings">
+              <Link to={`/mybookings`}>
               <Button
                 className="px-4 py-2 text-lg flex items-center justify-center"
-              type="primary" onClick={() => message.success('Processing complete!')}>
+              type="primary" onClick={ () => createAppointment(form) &&
+                message.success('Processing complete!') } >
                 Done
               </Button>
               </Link>

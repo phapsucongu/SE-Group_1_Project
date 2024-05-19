@@ -22,7 +22,7 @@ const Routers = () => {
       <Route path="/lawyerInfo/:id" element={<LawyerDesc />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Signup />} />
-      <Route path="/appointment" element={<AppointmentPage/>}/>
+      <Route path="/appointment/:lawyerid" element={<AppointmentPage/>}/>
       <Route path="/dashboard" element={<AdminApplications />} />
       <Route path="clientaccount" element={<ClientAccount />} />
       <Route path="lawyeraccount" element = {<LawyerAccount/>}/>

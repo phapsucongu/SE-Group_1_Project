@@ -37,3 +37,19 @@ export const getAllLawyer = async () => {
         }
 };
 
+export const getLawyer = async (id) => {
+    const response = await axiosInstance.get(`${apiUrl}/expert/get/${id}`);
+    if (response.data.success) {
+        return response.data;
+    }
+};
+
+export const createAppointment = async (form) => {
+    if (localStorage[LOCAL_STORAGE_TOKEN_NAME]) {
+        setAuthToken(localStorage[LOCAL_STORAGE_TOKEN_NAME]);
+    }
+    const response = await axiosInstance.post(`${apiUrl}/appointment/create`,form);
+    if (response.data.success) {
+        return response.data;
+    }
+};
