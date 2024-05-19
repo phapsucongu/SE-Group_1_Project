@@ -54,58 +54,10 @@ const SearchSidebar = ({ setSearchTerm, setSorByGender, setSpecialist, setPriceR
         <div className="mb-3">
           <Search placeholder="Search..." onSearch={onSearch} enterButton allowClear />
         </div>
-        <div className='mb-3'>
-          <h6 style={{ fontSize:'17px' }}>Date Range</h6>
-          <DatePicker
-            style={{ width: "100%" }}
-            format="YYYY-MM-DD HH:mm:ss"
-            onChange={handleDateChange}
-          />
         </div>
-
-        <div className='mb-3'>
-          <h6 style={{ fontSize:'17px' }}>Gender</h6>
-            <div className='flex flex-col'>
-              <Radio.Group onChange={onSelectGender}>
-                {options.map((option, index) => (
-                  <div key={index}>
-                    <Radio value={option.value}>{option.label}</Radio>
-                  </div>
-                ))}
-              </Radio.Group>
-            </div>
-        </div>
-
-        <div className='mb-3'>
-          <h6 style={{ fontSize:'17px' }}>Price Range</h6>
-          <Slider range defaultValue={[100, 300]} onChange={onRangeChange} />
-        </div>
-
-        <div className='mb-3'>
-          <h6 style={{fontSize:'17px'}}>Select Specialist</h6>
-            <div className='flex flex-row flex-wrap'>
-              <Radio.Group onChange={onSelectSepcialist}>
-                {SpecialistOptions.map((option, index) => (
-                  <div key={index}>
-                    <Radio value={option.value}>{option.label}</Radio>
-                  </div>
-                ))}
-              </Radio.Group>
-            </div>
-        </div>
-
-        <Button className='w-100 mt-4 mb-2' type="primary" style={{backgroundColor:'#1977cc'}} shape="round"
-          icon={<FaSearch />} 
-         size="sm">Search</Button>
-        {
-          Object.keys(query).length > 4 && <Button className='w-100 mt-4 mb-2' style={{backgroundColor:'#1977cc'}} type="primary" shape="round" 
-           icon={<FaRedoAlt />} 
-          size="sm">Reset</Button>
-        }
-      </div>
 
     </div>
   )
-}
+};
 
 export default SearchSidebar
