@@ -29,20 +29,20 @@ const MyAppointments= () => {
       console.error(error);
     }
   }
-
-  const [isModalVisible, setIsModalVisible] = useState(false);
-
-  const showModal = () => {
-    setIsModalVisible(true);
-  };
-
+  const [isShowModal, setIsShowModal] = useState(false);
+  const showModal = (id) => {
+    setIsShowModal(true);
+    //const Client chỗ này kiếm con lawyer theo id đi
+    setLawyerInfo(Client);
+  }
   const handleOk = () => {
-    setIsModalVisible(false);
-  };
-
+    setIsShowModal(false);
+  }
   const handleCancel = () => {
-    setIsModalVisible(false);
-  };
+    setIsShowModal(false);
+  }
+  const [ClientInfo, setClientInfo] = useState(null);
+
     
   return (
     <>
@@ -63,9 +63,6 @@ const MyAppointments= () => {
                     <th className="font-semibold py-2 px-5 bg-blue-200 text-bold  border border-black" >Address</th>
                     <th className="font-semibold py-2 px-5 bg-blue-200 text-bold  border border-black">Status</th>
                     <th className="font-semibold py-2 px-5 bg-blue-200 text-bold  border border-black">Action</th>
-                    <a href="#!" onClick={showModal} className="text-blue-500 hover:underline">
-                Header Link
-              </a>
                   </tr>
                 </thead>
                 {<tbody>
@@ -73,7 +70,7 @@ const MyAppointments= () => {
                     return (
                       <tr className="even:bg-white odd:bg-gray-300" key={ele?.id}>
                         <td className="font-semibold py-5 px-4   border border-black" >{i + 1}</td>
-                        <td  className="font-semibold py-5 px-4  border border-black" >{ele?.user}</td>
+                        <td  className="font-semibold py-5 px-4  border border-black" >{ele?.user}<Button onClick = {showModal(ele?.id)} >View</Button></td>
                         <td  className="font-semibold py-5 px-4  border border-black" >{ele?.date}</td>
                         <td  className="font-semibold py-5 px-4  border border-black" >{ele?.time}</td>
                         <td  className="font-semibold py-5 px-4  border border-black" >{ele?.address}</td>
@@ -102,6 +99,12 @@ const MyAppointments= () => {
                   })}
                 </tbody>}
               </table>
+              <Modal title="Client Details" open={isShowModal} onOk={handleOk} onCancel={handleOk} >
+                <p>Name: {Client?.fullname} </p>
+                <p>Email: {Client?.email} </p>
+                <p>Phone: {Client?.phone}</p> 
+               
+              </Modal>
               </div>
             </div>
           ) : (
