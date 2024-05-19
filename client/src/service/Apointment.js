@@ -27,3 +27,13 @@ export const deleteAppointment = async (id) => {
         console.error(error);
     }
 };
+
+
+export const getAllLawyer = async () => {
+    
+        const response = await axiosInstance.get(`${apiUrl}/expert/getall`);
+        if (response.data.success) {
+            return response.data;
+        }
+};
+
