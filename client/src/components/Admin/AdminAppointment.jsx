@@ -11,6 +11,7 @@ import Sidebar from "./Sidebar";
 import { Modal } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import AppointmentPage from "../Appointment/AppointmentPage";
+import { deleteAppointment, getAppointments } from "../../service/Apointment";
 
 // axios.defaults.baseURL = process.env.REACT_APP_SERVER_DOMAIN;
 
@@ -29,7 +30,9 @@ const AdminAppointments = () => {
       okText: 'Yes',
       cancelText: 'No',
       onOk() {
+        deleteAppointment(id)
         setApplications(prev => prev.filter(Appointment => Appointment.id !== id));
+        window.location.reload();
       },
     });
   }
@@ -120,6 +123,19 @@ const AdminAppointments = () => {
     setEditingAppointment(null);
   }
 
+  const [ listAppointment, setListAppointment ] = useState([]);
+   
+  function getAll() {
+    getAppointments().then((res)=>{
+      console.log("listAppointment", res);
+      setListAppointment(res)
+    }).catch(error =>{
+      console.error(error);
+    })
+  }
+  useEffect(() => { getAll(); }, []);
+
+
   return (
     <div className="adminContainer">
       <h3 className="text-center" style={{fontWeight: 'bold', fontSize: '25px' }}>APPOINTMENTS</h3>
@@ -129,8 +145,8 @@ const AdminAppointments = () => {
                 <tr>
                   <th>S.No</th>
                   {/* <th>Pic</th> */}
-                  <th>Lawyer ID</th>
-                  <th>User ID</th>
+                  <th>Lawyer </th>
+                  <th>User </th>
                   <th>Date</th>
                   <th>Time</th>
                   <th>Address</th>     
@@ -141,13 +157,13 @@ const AdminAppointments = () => {
                 </tr>
               </thead>
               <tbody>
-                {applications?.map((ele, i) => {
+                {listAppointment.appointments?.map((ele, i) => {
                   return (
                     <tr key={ele?.id}>
                       <td>{i + 1}</td>
                       
-                      <td>{ele?.lawyerID}</td>
-                      <td>{ele?.clientID}</td>
+                      <td>{ele?.lawyerName}</td>
+                      <td>{ele?.userName}</td>
                       <td>{ele?.date}</td>
                       <td>{ele?.time}</td>
                       <td>{ele?.address}</td>
@@ -164,6 +180,7 @@ const AdminAppointments = () => {
                         </button>
                         <button
                           className="btnAction user-btnAction"
+                          onClick={() => OnRemove(ele._id)}
                         >
                           Remove
                         </button>

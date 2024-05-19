@@ -14,22 +14,37 @@ const Expert = require('../models/Expert');
 router.post('/create', verifyToken, async (req, res) => {
     try {
         const { lawyer, date, time, description } = req.body;
-        if (!lawyer || !date || !time || !description) {
-            return res.status(400).json({ success: false, msg: 'missing fields' });
+
+        // Kiểm tra sự tồn tại của luật sư
+        const lawyerExists = await Expert.findById(lawyer);
+        if (!lawyerExists) {
+            return res.status(404).json({ success: false, msg: 'Lawyer not found' });
         }
-        const user = await Appointment.create({
+
+        // Kiểm tra sự tồn tại của người dùng
+        const userExists = await User.findById(req.userId);
+        if (!userExists) {
+            return res.status(404).json({ success: false, msg: 'User not found' });
+        }
+
+        // Tạo cuộc hẹn mới
+        const appointment = await Appointment.create({
             lawyer,
             user: req.userId,
             date,
             time,
             description,
+            lawyerName: lawyerExists.fullname,
+            userName: userExists.fullname
         });
-        res.status(200).json({ success: true, msg: 'appointment created', data: user });
+
+        res.status(200).json({ success: true, msg: 'Appointment created', data: appointment });
     } catch (err) {
         console.error(err.message);
-        res.status(500).json({ success: false, msg: 'server error' });
+        res.status(500).json({ success: false, msg: 'Server error' });
     }
 });
+
 
 // @route GET api/appointment/
 // @desc Get all appointments
@@ -50,15 +65,14 @@ router.get('/', verifyToken, async (req, res) => {
         }
         else{
             const appointments = await Appointment.find({ user: req.userId });
-        const lawyers = [];
         await Promise.all(appointments.map(async (appointment) => {
             const lawyer = await Expert.findById(appointment
                 .lawyer)
-                .select('-password');
-            //console.log(lawyer);
-            lawyers.push(lawyer);
+                .select('fullname');
+            console.log(lawyer);
+            appointment.lawyerName = lawyer.fullname;
         }));
-        res.status(200).json({ success: true, data: appointments ,lawyer:lawyers});
+        res.status(200).json({ success: true, data: appointments });
     }
     } catch (err) {
         console.error(err.message);

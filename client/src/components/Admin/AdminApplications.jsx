@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 // import axios from "axios";
 // import toast from "react-hot-toast";
 // import Loading from "./Loading";
@@ -8,31 +8,38 @@ import React, { useState, useEffect } from "react";
 // import fetchData from "../helper/apiCall";
 import "./admin.css";
 import Sidebar from "./Sidebar";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Modal } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
+import { addUser, deleteUser, getUser, getUsers, updateUser } from "../../service/AdminAplicationService";
 
 // axios.defaults.baseURL = process.env.REACT_APP_SERVER_DOMAIN;
+import { AdminContext } from "../../context/Admincontext";
 
 const AdminApplications = () => {
   const [isEdit, setIsEdit] = useState(false);
   const [isShowModalAddNewClient, setIsShowModalAddNewClient] = useState(false);
   const [editingClient, setEditingClient] = useState(null);
   const [form, setForm] = useState({
-    name: "",
+    username:"",
+    password:"",
+    fullname: "",
     birthday: "",
     email: "",
     phone: "",
     gender: "",
   });
+
+  const navigate = useNavigate();
+
   const handleInputChangeAddNewClient = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-  const { name, birthday, email, phone, gender} = form;
+  const { username, password, fullname, birthday, email, phone, gender} = form;
   const [applications, setApplications] = useState ([
     {
       id: "1",
-      name: "John Doe",
+      fullname: "John Doe",
       birthday: "1990-01-01",
       email: "johndoe@",
       phone: "9876543210",
@@ -40,7 +47,7 @@ const AdminApplications = () => {
     },
     {
       id: "2",
-      name: "Alice Smith",
+      fullname: "Alice Smith",
       birthday: "1992-01-01",
       email: "alicesmith@",
       phone: "9876543210",
@@ -48,7 +55,7 @@ const AdminApplications = () => {
     },
     {
       id: "3",
-      name: "Michael Johnson",
+      fullname: "Michael Johnson",
       birthday: "1980-01-01",
       email: "michaeljohnson@",
       phone: "1234567890",
@@ -56,7 +63,7 @@ const AdminApplications = () => {
     },
     {
       id: "4",
-      name: "Emily Watson",
+      fullname: "Emily Watson",
       birthday: "1995-01-01",
       email: "emilywatson@",
       phone: "9876543210",
@@ -64,7 +71,7 @@ const AdminApplications = () => {
     },
     {
       id: "5",
-      name: "David Beckham",
+      fullname: "David Beckham",
       birthday: "1985-01-01",
       email: "davidBeckham@",
       phone: "9876543210",
@@ -72,7 +79,7 @@ const AdminApplications = () => {
     },
     {
       id: "6",
-      name: "John Doe",
+      fullname: "John Doe",
       birthday: "1990-01-01",
       email: "johndoe@",
       phone: "9876543210",
@@ -80,7 +87,7 @@ const AdminApplications = () => {
     },
     {
      id: "7",
-      name: "Alice Smith",
+      fullname: "Alice Smith",
       birthday: "1992-01-01",
       email: "alicesmith@",
       phone: "9876543210",
@@ -94,6 +101,7 @@ const AdminApplications = () => {
   }
 
   const OnRemove = (id) => {
+    console.log(id);
     Modal.confirm({
       title: 'Sure?',
       icon: <ExclamationCircleOutlined />,
@@ -101,14 +109,16 @@ const AdminApplications = () => {
       okText: 'Yes',
       cancelText: 'No',
       onOk() {
+        deleteUser(id);
         setApplications(prev => prev.filter(client => client.id !== id));
+        window.location.reload();
       },
     });
   }
   
   const onEdit = (id) => {
     setIsEdit(true);
-    const client = applications.find(client => client.id === id);
+    const client = listUser.users.find(client => client._id === id);
     console.log(client);
     setEditingClient(client);
   }
@@ -125,7 +135,9 @@ const AdminApplications = () => {
   const resetAddNewClient = () => {
     setIsShowModalAddNewClient(false);
     setForm({
-      name: "",
+      username:"",
+      password:"",
+      fullname: "",
       birthday: "",
       email: "",
       phone: "",
@@ -137,16 +149,49 @@ const AdminApplications = () => {
 
     setIsShowModalAddNewClient(false);
     setApplications(prev => [...prev, { id: prev.length + 1, ...form }]);
+    addUser(form).then((res)=>{
+      console.log(res.data);
+    })
     setForm({
-      name: "",
+      username:"",
+      password:"",
+      fullname: "",
       birthday: "",
       email: "",
       phone: "",
       gender: "",
     });
+    window.location.reload();
+  } 
+
+  const updateClient = (id) => {
+    console.log(form);
+    setIsEdit(false);
+    // updateUser(id,form).then((res)=>{
+    //   console.log(res.data);
+    // })
+    setForm({
+      fullname: "",
+      birthday: "",
+      email: "",
+      phone: "",
+      gender: "",
+    });
+    // window.location.reload();
   }
 
-
+  const [ listUser, setListUser ] = useState([]);
+   
+  function getAll() {
+    getUsers().then((res)=>{
+      console.log("listUser", res.data);
+      setListUser(res.data)
+    }).catch(error =>{
+      console.error(error);
+    })
+  }
+  useEffect(() => { getAll(); }, []);
+  
   return (
     <div className="adminContainer">
       <h3 className="text-center" style={{fontWeight: 'bold', fontSize: '25px' }}>ALL CLIENTS</h3>
@@ -172,11 +217,11 @@ const AdminApplications = () => {
                 </tr>
               </thead>
               <tbody>
-                {applications?.map((ele, i) => {
+                {listUser.users?.map((ele, i) => {
                   return (
                     <tr key={ele?.id}>
                       <td>{i + 1}</td>
-                      <td>{ele?.name}</td>
+                      <td>{ele?.fullname}</td>
                       <td>{ele?.birthday}</td>
                       {/* <td>{ele?.userId?.lastname}</td> */}
                       <td>{ele?.email}</td>
@@ -186,14 +231,14 @@ const AdminApplications = () => {
                       <td className="select">
                         <button
                           className="btnAction user-btnAction accept-btnAction"
-                          onClick={() => onEdit(ele.id)}
+                          onClick={() => onEdit(ele._id)}
                         >
                           Edit
 
                         </button>
                         <button
                           className="btnAction user-btnAction"
-                          onClick={() => OnRemove(ele.id)}
+                          onClick={() => OnRemove(ele._id)}
                         >
                           Remove
                         </button>
@@ -210,15 +255,43 @@ const AdminApplications = () => {
             onCancel={resetAddNewClient}
             >
                <div>
-       <div className="mb-5 pt-10">
+               <div className="mb-5">
+       <label className='form__label'>
+         Username
+       </label>
+         <input 
+         type="text"
+         placeholder={"Username"}
+         name= "username"
+         value={username}
+         onChange={handleInputChangeAddNewClient} 
+         className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
+         required
+       />
+       </div>
+       <div className="mb-5">
+       <label className='form__label'>
+         Password
+       </label>
+         <input 
+         type="password"
+         placeholder={'Password'}
+         name="password"
+         value={password}
+         onChange={handleInputChangeAddNewClient} 
+         className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
+         required
+       />
+       </div>
+       <div className="mb-5">
        <label className='form__label'>
          Full Name
        </label>
          <input 
          type="text"
-         placeholder={'Full name'}
-         name="name"
-         value={name}
+         placeholder={'Fullname'}
+         name="fullname"
+         value={fullname}
          onChange={handleInputChangeAddNewClient} 
          className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
          required
@@ -230,7 +303,7 @@ const AdminApplications = () => {
          Birthday
        </label>
          <input 
-          type="text"
+        type="text"
          placeholder="Birthday"
          name="birthday"
          value={birthday}
@@ -295,22 +368,22 @@ const AdminApplications = () => {
               title="Edit Client"
               open={isEdit}
               onOk={() => {
-                setApplications(prev => prev.map(client => client.id === editingClient.id ? editingClient : client));
-                resetEditing();
+                updateClient(editingClient._id);
               }}
               onCancel={() => setIsEdit(false)}
               cancelText="Cancel"
               >
         <div>
+        
        <div className="mb-5 pt-10">
        <label className='form__label'>
          Full Name
        </label>
          <input 
          type="text"
-         placeholder={'Full name'}
-         name="name"
-         value= {editingClient?.name}
+         placeholder={'Fullname'}
+         name="fullname"
+         value= {editingClient?.fullname}
          onChange={handleInputChange} 
          className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
          required
@@ -364,14 +437,14 @@ const AdminApplications = () => {
             Gender
            </label>
            <select 
-           name="gender"
+          name="gender"
            value={editingClient?.gender}
            onChange={handleInputChange}
            className = "form__input-1 py-3.5">
                <option value=""></option>
-               <option value="Male">Male</option>
-               <option value="Female">Female</option>
-               <option value="Other">Other</option>
+               <option value="male">Male</option>
+               <option value="female">Female</option>
+               <option value="other">Other</option>
            </select>
            </div>
        </div>     

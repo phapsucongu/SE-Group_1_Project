@@ -49,7 +49,7 @@ router.post('/addExpert', verifyToken, async (req, res) => {
 });
 
 
-// @route GET api/admin/addUser
+// @route POST api/admin/addUser
 // @desc Add user
 // @access Private
 
@@ -61,7 +61,7 @@ router.post('/addUser', verifyToken, async (req, res) => {
     if (user.role !== 'admin') {
         return res.status(403).json({ success: false, msg: 'not allowed' });
     }
-    const { username, password, birthday, role, fullname, email } = req.body;
+    const { username, password, birthday, role, fullname, email ,phone} = req.body;
     if (!username || !password) {
         return res.status(400).json({ success: false, msg: 'username and password are required' });
     }
@@ -77,6 +77,7 @@ router.post('/addUser', verifyToken, async (req, res) => {
             birthday,
             role,
             fullname,
+            phone,
             email
         });
         await newUser.save();
@@ -99,23 +100,20 @@ router.put('/updateUser/:id', verifyToken, async (req, res) => {
     if (user.role !== 'admin') {
         return res.status(403).json({ success: false, msg: 'not allowed' });
     }
-    const { username, password, birthday, role, fullname, email } = req.body;
-    if (!username || !password) {
-        return res.status(400).json({ success: false, msg: 'username and password are required' });
-    }
+    const { birthday, role, fullname, email,phone } = req.body;
+    
     try {
         let user = await User.findById(req.params.id);
         if (!user) {
             return res.status(404).json({ success: false, msg: 'User not found' });
         }
-        const hashedPassword = await argon2.hash(password);
+        //const hashedPassword = await argon2.hash(password);
         user = await User.findByIdAndUpdate(req.params.id, {
-            username,
-            password: hashedPassword,
             birthday,
             role,
             fullname,
-            email
+            email,
+            phone
         });
         res.json({ success: true, msg: 'User updated' });
     } catch (err) {
@@ -360,4 +358,26 @@ router.delete('/deleteAppointment/:id', verifyToken, async (req, res) => {
         res.status(500).json({ success: false, msg: 'server error' });
     }
 });
+
+// @route GET api/admin/getAllAppointments
+// @desc Get all appointments
+// @access Private
+
+router.get('/getAllAppointments', verifyToken, async (req, res) => {
+    const user = await User.findById(req.userId);
+    if (!user) {
+        return res.status(403).json({ success: false, msg: 'Unauthorized' });
+    }
+    if (user.role !== 'admin') {
+        return res.status(403).json({ success: false, msg: 'not allowed' });
+    }
+    try {
+        const appointments = await Appointment.find();
+        res.json({ success: true, appointments });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ success: false, msg: 'server error' });
+    }
+});
+
 module.exports = router;

@@ -42,7 +42,7 @@ const ExpertSchema = new mongoose.Schema({
         type: String,
         default: ''
     },
-    education: {
+    bio: {
         type: String,
         default: ''
     },

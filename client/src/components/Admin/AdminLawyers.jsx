@@ -10,9 +10,11 @@ import "./admin.css";
 import Sidebar from "./Sidebar";
 import { Modal } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
-
+import { AdminContext } from "../../context/Admincontext";
 const AdminLawyers = () => {
 // axios.defaults.baseURL = process.env.REACT_APP_SERVER_DOMAIN;
+
+const { lawyers, getLawyer,addLawyer } = useContext(AdminContext);
 const [isEdit, setIsEdit] = useState(false);
   const [isShowModalAddNewLawyer, setIsShowModalAddNewLawyer] = useState(false);
   const [editingLawyer, setEditingLawyer] = useState(null);
@@ -31,64 +33,7 @@ const [isEdit, setIsEdit] = useState(false);
   };
   const { name, birthday, email, phone, gender, speciality, ticketPrice, bio} = form;
 
-  const [applications, setApplications] = useState ([
-    {
-      id: "1",
-      name: "lawyers",
-      birthday: "2004-01-01",
-      email: "hdd@gmail.com",
-      phone: "1234567890",
-      gender: "Male",
-      speciality: "Corporate Law",
-      ticketPrice: "500",
-      bio: "I am the best lawyer",
-    },
-    {
-      id: "2",
-      name: "Jane Smith",
-      birthday: "1980-01-01",
-      email: "janesmith@gmail.com",
-      phone: "9876543210",
-      gender: "Female",
-      speciality: "Corporate Law",
-      ticketPrice: "1000",
-      bio: "I am the best lawyer",
-    },
-    {
-      id: "3",
-      name: "Michael Johnson",
-      birthday: "1980-01-01",
-      email: "michaeljohnson@gmail.com",
-      phone: "1234567890",
-      gender: "Other",
-      speciality: "Corporate Law",
-      ticketPrice: "2000",
-      bio: "I am the best lawyer in the cityaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-    },
-    {
-      id: "4",
-      name: "Emily Watson",
-      birthday: "1995-01-01",
-      email: "emilywatson@gmail.com",
-      phone: "9876543210",
-      gender: "Male",
-      speciality: "Criminal Law",
-      ticketPrice: "500",
-      bio: "I am the best lawyer in this district",
-    },
-    {
-      id: "5",
-      name: "David Beckham",
-      birthday: "1985-01-01",
-      email: "davidBeckham@gmail.com",
-      phone: "9876543210",
-      gender: "Male",
-      speciality: "Corporate Law",
-      ticketPrice: "500",
-      bio: "I am the best lawyer in this city",
-    },
-  ]);
-
+  
   const OnAdd = () => {
     setIsShowModalAddNewLawyer(true);
   }

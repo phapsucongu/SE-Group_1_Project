@@ -79,7 +79,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjFmY
 
 GET http://localhost:5000/api/appointment
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjNlMGI0MWU0OTE4N2QxMjM0ZDhkZjUiLCJpYXQiOjE3MTYwMTExNDN9.3VAwv-RAj8jBTPl7-OoQ1lqdnmE8uamJGmI1kEt1Wko
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjFmYmQ4Njk5MTJlYzg0ZTBhYWIyZmEiLCJpYXQiOjE3MTU3ODkxNDV9.xC66imlYDZFsqO2R0W06-PcdymLLXTG4n4g8E0PSmz0
+
 
 ###
 
@@ -89,7 +90,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjFmY
 
 {
     "lawyer": "663e0b41e49187d1234d8df5",
-    "user": "661fbd869912ec84e0aab2fa",
     "date": "1/1/1111",
     "time": "1:00",
     "description": "description"
