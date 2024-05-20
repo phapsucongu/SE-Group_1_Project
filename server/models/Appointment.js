@@ -39,7 +39,23 @@ const AppointmentSchema = new mongoose.Schema(
         userName: {
             type: String,
             required: true,
-        }
+        },
+        lawyerEmail: {
+            type: String,
+            //required: true,
+        },
+        userEmail: {
+            type: String,
+            //required: true,
+        },
+        lawyerPhone: {
+            type: String,
+            //required: true,
+        },
+        userPhone: {
+            type: String,
+            //required: true,
+        },
     },
 );
 const Appointment = mongoose.model('appointments', AppointmentSchema);

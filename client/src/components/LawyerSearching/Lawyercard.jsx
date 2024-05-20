@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { BsArrowRight } from "react-icons/bs";
 
 
-const LawyerCard = ({lawyer}) => {
+const LawyerCard = ({id ,lawyer}) => {
 
     const {fullname, speciality, photo, price} = lawyer;
     return (

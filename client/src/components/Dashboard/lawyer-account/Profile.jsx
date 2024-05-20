@@ -1,52 +1,43 @@
 
 import React, { useState ,useContext} from 'react';
-import {useNavigate } from 'react-router-dom';
-import {toast} from 'react-toastify';
-import HashLoader from 'react-spinners/HashLoader';
 import { authContext } from '../../../context/AuthContext'
-import { BASE_URL } from '../../../utils/config';
-import { Select } from 'antd';
-import lawyerProfile from '../../../fakedata/lawyerProfile';
 import { useEffect } from 'react';
-
+import {apiUrl,LOCAL_STORAGE_TOKEN_NAME} from '../../../context/constants.jsx';
+import axiosInstance from '../../../context/constants';
+import setAuthToken from '../../../utils/setAuthToken';
+import { message } from 'antd';
 
 const LawyerProfile = () => {
    // const {registerUser} = useContext(authContext);
-  
+  const { authState,loadUser } = useContext(authContext);
+  const user = authState.user;
   const [formData, setFormData] = useState({
-    name: '',
+    fullname: '',
     email: '',
     birthday: '',
     phone: '',
     gender: '',
     speciality: '',
     bio: '',
-    ticketPrice: '',
+    price: '',
   });
 
-
- 
-  
-
-  //Đoạn này để fakedata
   useEffect(() => {
-    if (lawyerProfile) {
+    if (user) {
       setFormData({
-        name: lawyerProfile.name || '',
-        email: lawyerProfile.email || '',
-        birthday: lawyerProfile.birthday || '',
-        phone: lawyerProfile.phone || '',
-        gender: lawyerProfile.gender || '', 
-        speciality: lawyerProfile.speciality || '',
-        bio: lawyerProfile.bio || '',
-        ticketPrice: lawyerProfile.ticketPrice || '',
+        fullname: user.fullname,
+        email: user.email,
+        birthday: user.birthday,
+        phone: user.phone,
+        gender: user.gender,
+        speciality: user.speciality,
+        bio: user.bio,
+        price: user.price
       });
-     
     }
-  }, []); 
-
-
-  const {name,email,birthday,gender,phone,speciality, bio, ticketPrice} = formData;
+  }, [user]);
+ 
+  const {fullname,email,birthday,gender,phone,speciality, bio, price} = formData;
 
   const handleInputChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -54,14 +45,18 @@ const LawyerProfile = () => {
 
  const submitHandler = async (e) => {
     e.preventDefault();
+    if (localStorage[LOCAL_STORAGE_TOKEN_NAME]) {
+      setAuthToken(localStorage[LOCAL_STORAGE_TOKEN_NAME]);
+    }
     console.log(formData);
-    // const {data, status} = await registerUser(`${BASE_URL}/user/profile/me`,formData);
-    // if(status === 'error'){
-    //   toast.error(data.message);
-    // }else{
-    //   toast.success(data.message);
-    //   navigate('/dashboard');
-    // }
+    const response = await axiosInstance.put(`${apiUrl}/profile/user`,formData);
+    loadUser();
+    console.log(response);
+    if (response.data.success) {
+      message.success("Update successfully");
+    } else {
+      message.error("Update failed")
+    }
   }
 
   return (
@@ -74,8 +69,8 @@ const LawyerProfile = () => {
               <input 
               type="text"
               placeholder={'Full name'}
-              name="name"
-              value={name}
+              name="fullname"
+              value={fullname}
               onChange={handleInputChange} 
               className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
               required
@@ -162,15 +157,14 @@ const LawyerProfile = () => {
                 <input 
               type="text"
               placeholder="Ticket Price"
-              name="ticketPrice"
-              value={ticketPrice}
+              name="price"
+              value={price}
               onChange={handleInputChange}  
               className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
               required
             />
                 </div>
             </div>
-
 
             <div className="mb-5">
             <label className='form__label'>

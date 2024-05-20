@@ -24,7 +24,8 @@ router.post('/addExpert', verifyToken, async (req, res) => {
     }
     try {
         const user = await Expert.findOne({ username });
-        if (user) {
+        const user2 = await User.findOne({username});
+        if (user||user2) {
             return res.status(400).json({ success: false, msg: 'username already taken' });
         }
         const hashedPassword = await argon2.hash(password);
@@ -66,8 +67,9 @@ router.post('/addUser', verifyToken, async (req, res) => {
         return res.status(400).json({ success: false, msg: 'username and password are required' });
     }
     try {
-        const user = await User.findOne({username});
-        if (user) {
+        const user = await Expert.findOne({ username });
+        const user2 = await User.findOne({username});
+        if (user||user2) {
             return res.status(400).json({ success: false, msg: 'username already taken' });
         }
         const hashedPassword = await argon2.hash(password);
@@ -176,6 +178,9 @@ router.delete('/deleteUser/:id', verifyToken, async (req, res) => {
         let user = await User.findById(req.params.id);
         if (!user) {
             return res.status(404).json({ success: false, msg: 'User not found' });
+        }
+        if(user.role==='admin'){
+            return res.status(403).json({ success: false, msg: 'not allowed' });
         }
         await User.findByIdAndDelete(req.params.id);
         res.json({ success: true, msg: 'User deleted' });

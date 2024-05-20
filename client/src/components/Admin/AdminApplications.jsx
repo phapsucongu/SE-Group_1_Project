@@ -1,11 +1,4 @@
 import React, { useState, useEffect, useContext } from "react";
-// import axios from "axios";
-// import toast from "react-hot-toast";
-// import Loading from "./Loading";
-// import { setLoading } from "../redux/reducers/rootSlice";
-// import { useDispatch, useSelector } from "react-redux";
-// import Empty from "./Empty";
-// import fetchData from "../helper/apiCall";
 import "./admin.css";
 import Sidebar from "./Sidebar";
 import { Link, useNavigate } from "react-router-dom";
@@ -36,66 +29,7 @@ const AdminApplications = () => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
   const { username, password, fullname, birthday, email, phone, gender} = form;
-  const [applications, setApplications] = useState ([
-    {
-      id: "1",
-      fullname: "John Doe",
-      birthday: "1990-01-01",
-      email: "johndoe@",
-      phone: "9876543210",
-      gender: "Male"
-    },
-    {
-      id: "2",
-      fullname: "Alice Smith",
-      birthday: "1992-01-01",
-      email: "alicesmith@",
-      phone: "9876543210",
-      gender: "Female"
-    },
-    {
-      id: "3",
-      fullname: "Michael Johnson",
-      birthday: "1980-01-01",
-      email: "michaeljohnson@",
-      phone: "1234567890",
-      gender: "Other"
-    },
-    {
-      id: "4",
-      fullname: "Emily Watson",
-      birthday: "1995-01-01",
-      email: "emilywatson@",
-      phone: "9876543210",
-      gender: "Male"
-    },
-    {
-      id: "5",
-      fullname: "David Beckham",
-      birthday: "1985-01-01",
-      email: "davidBeckham@",
-      phone: "9876543210",
-      gender: "Male"
-    },
-    {
-      id: "6",
-      fullname: "John Doe",
-      birthday: "1990-01-01",
-      email: "johndoe@",
-      phone: "9876543210",
-      gender: "Female"
-    },
-    {
-     id: "7",
-      fullname: "Alice Smith",
-      birthday: "1992-01-01",
-      email: "alicesmith@",
-      phone: "9876543210",
-      gender: "Other"
-    },
-
-  ]);
-
+  
   const OnAdd = () => {
     setIsShowModalAddNewClient(true);
   }

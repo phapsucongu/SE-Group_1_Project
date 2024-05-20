@@ -18,7 +18,7 @@ const LawyerList = () => {
     return (
         <div className='grid-container' style={{ marginLeft: 50 }}>
             {listLawyer.map(lawyer => (
-            <LawyerCard  lawyer={lawyer} />
+            <LawyerCard key={lawyer._id} lawyer={lawyer} />
         ))}
             </div>
     )

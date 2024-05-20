@@ -5,20 +5,48 @@ import { useState,useContext,useEffect } from 'react';
 //import { appointment } from '../fakedata/appointment'; //cai nay la data fake
 import axiosInstance,{apiUrl} from '../context/constants';
 import { AppointmentContext } from '../context/AppointmentContext';
+import moment from 'moment';
+import { Modal, Button } from 'antd';
+import { getClient } from '../service/Apointment';
 
 const MyAppointments= () => {
 
-  //const [appointments, setAppointments] = useState(appointment);
-
   const { appointmentState, getAppointments } = useContext(AppointmentContext);
-  if (appointmentState.appointmentsLoading) {
-    useEffect(() => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [client, setClient] = useState({});
+
+
+
+  useEffect(() => {
+    if (appointmentState.appointmentsLoading) {
       getAppointments();
-    }, [getAppointments]);
-  }
+    }
+  }, [appointmentState.appointmentsLoading, getAppointments]);
+
+  const handleView = (id) => {
+    getClient(id)
+      .then((res) => {
+        console.log("Client", res);
+        setClient(res.user);
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+      setIsModalVisible(true);
+  };
+
+  const handleOk = () => {
+    setIsModalVisible(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+  };
+
   const appointments = appointmentState.appointments.data || [];
-  console.log("Appointments: ", appointments);
-  const handleClick = async (id, status) => {
+
+
+   const handleClick = async (id, status) => {
     try {
       console.log(id);
       const response = await axiosInstance.put(`${apiUrl}/appointment/${status}/${id}`);
@@ -28,7 +56,8 @@ const MyAppointments= () => {
     } catch (error) {
       console.error(error);
     }
-  }
+  };
+
     
   return (
     <>
@@ -54,10 +83,15 @@ const MyAppointments= () => {
                 {<tbody>
                   {appointments?.map((ele, i) => {
                     return (
-                      <tr className="even:bg-white odd:bg-gray-300" key={ele?.id}>
+                      <tr className="even:bg-white odd:bg-gray-300" key={ele?._id}>
                         <td className="font-semibold py-5 px-4   border border-black" >{i + 1}</td>
-                        <td  className="font-semibold py-5 px-4  border border-black" >{ele?.user}</td>
-                        <td  className="font-semibold py-5 px-4  border border-black" >{ele?.date}</td>
+                        <td  className="font-semibold py-5 px-4  border border-black" >
+                          {ele?.userName}
+                          <Button onClick={() => handleView(ele?.user)}>...</Button>
+                          </td>
+                        <td  className="font-semibold py-5 px-4  border border-black" >
+                        {ele ? moment(ele.date).format('MM/DD/YYYY') : ''}
+                        </td>
                         <td  className="font-semibold py-5 px-4  border border-black" >{ele?.time}</td>
                         <td  className="font-semibold py-5 px-4  border border-black" >{ele?.address}</td>
                         <td  className="font-semibold py-5 px-4  border border-black" >{ele?.status}</td>
@@ -86,6 +120,12 @@ const MyAppointments= () => {
                 </tbody>}
               </table>
               </div>
+              <Modal title="User Details" open={isModalVisible} onOk={handleOk} onCancel={handleCancel}>
+              <p>Name: {client.fullname}</p>
+              <p>Email: {client.email}</p>
+              <p>Phone: {client.phone}</p>
+
+            </Modal>
             </div>
           ) : (
             <Empty />

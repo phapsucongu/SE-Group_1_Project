@@ -20,7 +20,7 @@ const ExpertSchema = new mongoose.Schema({
     },
     role: {
         type: String,
-        default: 'lawyer'
+        default: 'expert'
     },
     fullname: {
         type: String,
@@ -53,14 +53,9 @@ const ExpertSchema = new mongoose.Schema({
     speciality: {
         type: String,
         enum : [
-            "Criminal Defense",
-            "Family Law",
-            "Intellectual Property",
-            "Immigration",
-            "Environmental",
-            "PersonalInjury",
-            "Employment",
-            "EconomicLaw",
+            "Civil Rights Law",
+            "Corporate Law",
+            "Criminal Law",
         ],
     },
     price :

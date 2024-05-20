@@ -8,6 +8,9 @@ import setAuthToken from '../../../utils/setAuthToken';
 import { Select } from 'antd';
 import { useEffect } from 'react';
 import axiosInstance from '../../../context/constants.jsx';
+import moment from 'moment';
+import {message} from 'antd';
+
 
 const Profile = () => {
   const { authState,loadUser } = useContext(authContext);
@@ -52,9 +55,9 @@ const Profile = () => {
     loadUser();
     console.log(response);
     if (response.data.success) {
-      toast.success(response.data.message);
+      message.success("Update successfully");
     } else {
-      toast.error(response.data.message);
+      message.error("Update failed")
     }
   }
 
@@ -68,8 +71,8 @@ const Profile = () => {
          <input 
          type="text"
          placeholder={'Full name'}
-         name="name"
-         value={name}
+         name="fullname"
+         value={fullname}
          onChange={handleInputChange} 
          className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
          required
@@ -95,10 +98,11 @@ const Profile = () => {
          Birthday
        </label>
          <input 
-          type="text"
+        type="date"
          placeholder="Birthday"
          name="birthday"
-         value={birthday}
+         value={moment(birthday).format('YYYY-MM-DD')}
+         
          onChange={handleInputChange}  
          className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
          required

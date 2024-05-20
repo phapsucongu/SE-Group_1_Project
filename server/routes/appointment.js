@@ -35,7 +35,11 @@ router.post('/create', verifyToken, async (req, res) => {
             time,
             description,
             lawyerName: lawyerExists.fullname,
-            userName: userExists.fullname
+            userName: userExists.fullname,
+            lawyerEmail: lawyerExists.email,
+            userEmail: userExists.email,
+            lawyerPhone: lawyerExists.phone,
+            userPhone: userExists.phone
         });
 
         res.status(200).json({ success: true, msg: 'Appointment created', data: appointment });

@@ -18,7 +18,8 @@ router.post('/register', async (req, res) => {
         }
 
         const user = await User.findOne({ username });
-        if (user) {
+        const expert = await Expert.findOne({username});
+        if (user||expert) {
             return res.status(400).json({ success: false, msg: 'username already exists' });
         }
 
@@ -103,4 +104,3 @@ router.get('/',verifyToken, async (req, res) => {
     }
 })
 module.exports = router;
-

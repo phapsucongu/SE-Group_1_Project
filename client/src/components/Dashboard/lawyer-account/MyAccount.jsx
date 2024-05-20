@@ -8,13 +8,17 @@ import Loading from "../../Loader/Loading"
 
 import userGetProfile from "../../../hooks/useFecthData";
 import { BASE_URL } from "../../../utils/config";
+import { LOCAL_STORAGE_TOKEN_NAME } from '../../../context/constants';
+
 const LawyerAccount = () => {
 
+    
     const {dispatch}  = useContext(authContext);
 
     const [tab, setTab] = useState("")
     const handleLogout = () => {
-        dispatch({type: 'LOGOUT'})
+        localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME);
+        window.location.href = '/login';
     }
 // const {data:userData, loading, error} = userGetProfile(`${BASE_URL}/user/profile/me`);
 // console.log(userData, "userData");
@@ -39,10 +43,10 @@ const LawyerAccount = () => {
                     <div className = "text-center mt-4">  
                     <div className="text-center mt-4">
                         <h3 className="text-headingColor text-[18px] leading-[30px] font-bold">
-                            Hoang Duc Duong
+                            My Account
                         </h3>
                         <p className ="text-textColor text-[15px] leading-6 font-medium">
-                            comehere.hdd@gmail.com
+                        Choose "Profile" to update your profile or "Change Password" to update your password
                         </p>
                     </div>
 

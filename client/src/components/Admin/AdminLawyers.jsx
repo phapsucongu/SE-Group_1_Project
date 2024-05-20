@@ -1,37 +1,34 @@
 import React, { useState, useEffect } from "react";
-// import axios from "axios";
-// import toast from "react-hot-toast";
-// import Loading from "./Loading";
-// import { setLoading } from "../redux/reducers/rootSlice";
-// import { useDispatch, useSelector } from "react-redux";
-// import Empty from "./Empty";
-// import fetchData from "../helper/apiCall";
 import "./admin.css";
 import Sidebar from "./Sidebar";
+import { useNavigate } from "react-router-dom";
 import { Modal } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { AdminContext } from "../../context/Admincontext";
+import { addUser, deleteUser, getUser, getUsers, updateUser } from "../../service/AdminLawyerService";
+import moment from 'moment';
 const AdminLawyers = () => {
-// axios.defaults.baseURL = process.env.REACT_APP_SERVER_DOMAIN;
 
-const { lawyers, getLawyer,addLawyer } = useContext(AdminContext);
 const [isEdit, setIsEdit] = useState(false);
   const [isShowModalAddNewLawyer, setIsShowModalAddNewLawyer] = useState(false);
   const [editingLawyer, setEditingLawyer] = useState(null);
   const [form, setForm] = useState({
-    name: "",
+    username: "",
+    password: "",
+    fullname: "",
     birthday: "",
     email: "",
     phone: "",
     gender: "",
     speciality: "",
-    ticketPrice: "",
+    price: "",
     bio: "",
   });
+  const navigate = useNavigate();
   const handleInputChangeAddNewLawyer = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
-  const { name, birthday, email, phone, gender, speciality, ticketPrice, bio} = form;
+  const {username,password, fullname, birthday, email, phone, gender, speciality, price, bio} = form;
 
   
   const OnAdd = () => {
@@ -46,14 +43,16 @@ const [isEdit, setIsEdit] = useState(false);
       okText: 'Yes',
       cancelText: 'No',
       onOk() {
-        setApplications(prev => prev.filter(Lawyer => Lawyer.id !== id));
+        deleteUser(id);
+        //setApplications(prev => prev.filter(Lawyer => Lawyer.id !== id));
+        window.location.reload();
       },
     });
   }
   
   const onEdit = (id) => {
     setIsEdit(true);
-    const Lawyer = applications.find(Lawyer => Lawyer.id === id);
+    const Lawyer = listLawyer.experts.find(Lawyer => Lawyer._id === id);
     console.log(Lawyer);
     setEditingLawyer(Lawyer);
   }
@@ -70,13 +69,15 @@ const [isEdit, setIsEdit] = useState(false);
   const resetAddNewLawyer = () => {
     setIsShowModalAddNewLawyer(false);
     setForm({
-      name: "",
+      username:"",
+      password:"",
+      fullname: "",
       birthday: "",
       email: "",
       phone: "",
       gender: "",
       speciality: "",
-      ticketPrice: "",
+      price: "",
       bio: "",
     });
   }
@@ -84,21 +85,41 @@ const [isEdit, setIsEdit] = useState(false);
     console.log(form);
 
     setIsShowModalAddNewLawyer(false);
-    setApplications(prev => [...prev, { id: prev.length + 1, ...form }]);
+    //setApplications(prev => [...prev, { id: prev.length + 1, ...form }]);
+    addUser(form);
     setForm({
-      name: "",
+      username:"",
+      password:"",
+      fullname: "",
       birthday: "",
       email: "",
       phone: "",
       gender: "",
       speciality: "",
-      ticketPrice: "",
+      price: "",
       bio: "",
     });
+    window.location.reload();
   }
 
+  const updateLawyer = (id) => {
+    updateUser(id, editingLawyer);
+    //setApplications(prev => prev.map(Lawyer => Lawyer.id === id ? editingLawyer : Lawyer));
+    resetEditing();
+    window.location.reload();
+  }
 
-
+  const [listLawyer, setListLawyer] = useState([]);
+  function getLawyer() {
+    getUsers().then((res) => {
+      console.log(res);
+      setListLawyer(res.data);
+    });
+  }
+  useEffect(() => {
+    getLawyer();
+  }, []);
+  console.log(listLawyer);
 
   return (
     <div className="adminContainer">
@@ -114,6 +135,7 @@ const [isEdit, setIsEdit] = useState(false);
                 <tr>
                   <th>S.No</th>
                   {/* <th>Pic</th> */}
+                  <th>Username</th>
                   <th>Full Name</th>
                   <th>Birthday</th>
                   <th>Email</th>
@@ -127,30 +149,30 @@ const [isEdit, setIsEdit] = useState(false);
                 </tr>
               </thead>
               <tbody>
-                {applications?.map((ele, i) => {
+                {listLawyer.experts?.map((ele, i) => {
                   return (
-                    <tr key={ele?.id}>
+                    <tr key={ele?._id}>
                       <td>{i + 1}</td>
-
-                      <td>{ele?.name}</td>
-                      <td>{ele?.birthday}</td>
+                      <td>{ele?.username}</td>
+                      <td>{ele?.fullname}</td>
+                      <td>{moment(ele?.birthday).format('YYYY-MM-DD')}</td>
                       <td>{ele?.email}</td>
                       <td>{ele?.phone}</td>
                       <td>{ele?.gender}</td>
                       <td>{ele?.speciality}</td>
-                      <td>{ele?.ticketPrice}</td>
+                      <td>{ele?.price}</td>
                       <td className="truncate overflow-ellipsis max-w-[200px]">{ele?.bio}</td>
                      
                       <td className="select">
                         <button
                           className="btnAction user-btnAction accept-btnAction"
-                          onClick = {() => onEdit(ele.id)}
+                          onClick = {() => onEdit(ele._id)}
                         >
                           Edit
                         </button>
                         <button
                           className="btnAction user-btnAction"
-                          onClick={() => OnRemove(ele.id)}
+                          onClick={() => OnRemove(ele._id)}
                         >
                           Remove
                         </button>
@@ -169,13 +191,39 @@ const [isEdit, setIsEdit] = useState(false);
                <div>
        <div className="mb-5 pt-10">
        <label className='form__label'>
+         Username
+       </label>
+         <input 
+         type="text"
+         placeholder={"Username"}
+         name= "username"
+         value={username}
+         onChange={handleInputChangeAddNewLawyer} 
+         className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
+         required
+       />
+       </div>
+       <div className="mb-5">
+       <label className='form__label'>
+         Password
+       </label>
+         <input 
+         type="password"
+         placeholder={'Password'}
+         name="password"
+         value={password}
+         onChange={handleInputChangeAddNewLawyer} 
+         className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
+         required
+       />
+       <label className='form__label'>
          Full Name
        </label>
          <input 
          type="text"
          placeholder={'Full name'}
-         name="name"
-         value={name}
+         name="fullname"
+         value={fullname}
          onChange={handleInputChangeAddNewLawyer} 
          className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
          required
@@ -187,10 +235,10 @@ const [isEdit, setIsEdit] = useState(false);
          Birthday
        </label>
          <input 
-          type="text"
+          type="date"
          placeholder="Birthday"
          name="birthday"
-         value={birthday}
+         value={moment(birthday).format('YYYY-MM-DD')}
          onChange={handleInputChangeAddNewLawyer}  
          className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
          required
@@ -264,8 +312,8 @@ const [isEdit, setIsEdit] = useState(false);
                 <input 
               type="number"
               placeholder="Ticket Price"
-              name="ticketPrice"
-              value={ticketPrice}
+              name="price"
+              value={price}
               onChange={handleInputChangeAddNewLawyer}  
               className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
               required
@@ -291,7 +339,6 @@ const [isEdit, setIsEdit] = useState(false);
               title="Edit Lawyer"
               open={isEdit}
               onOk={() => {
-                setApplications(prev => prev.map(Lawyer => Lawyer.id === editingLawyer.id ? editingLawyer : Lawyer));
                 resetEditing();
               }}
               onCancel={() => setIsEdit(false)}
@@ -305,8 +352,8 @@ const [isEdit, setIsEdit] = useState(false);
          <input 
          type="text"
          placeholder={'Full name'}
-         name="name"
-         value= {editingLawyer?.name}
+         name="fullname"
+         value= {editingLawyer?.fullname}
          onChange={handleInputChange} 
          className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
          required
@@ -317,10 +364,10 @@ const [isEdit, setIsEdit] = useState(false);
          Birthday
        </label>
          <input 
-          type="text"
+          type="date"
          placeholder="Birthday"
          name="birthday"
-         value={editingLawyer?.birthday}
+         value={moment(editingLawyer?.birthday).format('YYYY-MM-DD')}
          onChange={handleInputChange}  
          className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
          required
@@ -392,8 +439,8 @@ const [isEdit, setIsEdit] = useState(false);
                 <input 
               type="number"
               placeholder="Ticket Price"
-              name="ticketPrice"
-              value={editingLawyer?.ticketPrice}
+              name="price"
+              value={editingLawyer?.price}
               onChange={handleInputChange}  
               className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
               required

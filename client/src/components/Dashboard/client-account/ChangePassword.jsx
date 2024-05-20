@@ -2,11 +2,10 @@
 import React, { useState ,useContext} from 'react';
 import {useNavigate } from 'react-router-dom';
 import {toast} from 'react-toastify';
-import HashLoader from 'react-spinners/HashLoader';
 import { authContext } from '../../../context/AuthContext'
-import { BASE_URL } from '../../../utils/config';
 import { Select } from 'antd';
-
+import {message} from 'antd';
+import {changePassword} from '../../../service/Apointment';
 const ChangePassword= () => {
     const {registerUser} = useContext(authContext);
   
@@ -26,42 +25,19 @@ const ChangePassword= () => {
 
   const submitHandler = async (e) => {
     e.preventDefault();
-
-    // Check if new password and confirm new password match
-    if (password !== confirmPassword) {
-      setErrorMessage('New password and confirm new password do not match');
-      return;
+    if(password !== confirmPassword){
+      message.error("Password do not match");
     }
 
     try {
-      const response = await fetch('your_change_password_api_endpoint', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          // Include any necessary authentication headers
-        },
-        body: JSON.stringify({
-          CurrentPassword,
-          password,
-        }),
-      });
-
-      if (!response.ok) {
-        // Handle error response from the server
-        const errorMessage = await response.text();
-        throw new Error(errorMessage);
+      const res = await changePassword(formData);
+      if(res.success){
+        navigate('/login');
+        toast.success('Password updated successfully');
       }
-
-      // Password changed successfully
-      alert('Password changed successfully!');
-     setFormData({
-        CurrentPassword:'',
-        password: '',
-        confirmPassword: ''
-      });
-    } catch (error) {
-      // Handle error
-      setErrorMessage(error.message);
+    }
+    catch (error) {
+      console.error(error);
     }
   };
 
@@ -72,7 +48,7 @@ const ChangePassword= () => {
          <form onSubmit={submitHandler}>
             <div className="mb-5 pt-10">
               <input 
-              type="text"
+              type="password"
               placeholder="Current Password"
               name="CurrentPassword"
               value={CurrentPassword}
@@ -110,6 +86,7 @@ const ChangePassword= () => {
               //disabled={loading && true}
                 type="submit"
                 className="w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg px-4 py-3">
+                onClick={submitHandler}
                 Update
               </button>
             </div>

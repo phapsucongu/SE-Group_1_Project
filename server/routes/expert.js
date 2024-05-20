@@ -66,4 +66,17 @@ router.post('/search', async (req, res) => {
     }
 });
 
+// @route GET api/expert/getUser/:id
+// @desc Get user by id
+// @access Public
+
+router.get('/getUser/:id', async (req, res) => {
+    try {
+        const user = await User.findById(req.params.id);
+        res.status(200).json({ success: true, data: user });
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).json({ success: false, msg: 'server error' });
+    }
+});
 module.exports = router;
