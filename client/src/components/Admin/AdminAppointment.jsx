@@ -12,6 +12,7 @@ import { Modal } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import AppointmentPage from "../Appointment/AppointmentPage";
 import { deleteAppointment, getAppointments } from "../../service/Apointment";
+import moment from "moment";
 
 // axios.defaults.baseURL = process.env.REACT_APP_SERVER_DOMAIN;
 
@@ -75,7 +76,7 @@ const AdminAppointments = () => {
                       
                       <td>{ele?.lawyerName}</td>
                       <td>{ele?.userName}</td>
-                      <td>{ele?.date}</td>
+                      <td>{moment(ele?.date).format('YYYY-MM-DD')}</td>
                       <td>{ele?.time}</td>
                       <td>{ele?.address}</td>
                       <td>{ele?.status}</td>
