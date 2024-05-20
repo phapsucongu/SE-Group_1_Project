@@ -19,16 +19,38 @@ const Routers = () => {
       <Route path="/" element={<Home />} />
       <Route path="/home" element={<Home />} />
       <Route path="/findalawyer" element={<SearchLawyer />} />
-      <Route path="/lawyerInfo" element={<LawyerDesc />} />
+      <Route path="/lawyerInfo/:id" element={<LawyerDesc />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Signup />} />
-      <Route path="/appointment" element={<AppointmentPage/>}/>
-      <Route path="/dashboard" element={<AdminApplications />} />
-      <Route path="clientaccount" element={<ClientAccount />} />
-      <Route path="lawyeraccount" element = {<LawyerAccount/>}/>
-      <Route path="myappointments" element={<MyAppointments/>}/>
-
-    
+      <Route path="/appointment/:lawyerid" element={
+          <ProtectedRoute>
+            <AppointmentPage/>
+          </ProtectedRoute>
+          }/>
+      <Route path="/dashboard" element={
+          <ProtectedRoute>
+            <AdminApplications />
+          </ProtectedRoute>
+          } 
+      />
+      <Route path="clientaccount" element={
+            <ProtectedRoute>
+              <ClientAccount/>
+            </ProtectedRoute>
+          }
+      />
+      <Route path="lawyeraccount" element = {
+            <ProtectedRoute>
+              <LawyerAccount/>
+            </ProtectedRoute>  
+            }
+      />
+      <Route path="myappointments" element={
+            <ProtectedRoute>
+              <MyAppointments/>
+            </ProtectedRoute>
+              }
+      />
       <Route path="/findalawyer" element={
             <ProtectedRoute>
               <SearchLawyer />

@@ -26,13 +26,37 @@ const AppointmentSchema = new mongoose.Schema(
         },
         description: {
             type: String,
-            required: true,
+            //required: true,
         },
         isPaid: {
             type: Boolean,
             default: false,
         },
         lawyerName: {
+            type: String,
+            required: true,
+        },
+        userName: {
+            type: String,
+            required: true,
+        },
+        lawyerEmail: {
+            type: String,
+            //required: true,
+        },
+        userEmail: {
+            type: String,
+            //required: true,
+        },
+        lawyerPhone: {
+            type: String,
+            //required: true,
+        },
+        userPhone: {
+            type: String,
+            //required: true,
+        },
+        address: {
             type: String,
             required: true,
         },

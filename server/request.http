@@ -59,15 +59,17 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjAwM
 
 PUT http://localhost:5000/api/profile/user
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjQyYjQ4ZTQwZGJhMGNjODliNThlZTkiLCJpYXQiOjE3MTU2NTA3Mzh9.cQ4EDxXqL_2iqkDnvsTo67ffzmcgT7HNsmZRXWZVQDI
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjRhZDQ0N2U3MGNmNzIwOTY4ZjZjNGQiLCJpYXQiOjE3MTYxODAxMDl9.Iwtcc8EFDQndVSDhGaMzKFUXVpF__u_1C3DnCnPT-uA
 
 {
-    "bithday" : "1/1/1111",
-    "role" : "user",
-    "fullname" : "fullname",
-    "email" : "email",
-    "gender" : "gender",
-    "phone" : "phone"
+    "bio": "sdfsà",
+    "birthday": "2024-05-23T00:00:00.000Z",
+    "email": "email@gmail.com",
+    "fullname": "fullname abcaaaa",
+    "gender": "female",
+    "phone": "0123456780",
+    "price": 99,
+    "speciality": "Corporate Law"
 }    
 
 ###
@@ -79,7 +81,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjFmY
 
 GET http://localhost:5000/api/appointment
 Content-Type: application/json
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjNlMGI0MWU0OTE4N2QxMjM0ZDhkZjUiLCJpYXQiOjE3MTYwMTExNDN9.3VAwv-RAj8jBTPl7-OoQ1lqdnmE8uamJGmI1kEt1Wko
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjFmYmQ4Njk5MTJlYzg0ZTBhYWIyZmEiLCJpYXQiOjE3MTU3ODkxNDV9.xC66imlYDZFsqO2R0W06-PcdymLLXTG4n4g8E0PSmz0
+
 
 ###
 
@@ -89,7 +92,6 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjFmY
 
 {
     "lawyer": "663e0b41e49187d1234d8df5",
-    "user": "661fbd869912ec84e0aab2fa",
     "date": "1/1/1111",
     "time": "1:00",
     "description": "description"
@@ -111,4 +113,20 @@ Content-Type: application/json
   "speciality": "",
   "minPrice": 100,
   "maxPrice": 500
+}
+
+###
+
+GET http://localhost:5000/api/profile/user/660012d4dfa2de4855bbcd81
+Content-Type: application/json
+
+###
+
+PUT http://localhost:5000/api/profile/changePassword
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2NjNlMGI0MWU0OTE4N2QxMjM0ZDhkZjUiLCJpYXQiOjE3MTYxNzU0Mzl9.vI9s2nes2pAwZKaqvVjobY8G3OJUuiIXgrWLmEjs2VA
+
+{
+    "CurrentPassword": "1234567",
+    "password": "123456"
 }

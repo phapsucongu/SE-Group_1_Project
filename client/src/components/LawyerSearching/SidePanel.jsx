@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const SidePanel = () => {
+const SidePanel = ({lawyer,id}) => {
 
 
     return (
@@ -11,7 +11,7 @@ const SidePanel = () => {
                </p>
                <span className="text-[16px] leading-7 lg:text-[22px] lg:leading-8
                text-headingColor font-bold">
-                 700.000 ty
+                 {lawyer.price} $
                </span>
             </div>
 
@@ -40,7 +40,7 @@ const SidePanel = () => {
                     </li>
                 </ul>
             </div>
-            <Link to="/appointment">
+            <Link to={`/appointment/${id}`}>
             <button className="btn px-2 w-full rounded-md">Book Appointment</button>
             </Link>
         </div>

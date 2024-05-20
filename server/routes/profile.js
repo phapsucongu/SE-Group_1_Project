@@ -9,9 +9,9 @@ const verifyToken = require('../middleware/auth');
 // @desc Get user profile
 // @access Private
 
-router.get('/user', verifyToken, async (req, res) => {
+router.get('/user/:id', async (req, res) => {
     try {
-        const user = await User.findById(req.user.id).select('-password');
+        const user = await User.findById(req.params.id).select('-password -username ');
         if (!user) {
             return res.status(400).json({ success: false, msg: 'user not found' });
         }
@@ -27,7 +27,32 @@ router.get('/user', verifyToken, async (req, res) => {
 // @access Private
 
 router.put('/user', verifyToken, async (req, res) => {
-    const { birthday, role, fullname, email, gender, phone } = req.body;
+    
+    try {
+        let user = await User.findById(req.userId);
+        if (!user) {
+            const { birthday,role, fullname,email,gender, phone, speciality, bio, price } = req.body;
+            let expertFields = {
+                birthday : birthday,
+                role : role,
+                fullname : fullname,
+                email : email,
+                gender: gender,
+                phone : phone,
+                speciality : speciality,
+                bio : bio,
+                price : price
+            }
+            const user = await Expert.findById(req.userId);
+            if (!user) {
+                return res.status(400).json({ success: false, msg: 'user not found' });
+            }
+            const user2 = await Expert.findByIdAndUpdate
+            (req.userId, { $set: expertFields }, { new: true });
+            res.json({ success: true, user2 });
+        }
+        else{
+            const { birthday, role, fullname, email, gender, phone } = req.body;
     let userFields = {
         birthday : birthday,
         role : role,
@@ -36,14 +61,12 @@ router.put('/user', verifyToken, async (req, res) => {
         gender : gender,
         phone : phone
     }
-    try {
-        let user = await User.findById(req.userId);
-        if (!user) {
-            return res.status(400).json({ success: false, msg: 'user not found' });
-        }
-        user = await User.findByIdAndUpdate(req.userId, { $set: userFields }, { new: true });
-        res.json({ success: true, user });
-        console.log(user);
+
+            const user2 = await User.findByIdAndUpdate(req.userId, { $set: userFields }, { new: true });
+        res.json({ success: true, user2 });
+        console.log(user2);
+    }
+
     } catch (err) {
         console.error(err.message);
         res.status(500).json({ success: false, msg: 'server error' });
@@ -55,19 +78,42 @@ router.put('/user', verifyToken, async (req, res) => {
 // @desc Change password
 // @access Private
 
-router.put('/changePassword/:id', verifyToken, async (req, res) => {
+router.put('/changePassword', verifyToken, async (req, res) => {
+    const user = await User.findById(req.userId);
+    const { CurrentPassword } = req.body;
     const { password } = req.body;
-    if (password.length < 6) {
-        return res.status(400).json({ success: false, msg: 'Password must be at least 6 characters' });
+    if (!user) {
+        const user = await Expert.findById(req.userId);
+        if (!user) {
+            return res.status(400).json({ success: false, msg: 'user not found' });
+        }
+        const passwordValid = await argon2.verify(user.password, CurrentPassword);
+        if (!passwordValid) {
+            return res.status(400).json({ success: false, msg: 'incorrect password' });
+        }
+        try {
+            let hashedPassword = await argon2.hash(password);
+            await Expert.findByIdAndUpdate(req.userId, { password: hashedPassword });
+            res.json({ success: true, msg: 'Password updated' });
+        } catch (err) {
+            console.error(err.message);
+            res.status(500).json({ success: false, msg: 'server error' });
+        }
+    }
+    else{
+        const passwordValid = await argon2.verify(user.password, CurrentPassword);
+    if (!passwordValid) {
+        return res.status(400).json({ success: false, msg: 'incorrect password' });
     }
     try {
         let hashedPassword = await argon2.hash(password);
-        await User.findByIdAndUpdate(req.params.id, { password: hashedPassword });
+        await User.findByIdAndUpdate(req.userId, { password: hashedPassword });
         res.json({ success: true, msg: 'Password updated' });
     } catch (err) {
         console.error(err.message);
         res.status(500).json({ success: false, msg: 'server error' });
     }
+}
 });
 
 // @route GET apt/profile/expert/:id
@@ -86,6 +132,7 @@ router.get('/expert/:id', async (req, res) => {
         res.status(500).json({ success: false, msg: 'server error' });
     }
 });
+
 
 // @route PUT api/profile/expert/:id
 // @desc Update expert profile
@@ -136,4 +183,5 @@ router.put('/expertChangePassword/:id', verifyToken, async (req, res) => {
     }
 });
 
+// @route GET api/profile
 module.exports = router;

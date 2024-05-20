@@ -5,6 +5,8 @@ import { apiUrl } from "../context/constants.jsx";
 import { authContext } from '../context/AuthContext.jsx';
 import axios from "axios";
 import { AppointmentContext } from "../context/AppointmentContext.jsx";
+import { useEffect } from "react";
+import { message } from "antd";
 
 
 const Login = () => {
@@ -50,14 +52,15 @@ const Login = () => {
     try {
       const loginData = await loginUser(formData);
       if (loginData.success) {
-        toast.success(loginData.message);
-        
+        message.success("Login successfully!");
         window.location.href = '/';
       } else {
         toast.error(loginData.message);
+        message.error("Login failed!");
       }
     } catch (error) {
       toast.error(error.response.data.message);
+      message.error("Login failed!");
     }
   }
 

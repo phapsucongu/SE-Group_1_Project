@@ -18,13 +18,14 @@ router.post('/addExpert', verifyToken, async (req, res) => {
     if (user.role !== 'admin') {
         return res.status(403).json({ success: false, msg: 'not allowed' });
     }
-    const { username, password, birthday, role, fullname, email, phone, gender, speciality,price } = req.body;
+    const { username, password, birthday, role, fullname, email, phone, gender, speciality,price, bio } = req.body;
     if (!username || !password) {
         return res.status(400).json({ success: false, msg: 'username and password are required' });
     }
     try {
         const user = await Expert.findOne({ username });
-        if (user) {
+        const user2 = await User.findOne({username});
+        if (user||user2) {
             return res.status(400).json({ success: false, msg: 'username already taken' });
         }
         const hashedPassword = await argon2.hash(password);
@@ -39,6 +40,7 @@ router.post('/addExpert', verifyToken, async (req, res) => {
             gender,
             speciality,
             price,
+            bio,
         });
         await newUser.save();
         res.json({ success: true, msg: 'Expert created' });
@@ -49,7 +51,7 @@ router.post('/addExpert', verifyToken, async (req, res) => {
 });
 
 
-// @route GET api/admin/addUser
+// @route POST api/admin/addUser
 // @desc Add user
 // @access Private
 
@@ -61,13 +63,14 @@ router.post('/addUser', verifyToken, async (req, res) => {
     if (user.role !== 'admin') {
         return res.status(403).json({ success: false, msg: 'not allowed' });
     }
-    const { username, password, birthday, role, fullname, email } = req.body;
+    const { username, password, birthday, role, fullname, gender, email ,phone} = req.body;
     if (!username || !password) {
         return res.status(400).json({ success: false, msg: 'username and password are required' });
     }
     try {
-        const user = await User.findOne({username});
-        if (user) {
+        const user = await Expert.findOne({ username });
+        const user2 = await User.findOne({username});
+        if (user||user2) {
             return res.status(400).json({ success: false, msg: 'username already taken' });
         }
         const hashedPassword = await argon2.hash(password);
@@ -76,7 +79,9 @@ router.post('/addUser', verifyToken, async (req, res) => {
             password: hashedPassword,
             birthday,
             role,
+            gender,
             fullname,
+            phone,
             email
         });
         await newUser.save();
@@ -99,23 +104,21 @@ router.put('/updateUser/:id', verifyToken, async (req, res) => {
     if (user.role !== 'admin') {
         return res.status(403).json({ success: false, msg: 'not allowed' });
     }
-    const { username, password, birthday, role, fullname, email } = req.body;
-    if (!username || !password) {
-        return res.status(400).json({ success: false, msg: 'username and password are required' });
-    }
+    const { birthday, role, fullname,gender, email, phone } = req.body;
+    
     try {
         let user = await User.findById(req.params.id);
         if (!user) {
             return res.status(404).json({ success: false, msg: 'User not found' });
         }
-        const hashedPassword = await argon2.hash(password);
+        //const hashedPassword = await argon2.hash(password);
         user = await User.findByIdAndUpdate(req.params.id, {
-            username,
-            password: hashedPassword,
             birthday,
             role,
             fullname,
-            email
+            email,
+            phone,
+            gender,
         });
         res.json({ success: true, msg: 'User updated' });
     } catch (err) {
@@ -136,7 +139,7 @@ router.put('/updateExpert/:id', verifyToken, async (req, res) => {
     if (user.role !== 'admin') {
         return res.status(403).json({ success: false, msg: 'not allowed' });
     }
-    const { username, password, birthday, role, fullname, email,phone} = req.body;
+    const { username, password, birthday, role, fullname, email,phone, price, speciality, bio} = req.body;
     if (!username || !password) {
         return res.status(400).json({ success: false, msg: 'username and password are required' });
     }
@@ -153,7 +156,10 @@ router.put('/updateExpert/:id', verifyToken, async (req, res) => {
             role,
             fullname,
             email,
-            phone
+            phone,
+            price,
+            speciality,
+            bio,
         });
         res.json({ success: true, msg: 'Expert updated' });
     } catch (err) {
@@ -178,6 +184,9 @@ router.delete('/deleteUser/:id', verifyToken, async (req, res) => {
         let user = await User.findById(req.params.id);
         if (!user) {
             return res.status(404).json({ success: false, msg: 'User not found' });
+        }
+        if(user.role==='admin'){
+            return res.status(403).json({ success: false, msg: 'not allowed' });
         }
         await User.findByIdAndDelete(req.params.id);
         res.json({ success: true, msg: 'User deleted' });
@@ -360,4 +369,26 @@ router.delete('/deleteAppointment/:id', verifyToken, async (req, res) => {
         res.status(500).json({ success: false, msg: 'server error' });
     }
 });
+
+// @route GET api/admin/getAllAppointments
+// @desc Get all appointments
+// @access Private
+
+router.get('/getAllAppointments', verifyToken, async (req, res) => {
+    const user = await User.findById(req.userId);
+    if (!user) {
+        return res.status(403).json({ success: false, msg: 'Unauthorized' });
+    }
+    if (user.role !== 'admin') {
+        return res.status(403).json({ success: false, msg: 'not allowed' });
+    }
+    try {
+        const appointments = await Appointment.find();
+        res.json({ success: true, appointments });
+    } catch (err) {
+        console.error(err.message);
+        res.status(500).json({ success: false, msg: 'server error' });
+    }
+});
+
 module.exports = router;
