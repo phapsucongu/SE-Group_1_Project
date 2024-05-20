@@ -11,7 +11,9 @@ import { BASE_URL } from "../../../utils/config";
 import { LOCAL_STORAGE_TOKEN_NAME } from '../../../context/constants';
 const ClientAccount = () => {
 
-    const {dispatch}  = useContext(authContext);
+    const { authState } = useContext(authContext);
+    const user = authState.user;
+
 
     const [tab, setTab] = useState("")
     const handleLogout = () => {
@@ -41,10 +43,13 @@ const ClientAccount = () => {
                     <div className = "text-center mt-4">  
                     <div className="text-center mt-4">
                         <h3 className="text-headingColor text-[18px] leading-[30px] font-bold">
-                            My Account
+                            {user.fullname}
                         </h3>
                         <p className ="text-textColor text-[15px] leading-6 font-medium">
-                            Choose "Profile" to update your profile or "Change Password" to update your password
+                            {user.email}
+                        </p>
+                        <p className ="text-textColor text-[15px] leading-6 font-medium">
+                            {user.phone}
                         </p>
                     </div>
 

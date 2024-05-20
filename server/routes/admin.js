@@ -18,7 +18,7 @@ router.post('/addExpert', verifyToken, async (req, res) => {
     if (user.role !== 'admin') {
         return res.status(403).json({ success: false, msg: 'not allowed' });
     }
-    const { username, password, birthday, role, fullname, email, phone, gender, speciality,price,bio } = req.body;
+    const { username, password, birthday, role, fullname, email, phone, gender, speciality,price, bio } = req.body;
     if (!username || !password) {
         return res.status(400).json({ success: false, msg: 'username and password are required' });
     }
@@ -40,7 +40,7 @@ router.post('/addExpert', verifyToken, async (req, res) => {
             gender,
             speciality,
             price,
-            bio
+            bio,
         });
         await newUser.save();
         res.json({ success: true, msg: 'Expert created' });
@@ -63,7 +63,7 @@ router.post('/addUser', verifyToken, async (req, res) => {
     if (user.role !== 'admin') {
         return res.status(403).json({ success: false, msg: 'not allowed' });
     }
-    const { username, password, birthday, role, fullname, email ,phone} = req.body;
+    const { username, password, birthday, role, fullname, gender, email ,phone} = req.body;
     if (!username || !password) {
         return res.status(400).json({ success: false, msg: 'username and password are required' });
     }
@@ -79,6 +79,7 @@ router.post('/addUser', verifyToken, async (req, res) => {
             password: hashedPassword,
             birthday,
             role,
+            gender,
             fullname,
             phone,
             email
@@ -103,7 +104,7 @@ router.put('/updateUser/:id', verifyToken, async (req, res) => {
     if (user.role !== 'admin') {
         return res.status(403).json({ success: false, msg: 'not allowed' });
     }
-    const { birthday, role, fullname, email,phone,gender } = req.body;
+    const { birthday, role, fullname,gender, email, phone } = req.body;
     
     try {
         let user = await User.findById(req.params.id);
@@ -117,7 +118,7 @@ router.put('/updateUser/:id', verifyToken, async (req, res) => {
             fullname,
             email,
             phone,
-            gender
+            gender,
         });
         res.json({ success: true, msg: 'User updated' ,data:user2});
     } catch (err) {
@@ -138,7 +139,7 @@ router.put('/updateExpert/:id', verifyToken, async (req, res) => {
     if (user.role !== 'admin') {
         return res.status(403).json({ success: false, msg: 'not allowed' });
     }
-    const { username, password, birthday, role, fullname, email,phone,bio, speciality,price,gender} = req.body;
+    const { username, password, birthday, role, fullname, email,phone, price, speciality, bio} = req.body;
     if (!username || !password) {
         return res.status(400).json({ success: false, msg: 'username and password are required' });
     }
@@ -156,10 +157,9 @@ router.put('/updateExpert/:id', verifyToken, async (req, res) => {
             fullname,
             email,
             phone,
-            bio,
-            speciality,
             price,
-            gender
+            speciality,
+            bio,
         });
         res.json({ success: true, msg: 'Expert updated',data:user2 });
     } catch (err) {

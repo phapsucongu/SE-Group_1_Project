@@ -2,15 +2,25 @@ import React from "react";
 import './LawyerUI.css';
 import { Link } from "react-router-dom";
 import { BsArrowRight } from "react-icons/bs";
-
-
+import LuatSuHa from '../../assets/images/luatsuha.jpg'
+import LuatSuBinh from '../../assets/images/nguyenanbinh.png'
+import LuatSu from '../../assets/images/luatsu.png'
 const LawyerCard = ({id ,lawyer}) => {
-
+    let imgsrc = '';
+    if(lawyer.fullname === 'Trần Viết Hà'){
+        imgsrc = LuatSuHa;
+    }
+    else if(lawyer.fullname === 'Nguyễn An Bình'){
+        imgsrc = LuatSuBinh;
+    }
+    else {
+        imgsrc = LuatSu;
+    }
     const {fullname, speciality, photo, price} = lawyer;
     return (
         <div  style={{ marginBottom: 50, marginLeft:20 }}>
             <div className="image-container">
-                <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" className="image" alt="" />
+                <img src={imgsrc} className="image" alt="" />
             </div>
             <h2 className="lawyer-name" style = {{ marginTop: 5}}>{fullname}</h2>
             <div className="mt-2 lg:mt-4 flex items-center justify-between">

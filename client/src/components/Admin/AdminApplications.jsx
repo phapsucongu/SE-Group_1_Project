@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Modal } from "antd";
 import { ExclamationCircleOutlined } from "@ant-design/icons";
 import { addUser, deleteUser, getUser, getUsers, updateUser } from "../../service/AdminAplicationService";
-
+import moment from 'moment';
 // axios.defaults.baseURL = process.env.REACT_APP_SERVER_DOMAIN;
 import { AdminContext } from "../../context/Admincontext";
 
@@ -44,7 +44,6 @@ const AdminApplications = () => {
       cancelText: 'No',
       onOk() {
         deleteUser(id);
-        //setApplications(prev => prev.filter(client => client.id !== id));
         window.location.reload();
       },
     });
@@ -60,12 +59,10 @@ const AdminApplications = () => {
 
   const handleInputChange = (e) => {
     setEditingClient({ ...editingClient, [e.target.name]: e.target.value });
+    console.log(editingClient);
   }
 
-  const resetEditing = () => {
-    setIsEdit(false);
-    setEditingClient(null);
-  }
+
   const resetAddNewClient = () => {
     setIsShowModalAddNewClient(false);
     setForm({
@@ -80,9 +77,7 @@ const AdminApplications = () => {
   }
   const AddNewClient = () => {
     console.log(form);
-
     setIsShowModalAddNewClient(false);
-    //setApplications(prev => [...prev, { id: prev.length + 1, ...form }]);
     addUser(form).then((res)=>{
       console.log(res.data);
     })
@@ -99,11 +94,11 @@ const AdminApplications = () => {
   } 
 
   const updateClient = (id) => {
-    console.log(form);
+  
     setIsEdit(false);
-     updateUser(id,form).then((res)=>{
-       console.log(res);
-     })
+    updateUser(id, editingClient).then((res)=>{
+      console.log(res.data);
+    })
     setForm({
       fullname: "",
       birthday: "",
@@ -111,7 +106,7 @@ const AdminApplications = () => {
       phone: "",
       gender: "",
     });
-    // window.location.reload();
+    window.location.reload();
   }
 
   const [ listUser, setListUser ] = useState([]);
@@ -158,7 +153,7 @@ const AdminApplications = () => {
                       <td>{i + 1}</td>
                       <td>{ele?.username}</td>
                       <td>{ele?.fullname}</td>
-                      <td>{ele?.birthday}</td>
+                      <td>{moment(ele?.birthday).format('MM-DD-YYYY')}</td>
                       {/* <td>{ele?.userId?.lastname}</td> */}
                       <td>{ele?.email}</td>
                       <td>{ele?.phone}</td>
@@ -239,7 +234,7 @@ const AdminApplications = () => {
          Birthday
        </label>
          <input 
-        type="text"
+        type="date"
          placeholder="Birthday"
          name="birthday"
          value={birthday}
@@ -330,10 +325,10 @@ const AdminApplications = () => {
          Birthday
        </label>
          <input 
-          type="text"
+          type="date"
          placeholder="Birthday"
          name="birthday"
-         value={editingClient?.birthday}
+         value={moment(editingClient?.birthday).format('YYYY-MM-DD')}
          onChange={handleInputChange}  
          className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
          required

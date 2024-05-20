@@ -6,6 +6,7 @@ import moment from 'moment';
 import ConfirmAppointment from './ConfirmAppointment';
 import { createAppointment } from "../../service/Apointment";
 
+
 const AppointmentPage = () => {
 
 
@@ -51,11 +52,13 @@ const steps = [
     lawyer: '',
     date: '',
     time: '',
+    address: '',
     description: ''
   }
   form.lawyer=lawyerid;
   form.date=selectedDate;
   form.time=selectTime;
+  form.address=address;
   form.description=description;
   
   console.log(form);
@@ -91,7 +94,7 @@ return (
               <Button
                 className="px-4 py-2 text-lg flex items-center justify-center"
               type="primary" onClick={ () => createAppointment(form) &&
-                message.success('Processing complete!') } >
+                message.success('Processing complete!') }  >
                 Done
               </Button>
               </Link>

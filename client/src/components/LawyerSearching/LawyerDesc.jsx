@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import lawyerImg from "./LawyersImg/lawyer4.jpg";
+import LuatSuHa from '../../assets/images/luatsuha.jpg'
 import { useState } from "react";
 import LawyerAbout from "./LawyerAbout";
 import Feedback from "./Feedback";
@@ -7,8 +7,12 @@ import SidePanel from "./SidePanel";
 import starIcon from "./LawyersImg/Star.png";
 import { useParams } from "react-router-dom";
 import { getLawyer } from "../../service/Apointment";
+import LuatSuBinh from '../../assets/images/nguyenanbinh.png'
+import LuatSu from '../../assets/images/luatsu.png'
+
 
 const LawyerDesc = () => {
+    
     const {id} = useParams();
     const [ Lawyer, setLawyer ] = useState([])
     const [tab, steTab] = useState('about');
@@ -21,6 +25,16 @@ const LawyerDesc = () => {
         })
       }
       useEffect(() => { getdetailLawyer(); }, []);
+      let imgsrc = '';
+      if(Lawyer.fullname === 'Trần Viết Hà'){
+        imgsrc = LuatSuHa;
+    }
+    else if(Lawyer.fullname === 'Nguyễn An Bình'){
+        imgsrc = LuatSuBinh;
+    }
+    else {
+        imgsrc = LuatSu;
+    }
     return (<section>
         <div className="max-w-[1170px] px-5 mx-auto">
             <div className="grid md:grid-cols-3 gap-[50px]">
@@ -28,7 +42,7 @@ const LawyerDesc = () => {
                     <div className="flex items-center gap-5">
                         <figure className="max-w-[200px] max-h-[200px]">
                             
-                            <img src={lawyerImg} alt="" />
+                            <img  src={imgsrc} alt="" />
                         </figure>
                         <div>
                             <span className="bg-[#CCF0F3] text-irisBlueColor py-1 px-6 lg:py-2 lg:px-6 text-[12px]
@@ -43,7 +57,7 @@ const LawyerDesc = () => {
                             </h3> */}
                             
                             <p className="text__para text-[14px] leading-5 md:text-[15px] lg:max-w-[390px]">
-                            {Lawyer.bio}
+                            {Lawyer.email}
                             </p>
                         </div>
                     </div>

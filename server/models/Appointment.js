@@ -56,6 +56,10 @@ const AppointmentSchema = new mongoose.Schema(
             type: String,
             //required: true,
         },
+        address: {
+            type: String,
+            required: true,
+        },
     },
 );
 const Appointment = mongoose.model('appointments', AppointmentSchema);

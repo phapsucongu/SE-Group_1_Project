@@ -7,40 +7,6 @@ import './LawyerUI.css'
 
 const SearchSidebar = ({ setSearchTerm, setSorByGender, setSpecialist, setPriceRange, resetFilter, query }) => {
   const searchBarRef = useRef(null);
-  const handleDateChange = (_date, _dateString) => { }
-  const options = [
-    {
-      label: 'Male',
-      value: 'male',
-    },
-    {
-      label: 'Female',
-      value: 'female',
-    },
-  ];
-
-  const SpecialistOptions = [
-    { label: "Criminal Defense", value: "Criminal Defense" },
-    { label: "Family Law", value: "Family Law" },
-    { label: "Intellectual Property", value: "Intellectual Property" },
-    { label: "Immigration", value: "Immigration" },
-    { label: "Environmental", value: "Environmental" },
-    { label: "Personal Injury", value: "Personal Injury" },
-    { label: "Employment", value: "Employment" },
-    { label: "Economic Law", value: "Economic Law" },
-  ]
-
-  const onSelectGender = (e) => setSorByGender(e.target.value)
-
-  const onSelectSepcialist = (e) => setSpecialist(e.target.value)
-
-  const onRangeChange = (range) => {
-    const obj = {
-      min: range[0],
-      max: range[1]
-    }
-    setPriceRange(obj)
-  }
   const onSearch = (value) => {
     setSearchTerm(value);
   }
@@ -57,6 +23,6 @@ const SearchSidebar = ({ setSearchTerm, setSorByGender, setSpecialist, setPriceR
        </div>
        </div>
   )
-}
+};
 
 export default SearchSidebar

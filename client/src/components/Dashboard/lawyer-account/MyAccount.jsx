@@ -1,5 +1,7 @@
 import React, { useContext, useState } from "react";
-import userImg from "../../../assets/images/avatar-icon.png";
+import LuatSuHa from "../../../assets/images/luatsuha.jpg";
+import LuatSuBinh from "../../../assets/images/nguyenanbinh.png";
+import LuatSu from "../../../assets/images/luatsu.png";
 import { authContext } from "../../../context/AuthContext";
 
 import Profile from "../lawyer-account/Profile";
@@ -11,7 +13,17 @@ import { BASE_URL } from "../../../utils/config";
 import { LOCAL_STORAGE_TOKEN_NAME } from '../../../context/constants';
 
 const LawyerAccount = () => {
+    const { authState } = useContext(authContext);
+    const user = authState.user;
 
+    let img = '';
+    if (user.fullname === 'Trần Viết Hà') {
+        img = LuatSuHa;
+    } else if (user.fullname === 'Nguyễn An Bình') {
+        img = LuatSuBinh;
+    } else {
+        img = LuatSu;
+    }
     
     const {dispatch}  = useContext(authContext);
 
@@ -35,7 +47,7 @@ const LawyerAccount = () => {
                     <div className="flex items-center justify-center">
                         <figure className="w-[100px] h-[100px] rounded-full border-2 border-solid border-primaryColor">
                             <img 
-                            src={userImg}
+                            src={img}
                              alt="" 
                              className="w-full h-full rounded-full" />
                         </figure>
@@ -43,10 +55,13 @@ const LawyerAccount = () => {
                     <div className = "text-center mt-4">  
                     <div className="text-center mt-4">
                         <h3 className="text-headingColor text-[18px] leading-[30px] font-bold">
-                            My Account
+                            {user.fullname}
                         </h3>
                         <p className ="text-textColor text-[15px] leading-6 font-medium">
-                        Choose "Profile" to update your profile or "Change Password" to update your password
+                            {user.email}
+                        </p>
+                        <p className ="text-textColor text-[15px] leading-6 font-medium">
+                            {user.phone}
                         </p>
                     </div>
 

@@ -6,6 +6,7 @@ import {apiUrl,LOCAL_STORAGE_TOKEN_NAME} from '../../../context/constants.jsx';
 import axiosInstance from '../../../context/constants';
 import setAuthToken from '../../../utils/setAuthToken';
 import { message } from 'antd';
+import moment from 'moment';
 
 const LawyerProfile = () => {
    // const {registerUser} = useContext(authContext);
@@ -96,10 +97,10 @@ const LawyerProfile = () => {
               Birthday
             </label>
               <input 
-               type="text"
+               type="date"
               placeholder="Birthday"
               name="birthday"
-              value={birthday}
+              value={moment(birthday).format('YYYY-MM-DD')}
               onChange={handleInputChange}  
               className="w-full pr-4 py-3 border-b border-solid border-[#0066ff61] focus:outline-none focus:border-b-primaryColor text-[16px] leading-7 text-headingColor placeholder:text-textColor cursor-pointer"
               required
@@ -130,9 +131,9 @@ const LawyerProfile = () => {
                 onChange={handleInputChange}
                 className = "form__input-1 py-3.5">
                     <option value=""></option>
-                    <option value="male">Male</option>
-                    <option value="female">Female</option>
-                    <option value="other">Other</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
                 </select>
                 </div>
                 <div>

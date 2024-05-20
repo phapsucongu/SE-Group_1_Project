@@ -9,9 +9,7 @@ const FeedBackForm = () => {
   const [feedbackForm, setFeedbackForm] = useState(false);
 
   const handleSubmitReview = async (e) => {
-    e.preventDefault();
-    setReviews([...reviews, { rating, reviewtext }]);
-    setFeedbackForm(false);
+
   };
   return (
     <form action="">

@@ -13,7 +13,7 @@ const Expert = require('../models/Expert');
 
 router.post('/create', verifyToken, async (req, res) => {
     try {
-        const { lawyer, date, time, description } = req.body;
+        const { lawyer, date, time, description, address } = req.body;
 
         // Kiểm tra sự tồn tại của luật sư
         const lawyerExists = await Expert.findById(lawyer);
@@ -34,6 +34,7 @@ router.post('/create', verifyToken, async (req, res) => {
             date,
             time,
             description,
+            address,
             lawyerName: lawyerExists.fullname,
             userName: userExists.fullname,
             lawyerEmail: lawyerExists.email,

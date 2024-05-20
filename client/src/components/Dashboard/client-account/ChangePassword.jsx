@@ -33,7 +33,7 @@ const ChangePassword= () => {
       const res = await changePassword(formData);
       if(res.success){
         navigate('/login');
-        toast.success('Password updated successfully');
+        message.success("Password changed successfully");
       }
     }
     catch (error) {
@@ -86,7 +86,6 @@ const ChangePassword= () => {
               //disabled={loading && true}
                 type="submit"
                 className="w-full bg-primaryColor text-white text-[18px] leading-[30px] rounded-lg px-4 py-3">
-                onClick={submitHandler}
                 Update
               </button>
             </div>
