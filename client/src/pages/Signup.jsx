@@ -3,6 +3,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import {toast} from 'react-toastify';
 import HashLoader from 'react-spinners/HashLoader';
 import { authContext } from '../context/AuthContext';
+import { BASE_URL } from '../utils/config';
+import { Select } from 'antd';
+import { message } from 'antd';
+
 const Signup = () => {
 
   const {registerUser} = useContext(authContext);
@@ -24,19 +28,19 @@ const Signup = () => {
     if (password !== confirmPassword) {
       setFormData({...formData, password: '', confirmPassword: ''});
       return toast.error('Passwords do not match');
-      
     }
     try {
       const registerData = await registerUser(formData);
       if (registerData.success) {
         navigate('/');
-        toast.success('Registered successfully');
+        message.success("Signup successfully!");
       } else {
-        toast.error(registerData.message);
+        message.error("Signup failed");
       }
     }
     catch (error) {
       toast.error(error.response.data.message);
+      message.error("Signup failed");
     }
   }
 

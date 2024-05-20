@@ -6,26 +6,64 @@ import logo from '../../assets/images/legal-services.png';
 import userImg from '../../assets/images/avatar-icon.png';
 import { LOCAL_STORAGE_TOKEN_NAME } from '../../context/constants';
 
-const navLinks = [
+let navLinks = []
+
+let account = []
+const guessNavLinks = [
   {
     path: '/home',
     display: 'Home',
   },
   {
-    path: '/experts',
-    display: 'Find An Expert',
+    path: '/findalawyer',
+    display: 'Find A Lawyer',
+  },
+]
+
+const clientNavLinks = [
+  {
+    path: '/home',
+    display: 'Home',
+  },
+  {
+    path: '/findalawyer',
+    display: 'Find A Lawyer',
   },
   {
     path: '/mybookings',
     display: 'My Booking',
   },
+]
+
+const lawyerNavLinks = [
   {
-    path: '/contact',
-    display: 'Contact',
+    path: '/home',
+    display: 'Home',
   },
-];
+  {
+    path: '/myappointments',
+    display: 'My Appointments',
+  },
+]
+const handleOnClickAvatar = () => {
+  return window.location.href = `/${account}`;
+}
 
 const Header = () => {
+  const { authState: {user} } = useContext(authContext);
+
+  const role = user?.role;
+  if(role === 'user'){
+    navLinks = [...clientNavLinks];
+    account = "clientAccount"
+  }
+  else if(role === 'expert'){
+    navLinks = [...lawyerNavLinks];
+    account = "lawyerAccount"
+  }
+  else {
+    navLinks = [...guessNavLinks];
+  }
   const headerRef = useRef(null);
   const menuRef = useRef(null);
   const { authState } = useContext(authContext);
@@ -67,10 +105,7 @@ const Header = () => {
     return () => document.removeEventListener('click', handleClickOutside);
   }, []); // Empty dependency array ensures it runs only once
 
-  const handleLogout = () => {
-    localStorage.removeItem(LOCAL_STORAGE_TOKEN_NAME);
-    window.location.href = '/login';
-  };
+  
 
   return (
     <header className="header flex items-center" ref={headerRef}>
@@ -82,7 +117,7 @@ const Header = () => {
             <h4 style={{ marginLeft: '10px', fontWeight: 'bold', fontSize: '22px' }}>Law Connect</h4>
           </div>
 
-          {/* Menu */}
+          {/* Menu: Đoạn này sau tùy chỉnh theo role */}
           <div className="navigation" ref={menuRef} onClick={toggleMenu}>
             <ul className="menu flex items-center gap-[2.7rem]">
               {navLinks.map((link, index) => (
@@ -107,21 +142,11 @@ const Header = () => {
             {authState.isAuthenticated ? (
               <div className="relative">
                 <div className="inline-block relative">
-                  <figure className="w-[35px] h-[35px] rounded-full cursor-pointer" onClick={toggleMenu}>
+                  <figure className="w-[35px] h-[35px] rounded-full cursor-pointer">
+                    <Link to={`/${account}`}>
                     <img src={userImg} className="w-full rounded-full" alt="" />
+                    </Link>
                   </figure>
-                  {isDropdownOpen && (
-                    <div className="absolute right-0 mt-2 w-28 bg-white rounded-lg shadow-lg z-10">
-                      <div className="py-1">
-                        <Link to="/profile" className="block px-4 py-2 text-sm text-gray-800 hover:bg-gray-200 text-center">
-                          Profile
-                        </Link>
-                        <button onClick={handleLogout} className="w-full text-left px-4 py-2 text-sm text-gray-800 hover:bg-gray-200 flex justify-center items-center">
-                          Logout
-                        </button>
-                      </div>
-                    </div>
-                  )}
                 </div>
               </div>
             ) : (
@@ -132,9 +157,6 @@ const Header = () => {
                 </button>
               </Link>
             )}
-            <span className='md:hidden' onClick={toggleMenu}>
-              <BiMenu className='w-6 h-6 cursor-pointer' />
-            </span>
           </div>
         </div>
       </div>

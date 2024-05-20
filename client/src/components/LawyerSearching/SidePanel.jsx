@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const SidePanel = () => {
+const SidePanel = ({lawyer,id}) => {
 
 
     return (
@@ -10,36 +11,38 @@ const SidePanel = () => {
                </p>
                <span className="text-[16px] leading-7 lg:text-[22px] lg:leading-8
                text-headingColor font-bold">
-                 700.000 ty
+                 {lawyer.price} $
                </span>
             </div>
 
             <div className="mt-[30px]">
                 <p className="text__para mt-0 font-semibold text-headingColor">
-                    Available Time Slots:
+                    Status: Active
                 </p>
 
                 <ul className="mt-3">
                     <li className="flex items-center justify-between mb-2">
                         <p className="text-[15px] leading-6 text-textColor font-semibold">
-                            Sunday
+                            Online
                         </p>
                         <p className="text-[15px] leading-6 text-textColor font-semibold">
-                            4:00 PM - 9:30 PM
+                            Google Meet
                         </p>
                     </li>
 
                     <li className="flex items-center justify-between mb-2">
                         <p className="text-[15px] leading-6 text-textColor font-semibold">
-                            Saturday
+                            Offline
                         </p>
                         <p className="text-[15px] leading-6 text-textColor font-semibold">
-                            4:00 PM - 9:30 PM
+                            322 My Dinh Building
                         </p>
                     </li>
                 </ul>
             </div>
+            <Link to={`/appointment/${id}`}>
             <button className="btn px-2 w-full rounded-md">Book Appointment</button>
+            </Link>
         </div>
     );
 };
