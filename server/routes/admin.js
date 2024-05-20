@@ -18,7 +18,7 @@ router.post('/addExpert', verifyToken, async (req, res) => {
     if (user.role !== 'admin') {
         return res.status(403).json({ success: false, msg: 'not allowed' });
     }
-    const { username, password, birthday, role, fullname, email, phone, gender, speciality,price } = req.body;
+    const { username, password, birthday, role, fullname, email, phone, gender, speciality,price,bio } = req.body;
     if (!username || !password) {
         return res.status(400).json({ success: false, msg: 'username and password are required' });
     }
@@ -40,6 +40,7 @@ router.post('/addExpert', verifyToken, async (req, res) => {
             gender,
             speciality,
             price,
+            bio
         });
         await newUser.save();
         res.json({ success: true, msg: 'Expert created' });
@@ -102,7 +103,7 @@ router.put('/updateUser/:id', verifyToken, async (req, res) => {
     if (user.role !== 'admin') {
         return res.status(403).json({ success: false, msg: 'not allowed' });
     }
-    const { birthday, role, fullname, email,phone } = req.body;
+    const { birthday, role, fullname, email,phone,gender } = req.body;
     
     try {
         let user = await User.findById(req.params.id);
@@ -110,14 +111,15 @@ router.put('/updateUser/:id', verifyToken, async (req, res) => {
             return res.status(404).json({ success: false, msg: 'User not found' });
         }
         //const hashedPassword = await argon2.hash(password);
-        user = await User.findByIdAndUpdate(req.params.id, {
+        const user2 = await User.findByIdAndUpdate(req.params.id, {
             birthday,
             role,
             fullname,
             email,
-            phone
+            phone,
+            gender
         });
-        res.json({ success: true, msg: 'User updated' });
+        res.json({ success: true, msg: 'User updated' ,data:user2});
     } catch (err) {
         console.error(err.message);
         res.status(500).json({ success: false, msg: 'server error' });
@@ -136,7 +138,7 @@ router.put('/updateExpert/:id', verifyToken, async (req, res) => {
     if (user.role !== 'admin') {
         return res.status(403).json({ success: false, msg: 'not allowed' });
     }
-    const { username, password, birthday, role, fullname, email,phone} = req.body;
+    const { username, password, birthday, role, fullname, email,phone,bio, speciality,price,gender} = req.body;
     if (!username || !password) {
         return res.status(400).json({ success: false, msg: 'username and password are required' });
     }
@@ -146,16 +148,20 @@ router.put('/updateExpert/:id', verifyToken, async (req, res) => {
             return res.status(404).json({ success: false, msg: 'Expert not found' });
         }
         const hashedPassword = await argon2.hash(password);
-        user = await Expert.findByIdAndUpdate(req.params.id, {
+        const user2 = await Expert.findByIdAndUpdate(req.params.id, {
             username,
             password: hashedPassword,
             birthday,
             role,
             fullname,
             email,
-            phone
+            phone,
+            bio,
+            speciality,
+            price,
+            gender
         });
-        res.json({ success: true, msg: 'Expert updated' });
+        res.json({ success: true, msg: 'Expert updated',data:user2 });
     } catch (err) {
         console.error(err.message);
         res.status(500).json({ success: false, msg: 'server error' });

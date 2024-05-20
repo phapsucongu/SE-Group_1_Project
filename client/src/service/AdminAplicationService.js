@@ -41,6 +41,5 @@ export const updateUser = async (id,update) => {
     const response = await axiosInstance.put(`${apiUrl}/admin/updateUser/${id}`,update);
     if (response.data.success) {
         return response.data;
-        console.log(response.data);
     }
 };

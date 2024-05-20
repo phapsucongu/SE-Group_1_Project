@@ -37,7 +37,9 @@ export const updateUser = async (id,update) => {
     if (localStorage[LOCAL_STORAGE_TOKEN_NAME]) {
         setAuthToken(localStorage[LOCAL_STORAGE_TOKEN_NAME]);
     }
+    console.log(update);
     const response = await axiosInstance.put(`${apiUrl}/admin/updateExpert/${id}`,update);
+    console.log(response.data);
     if (response.data.success) {
         return response.data;
         console.log(response.data);

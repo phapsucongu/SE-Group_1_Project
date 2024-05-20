@@ -119,7 +119,7 @@ const [isEdit, setIsEdit] = useState(false);
   useEffect(() => {
     getLawyer();
   }, []);
-  console.log(listLawyer);
+
 
   return (
     <div className="adminContainer">
@@ -339,7 +339,7 @@ const [isEdit, setIsEdit] = useState(false);
               title="Edit Lawyer"
               open={isEdit}
               onOk={() => {
-                resetEditing();
+                updateLawyer(editingLawyer._id);
               }}
               onCancel={() => setIsEdit(false)}
               cancelText="Cancel"

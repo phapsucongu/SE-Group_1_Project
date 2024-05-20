@@ -44,7 +44,7 @@ const AdminApplications = () => {
       cancelText: 'No',
       onOk() {
         deleteUser(id);
-        setApplications(prev => prev.filter(client => client.id !== id));
+        //setApplications(prev => prev.filter(client => client.id !== id));
         window.location.reload();
       },
     });
@@ -53,7 +53,7 @@ const AdminApplications = () => {
   const onEdit = (id) => {
     setIsEdit(true);
     const client = listUser.users.find(client => client._id === id);
-    console.log(client);
+    //console.log(client);
     setEditingClient(client);
   }
 
@@ -82,7 +82,7 @@ const AdminApplications = () => {
     console.log(form);
 
     setIsShowModalAddNewClient(false);
-    setApplications(prev => [...prev, { id: prev.length + 1, ...form }]);
+    //setApplications(prev => [...prev, { id: prev.length + 1, ...form }]);
     addUser(form).then((res)=>{
       console.log(res.data);
     })
@@ -101,9 +101,9 @@ const AdminApplications = () => {
   const updateClient = (id) => {
     console.log(form);
     setIsEdit(false);
-    // updateUser(id,form).then((res)=>{
-    //   console.log(res.data);
-    // })
+     updateUser(id,form).then((res)=>{
+       console.log(res);
+     })
     setForm({
       fullname: "",
       birthday: "",
@@ -139,6 +139,7 @@ const AdminApplications = () => {
               <thead>
                 <tr>
                   <th>S.No</th>
+                  <th>Username</th>
                   {/* <th>Pic</th> */}
                   <th>Full Name</th>
                   {/* <th>Last Name</th> */}
@@ -153,8 +154,9 @@ const AdminApplications = () => {
               <tbody>
                 {listUser.users?.map((ele, i) => {
                   return (
-                    <tr key={ele?.id}>
+                    <tr key={ele?._id}>
                       <td>{i + 1}</td>
+                      <td>{ele?.username}</td>
                       <td>{ele?.fullname}</td>
                       <td>{ele?.birthday}</td>
                       {/* <td>{ele?.userId?.lastname}</td> */}
